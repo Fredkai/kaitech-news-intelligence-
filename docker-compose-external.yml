@@ -1,0 +1,124 @@
+version: '3.8'
+
+services:
+  # Frontend Web Application with External Access
+  web:
+    build: .
+    ports:
+      - "80:80"     # HTTP (redirects to HTTPS)
+      - "443:443"   # HTTPS
+      - "0.0.0.0:80:80"     # Bind HTTP to all interfaces
+      - "0.0.0.0:443:443"   # Bind HTTPS to all interfaces
+    depends_on:
+      - news-api
+      - redis
+      - postgres
+    networks:
+      - voice-of-time-network
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./ssl:/etc/nginx/ssl:ro  # Mount SSL certificates
+
+  # News API Service for Real-time Breaking News
+  news-api:
+    build: ./services/news-api
+    ports:
+      - "3000:3000"
+      - "0.0.0.0:3000:3000"  # Bind to all interfaces
+    depends_on:
+      - redis
+      - postgres
+    networks:
+      - voice-of-time-network
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - REDIS_URL=redis://redis:6379
+      - DATABASE_URL=postgresql://newsuser:newspass@postgres:5432/newsdb
+      - NEWS_API_KEY=${NEWS_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+
+  # News Crawler Service
+  news-crawler:
+    build: ./services/news-crawler
+    depends_on:
+      - redis
+      - postgres
+    networks:
+      - voice-of-time-network
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - REDIS_URL=redis://redis:6379
+      - DATABASE_URL=postgresql://newsuser:newspass@postgres:5432/newsdb
+      - CRAWL_INTERVAL=60000  # 1 minute
+
+  # AI Analysis Service
+  ai-analyzer:
+    build: ./services/ai-analyzer
+    depends_on:
+      - redis
+      - postgres
+    networks:
+      - voice-of-time-network
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+      - REDIS_URL=redis://redis:6379
+      - DATABASE_URL=postgresql://newsuser:newspass@postgres:5432/newsdb
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+
+  # Redis for Caching and Real-time Data
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - voice-of-time-network
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432"
+    networks:
+      - voice-of-time-network
+    restart: unless-stopped
+    environment:
+      - POSTGRES_DB=newsdb
+      - POSTGRES_USER=newsuser
+      - POSTGRES_PASSWORD=newspass
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  # External Access Load Balancer
+  nginx-lb:
+    image: nginx:alpine
+    ports:
+      - "8080:80"   # HTTP load balancer
+      - "8443:443"  # HTTPS load balancer
+      - "0.0.0.0:8080:80"   # Bind HTTP to all interfaces
+      - "0.0.0.0:8443:443"  # Bind HTTPS to all interfaces
+    volumes:
+      - ./nginx-external.conf:/etc/nginx/nginx.conf
+      - ./ssl:/etc/nginx/ssl:ro  # Mount SSL certificates
+    depends_on:
+      - web
+    networks:
+      - voice-of-time-network
+    restart: unless-stopped
+
+networks:
+  voice-of-time-network:
+    driver: bridge
+
+volumes:
+  redis_data:
+  postgres_data:
