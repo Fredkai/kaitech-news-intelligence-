@@ -1,0 +1,39 @@
+<svg width="200" height="60" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background circle for globe effect -->
+  <circle cx="30" cy="30" r="25" fill="none" stroke="#1e40af" stroke-width="2" opacity="0.3"/>
+  <circle cx="30" cy="30" r="18" fill="none" stroke="#3b82f6" stroke-width="1.5" opacity="0.5"/>
+  
+  <!-- Globe lines -->
+  <path d="M 5 30 Q 30 10 55 30 Q 30 50 5 30" fill="none" stroke="#1e40af" stroke-width="1.5"/>
+  <path d="M 30 5 Q 45 30 30 55 Q 15 30 30 5" fill="none" stroke="#1e40af" stroke-width="1.5"/>
+  <line x1="5" y1="30" x2="55" y2="30" stroke="#3b82f6" stroke-width="1"/>
+  
+  <!-- Signal/broadcast waves -->
+  <path d="M 40 15 Q 50 20 45 25" fill="none" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+  <path d="M 45 12 Q 58 18 52 24" fill="none" stroke="#ef4444" stroke-width="1.5" stroke-linecap="round" opacity="0.7"/>
+  <path d="M 50 10 Q 65 16 58 23" fill="none" stroke="#ef4444" stroke-width="1" stroke-linecap="round" opacity="0.5"/>
+  
+  <!-- AI Circuit pattern -->
+  <g opacity="0.6">
+    <circle cx="25" cy="20" r="2" fill="#10b981"/>
+    <circle cx="35" cy="25" r="2" fill="#10b981"/>
+    <circle cx="25" cy="35" r="2" fill="#10b981"/>
+    <line x1="25" y1="20" x2="35" y2="25" stroke="#10b981" stroke-width="1"/>
+    <line x1="35" y1="25" x2="25" y2="35" stroke="#10b981" stroke-width="1"/>
+  </g>
+  
+  <!-- KaiTech Text -->
+  <g font-family="Arial, sans-serif" font-weight="bold">
+    <!-- Kai part -->
+    <text x="70" y="25" font-size="24" fill="#1e40af">Kai</text>
+    <!-- Tech part -->
+    <text x="110" y="25" font-size="24" fill="#ef4444">Tech</text>
+    <!-- Tagline -->
+    <text x="70" y="42" font-size="10" fill="#6b7280" font-weight="normal">Global AI News Intelligence</text>
+  </g>
+  
+  <!-- Decorative elements -->
+  <rect x="68" y="28" width="82" height="1" fill="#e5e7eb"/>
+  <circle cx="75" cy="28.5" r="1.5" fill="#ef4444"/>
+  <circle cx="145" cy="28.5" r="1.5" fill="#1e40af"/>
+</svg>

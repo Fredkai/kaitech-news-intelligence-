@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KaiTech - Global AI News Intelligence</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="assets/kaitech-favicon.svg">
+</head>
+<body>
+    <!-- Breaking News Bar -->
+    <div id="breakingNewsBar" class="breaking-news-bar">
+        <div class="breaking-news-content">
+            <span class="breaking-label">BREAKING</span>
+            <span id="breakingNewsText">AI Analysis reveals major trends in global markets - powered by KaiTech Intelligence</span>
+        </div>
+    </div>
+    
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <img src="assets/kaitech-logo.svg" alt="KaiTech" class="logo">
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#news">Live News</a></li>
+                <li><a href="#analysis">AI Analysis</a></li>
+                <li><a href="#global">Global Coverage</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1>Global News Intelligence</h1>
+                <h2 class="hero-subtitle">Powered by KaiTech AI</h2>
+                <p>Stay informed with real-time global news analysis, AI-powered insights, and comprehensive coverage from around the world.</p>
+                <div class="hero-buttons">
+                    <button class="cta-button primary" onclick="scrollToSection('news')">
+                        <i class="fas fa-newspaper"></i> Live News Feed
+                    </button>
+                    <button class="cta-button secondary" onclick="scrollToSection('analysis')">
+                        <i class="fas fa-chart-line"></i> AI Analysis
+                    </button>
+                </div>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number" id="storiesAnalyzed">24,567</span>
+                    <span class="stat-label">Stories Analyzed Today</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number" id="countriesCovered">195</span>
+                    <span class="stat-label">Countries Covered</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number" id="liveUpdates">∞</span>
+                    <span class="stat-label">Live Updates</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Live News Section -->
+        <section id="news" class="news-section">
+            <div class="container">
+                <h2><i class="fas fa-newspaper"></i> Live News Feed</h2>
+                <div class="news-filters">
+                    <button class="filter-btn active" data-category="all">All News</button>
+                    <button class="filter-btn" data-category="breaking">Breaking</button>
+                    <button class="filter-btn" data-category="politics">Politics</button>
+                    <button class="filter-btn" data-category="technology">Technology</button>
+                    <button class="filter-btn" data-category="business">Business</button>
+                    <button class="filter-btn" data-category="world">World</button>
+                </div>
+                <div class="news-grid" id="newsGrid">
+                    <!-- News articles will be loaded here -->
+                    <div class="news-card">
+                        <div class="news-header">
+                            <span class="news-category breaking">BREAKING</span>
+                            <span class="news-time">2 min ago</span>
+                        </div>
+                        <h3 class="news-title">Global Markets React to AI Technology Breakthrough</h3>
+                        <p class="news-excerpt">KaiTech AI analysis reveals significant market movements following latest artificial intelligence developments...</p>
+                        <div class="news-footer">
+                            <span class="news-source">KaiTech Intelligence</span>
+                            <div class="news-actions">
+                                <button class="action-btn"><i class="fas fa-share"></i></button>
+                                <button class="action-btn"><i class="fas fa-bookmark"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="load-more">
+                    <button class="load-more-btn" onclick="loadMoreNews()">Load More News</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Analysis Section -->
+        <section id="analysis" class="analysis-section">
+            <div class="container">
+                <h2><i class="fas fa-chart-line"></i> AI News Analysis</h2>
+                <div class="analysis-grid">
+                    <div class="analysis-card">
+                        <div class="analysis-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3>Sentiment Analysis</h3>
+                        <p>Real-time sentiment tracking across global news stories and social media.</p>
+                        <div class="analysis-metric">
+                            <span class="metric-value positive">+72%</span>
+                            <span class="metric-label">Global Sentiment</span>
+                        </div>
+                        <button class="analysis-button" onclick="openAnalysis('sentiment')">View Details</button>
+                    </div>
+                    
+                    <div class="analysis-card">
+                        <div class="analysis-icon">
+                            <i class="fas fa-globe-americas"></i>
+                        </div>
+                        <h3>Geographic Trends</h3>
+                        <p>Track news patterns and developments across different regions worldwide.</p>
+                        <div class="analysis-metric">
+                            <span class="metric-value neutral">195</span>
+                            <span class="metric-label">Active Regions</span>
+                        </div>
+                        <button class="analysis-button" onclick="openAnalysis('geographic')">View Map</button>
+                    </div>
+                    
+                    <div class="analysis-card">
+                        <div class="analysis-icon">
+                            <i class="fas fa-trending-up"></i>
+                        </div>
+                        <h3>Trending Topics</h3>
+                        <p>AI-powered identification of emerging stories and viral content.</p>
+                        <div class="analysis-metric">
+                            <span class="metric-value trending">AI Tech</span>
+                            <span class="metric-label">#1 Trending</span>
+                        </div>
+                        <button class="analysis-button" onclick="openAnalysis('trending')">Explore Trends</button>
+                    </div>
+                    
+                    <div class="analysis-card">
+                        <div class="analysis-icon">
+                            <i class="fas fa-search"></i>
+                        </div>
+                        <h3>News Verification</h3>
+                        <p>Advanced fact-checking and source credibility analysis.</p>
+                        <div class="analysis-metric">
+                            <span class="metric-value verified">98.7%</span>
+                            <span class="metric-label">Accuracy Rate</span>
+                        </div>
+                        <button class="analysis-button" onclick="openAnalysis('verification')">Check Facts</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Global Coverage Section -->
+        <section id="global" class="global-section">
+            <div class="container">
+                <h2><i class="fas fa-globe"></i> Global Coverage</h2>
+                <div class="global-content">
+                    <div class="world-map">
+                        <div class="map-placeholder">
+                            <i class="fas fa-globe-americas" style="font-size: 4rem; color: #1e40af; opacity: 0.3;"></i>
+                            <p>Interactive World Map</p>
+                            <small>Real-time news activity visualization</small>
+                        </div>
+                    </div>
+                    <div class="regional-stats">
+                        <div class="region-card">
+                            <h4>North America</h4>
+                            <div class="region-metrics">
+                                <span class="region-count">2,847</span>
+                                <span class="region-label">Active Stories</span>
+                            </div>
+                        </div>
+                        <div class="region-card">
+                            <h4>Europe</h4>
+                            <div class="region-metrics">
+                                <span class="region-count">3,291</span>
+                                <span class="region-label">Active Stories</span>
+                            </div>
+                        </div>
+                        <div class="region-card">
+                            <h4>Asia Pacific</h4>
+                            <div class="region-metrics">
+                                <span class="region-count">4,156</span>
+                                <span class="region-label">Active Stories</span>
+                            </div>
+                        </div>
+                        <div class="region-card">
+                            <h4>Middle East</h4>
+                            <div class="region-metrics">
+                                <span class="region-count">1,923</span>
+                                <span class="region-label">Active Stories</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tool Modals -->
+        <div id="toolModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modalTitle">AI Tool</h3>
+                    <span class="close" onclick="closeModal()">&times;</span>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <!-- Tool content will be loaded here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- About Section -->
+        <section id="about" class="about-section">
+            <div class="container">
+                <h2>About KaiTech</h2>
+                <div class="about-content">
+                    <p>KaiTech is at the forefront of AI-powered news intelligence, delivering real-time global coverage 
+                    with advanced artificial intelligence analysis. Our platform combines cutting-edge technology with 
+                    journalistic excellence to provide unparalleled news insights and comprehensive global coverage.</p>
+                    
+                    <div class="features">
+                        <div class="feature">
+                            <i class="fas fa-satellite"></i>
+                            <h4>Global Network</h4>
+                            <p>24/7 monitoring of news sources from 195 countries worldwide</p>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-brain"></i>
+                            <h4>AI Intelligence</h4>
+                            <p>Advanced machine learning algorithms for news analysis and prediction</p>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-shield-alt"></i>
+                            <h4>Fact Verification</h4>
+                            <p>Automated fact-checking and source credibility assessment</p>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-clock"></i>
+                            <h4>Real-Time Updates</h4>
+                            <p>Instant news alerts and breaking story notifications</p>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-chart-bar"></i>
+                            <h4>Trend Analysis</h4>
+                            <p>Predictive analytics for emerging stories and viral content</p>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-language"></i>
+                            <h4>Multi-Language</h4>
+                            <p>AI-powered translation and analysis in 40+ languages</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 KaiTech Global AI News Intelligence. Powered by advanced artificial intelligence.</p>
+        </div>
+    </footer>
+
+    <!-- Loading Indicator -->
+    <div id="loadingIndicator" class="loading-indicator">
+        <div class="spinner"></div>
+        <p>AI is thinking...</p>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
