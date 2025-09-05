@@ -822,7 +822,167 @@ window.generateCode = generateCode;
 window.analyzeImage = analyzeImage;
 window.analyzeText = analyzeText;
 
-// Export news-specific functions
+// === KAITECH RWANDA NEW SERVICES FUNCTIONALITY ===
+
+// Cloud Services Functions
+function openCloudService(serviceType) {
+    const serviceDetails = {
+        'iaas': 'Infrastructure as a Service - Scalable computing resources hosted in Rwanda\'s state-of-the-art data centers with 99.9% uptime guarantee.',
+        'paas': 'Platform as a Service - Complete development platform supporting Node.js, Python, Java, PHP, .NET with integrated CI/CD pipelines.',
+        'security': 'Enterprise Security - 256-bit AES encryption, GDPR compliance, SOC 2 certified with 24/7 monitoring and disaster recovery.'
+    };
+    
+    modalTitle.textContent = 'KaiTech Cloud Services';
+    modalBody.innerHTML = `
+        <div class="service-modal">
+            <h3>${serviceType.toUpperCase()} - Cloud Excellence</h3>
+            <p>${serviceDetails[serviceType] || 'Service information available on request.'}</p>
+            <div class="rwanda-advantage-mini">
+                <h4>Rwanda Tech Hub Advantages:</h4>
+                <ul>
+                    <li>🌿 100% renewable energy data centers</li>
+                    <li>🚀 High-speed fiber connectivity nationwide</li>
+                    <li>🛡️ Stable governance and business-friendly policies</li>
+                    <li>🎓 Skilled local tech talent pool</li>
+                </ul>
+            </div>
+            <button onclick="contactSales('${serviceType}')" class="contact-btn">Get Started</button>
+        </div>
+    `;
+    toolModal.style.display = 'block';
+}
+
+// Media Portfolio Functions
+function showMediaPortfolio(portfolioType) {
+    const portfolioDetails = {
+        'branding': 'Complete brand identity systems including logos, guidelines, and visual systems for businesses across Rwanda and East Africa.',
+        'infographics': 'Data visualization and information design for government reports, NGO campaigns, and corporate communications.',
+        'digital': 'Social media campaigns, Google Ads, Facebook Ads, email marketing, and comprehensive digital marketing strategies.',
+        'corporate': 'Professional video production including company profiles, training videos, event coverage with 4K quality and drone footage.',
+        'motion': 'Motion graphics, animated charts, explainer videos, and logo animations that bring your brand to life.',
+        'audio': 'Original music composition, voice-over recording in Kinyarwanda/English/French, and professional audio post-production.'
+    };
+    
+    modalTitle.textContent = 'KaiTech Media & Design Studio';
+    modalBody.innerHTML = `
+        <div class="portfolio-modal">
+            <h3>${portfolioType.charAt(0).toUpperCase() + portfolioType.slice(1)} Portfolio</h3>
+            <p>${portfolioDetails[portfolioType] || 'Portfolio details available on request.'}</p>
+            <div class="creative-stats">
+                <div class="stat-row">
+                    <span>📊 250+ Projects Completed</span>
+                    <span>🏢 50+ Organizations Served</span>
+                </div>
+                <div class="stat-row">
+                    <span>🌍 15+ Languages Supported</span>
+                    <span>🎨 Award-winning Creative Team</span>
+                </div>
+            </div>
+            <div class="portfolio-features">
+                <h4>What Makes Us Different:</h4>
+                <ul>
+                    <li>🇷🇼 Deep understanding of Rwandan culture and values</li>
+                    <li>🌟 International quality standards with local insight</li>
+                    <li>⚡ Fast turnaround times with 24/7 support</li>
+                    <li>💡 Innovative approaches using latest technology</li>
+                </ul>
+            </div>
+            <button onclick="contactSales('${portfolioType}')" class="contact-btn">Start Your Project</button>
+        </div>
+    `;
+    toolModal.style.display = 'block';
+}
+
+
+// Contact Sales Function
+function contactSales(service) {
+    const contactModal = `
+        <div class="contact-modal">
+            <h3>Contact KaiTech Rwanda</h3>
+            <p>Thank you for your interest in our <strong>${service}</strong> services!</p>
+            
+            <div class="contact-info">
+                <div class="contact-detail">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Kigali, Rwanda - East Africa's Tech Hub</span>
+                </div>
+                <div class="contact-detail">
+                    <i class="fas fa-phone"></i>
+                    <span>+250 XXX XXX XXX</span>
+                </div>
+                <div class="contact-detail">
+                    <i class="fas fa-envelope"></i>
+                    <span>info@kaitech.rw</span>
+                </div>
+                <div class="contact-detail">
+                    <i class="fas fa-globe"></i>
+                    <span>www.kaitech.rw</span>
+                </div>
+            </div>
+            
+            <div class="contact-form-placeholder">
+                <p><strong>"Voice of Time" - We deliver timely solutions!</strong></p>
+                <p>Our team will contact you within 24 hours to discuss your ${service} requirements.</p>
+                
+                <div class="next-steps">
+                    <h4>What happens next:</h4>
+                    <ol>
+                        <li>📞 Initial consultation call</li>
+                        <li>📋 Requirements analysis</li>
+                        <li>💡 Customized proposal</li>
+                        <li>🚀 Project kickoff</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <button onclick="closeModal()" class="contact-btn">Close</button>
+        </div>
+    `;
+    
+    modalTitle.textContent = 'Contact KaiTech Rwanda';
+    modalBody.innerHTML = contactModal;
+    toolModal.style.display = 'block';
+}
+
+// Enhanced Breaking News for Rwanda Context
+function updateRwandaBreakingNews() {
+    const rwandaNews = [
+        'Voice of Time: KaiTech Rwanda expands AI services across East Africa',
+        'Breaking: Rwanda Tech Hub attracts major international cloud investments', 
+        'KaiTech Intelligence: 98.7% accuracy in real-time global news analysis',
+        'Live: Rwanda leads Africa in sustainable technology infrastructure',
+        'Breaking: KaiTech media wins award for innovative digital content',
+        'Voice of Time: Rwanda Vision 2050 accelerated by KaiTech solutions'
+    ];
+    
+    let newsIndex = 0;
+    setInterval(() => {
+        if (breakingNewsText) {
+            breakingNewsText.textContent = rwandaNews[newsIndex];
+            newsIndex = (newsIndex + 1) % rwandaNews.length;
+        }
+    }, 8000);
+}
+
+// Initialize Rwanda-specific features
+function initializeRwandaFeatures() {
+    updateRwandaBreakingNews();
+    console.log('KaiTech Rwanda features initialized - Voice of Time activated!');
+}
+
+// Enhanced initialization
+const originalInitialize = initializeApp;
+initializeApp = function() {
+    originalInitialize();
+    initializeRwandaFeatures();
+};
+
+// Export new Rwanda service functions
+window.openCloudService = openCloudService;
+window.showMediaPortfolio = showMediaPortfolio;
+window.contactSales = contactSales;
+
+// Export existing news functions
 window.loadMoreNews = loadMoreNews;
 window.shareNews = shareNews;
 window.bookmarkNews = bookmarkNews;

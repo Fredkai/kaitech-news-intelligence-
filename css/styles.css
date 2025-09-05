@@ -5,11 +5,26 @@
     box-sizing: border-box;
 }
 
+:root {
+    /* Rwanda-inspired color palette */
+    --primary-blue: #1e40af;
+    --secondary-blue: #3b82f6;
+    --rwanda-green: #00a651;
+    --rwanda-gold: #ffd700;
+    --accent-orange: #ff6b35;
+    --tech-purple: #6366f1;
+    --dark-text: #1f2937;
+    --light-text: #6b7280;
+    --white: #ffffff;
+    --light-gray: #f8fafc;
+    --border-gray: #e5e7eb;
+}
+
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     line-height: 1.6;
-    color: #333;
-    background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+    color: var(--dark-text);
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--secondary-blue) 100%);
     min-height: 100vh;
 }
 
@@ -68,11 +83,25 @@ body {
 .hero {
     height: 100vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
     color: white;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, var(--rwanda-green) 0%, var(--primary-blue) 50%, var(--tech-purple) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23ffffff" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+    opacity: 0.3;
 }
 
 .hero-content h1 {
@@ -108,6 +137,43 @@ body {
 .cta-button:hover {
     transform: translateY(-3px);
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 2rem;
+}
+
+.cta-button.tertiary {
+    background: linear-gradient(45deg, var(--rwanda-gold), var(--accent-orange));
+}
+
+.hero-stats {
+    display: flex;
+    gap: 3rem;
+    margin-top: 3rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.stat {
+    text-align: center;
+    color: white;
+}
+
+.stat-number {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    opacity: 0.8;
 }
 
 /* Section Styles */
@@ -504,17 +570,442 @@ html {
     background: #555;
 }
 
+/* ====== NEW KAITECH RWANDA STYLES ====== */
+
+/* Cloud Services Section */
+.cloud-section {
+    background: var(--white);
+    padding: 5rem 0;
+}
+
+.cloud-hero {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.cloud-hero p {
+    font-size: 1.2rem;
+    color: var(--light-text);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.cloud-services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 4rem;
+}
+
+.service-card {
+    background: var(--white);
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    border-color: var(--rwanda-green);
+}
+
+.service-card.premium {
+    position: relative;
+    overflow: hidden;
+}
+
+.service-card.premium::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--rwanda-green) 0%, var(--primary-blue) 50%, var(--tech-purple) 100%);
+}
+
+.service-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, var(--rwanda-green) 0%, var(--primary-blue) 100%);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.service-features {
+    list-style: none;
+    margin: 1.5rem 0;
+}
+
+.service-features li {
+    padding: 0.5rem 0;
+    position: relative;
+    padding-left: 1.5rem;
+}
+
+.service-features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--rwanda-green);
+    font-weight: bold;
+}
+
+.service-btn {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--tech-purple) 100%);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    width: 100%;
+}
+
+.service-btn:hover {
+    transform: translateY(-2px);
+}
+
+.rwanda-advantage {
+    background: linear-gradient(135deg, var(--light-gray) 0%, #e0f2fe 100%);
+    padding: 3rem;
+    border-radius: 20px;
+    text-align: center;
+}
+
+.advantage-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.advantage-item {
+    text-align: center;
+}
+
+.advantage-item i {
+    font-size: 2rem;
+    color: var(--rwanda-green);
+    margin-bottom: 1rem;
+}
+
+/* Media & Design Section */
+.media-section {
+    background: linear-gradient(135deg, var(--light-gray) 0%, #f0f9ff 100%);
+    padding: 5rem 0;
+}
+
+.media-hero {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.media-hero p {
+    font-size: 1.2rem;
+    color: var(--light-text);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.media-category {
+    margin-bottom: 3rem;
+}
+
+.media-category h3 {
+    text-align: center;
+    color: var(--dark-text);
+    margin-bottom: 2rem;
+    font-size: 1.8rem;
+}
+
+.media-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.media-card {
+    background: var(--white);
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.media-card:hover {
+    transform: translateY(-5px);
+}
+
+.media-preview {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--accent-orange) 0%, var(--rwanda-gold) 100());
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    color: white;
+    font-size: 2rem;
+}
+
+.media-btn {
+    background: linear-gradient(135deg, var(--accent-orange) 0%, var(--rwanda-gold) 100%);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    margin-top: 1rem;
+}
+
+.media-btn:hover {
+    transform: translateY(-2px);
+}
+
+
+
+/* Enhanced Footer */
+.footer {
+    background: linear-gradient(135deg, var(--dark-text) 0%, #374151 100%);
+    color: var(--white);
+    padding: 3rem 0 1rem;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.footer-brand h3 {
+    color: var(--rwanda-green);
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.footer-slogan {
+    color: var(--rwanda-gold);
+    font-style: italic;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+}
+
+.footer-services ul {
+    list-style: none;
+}
+
+.footer-services li {
+    padding: 0.3rem 0;
+    color: #d1d5db;
+}
+
+.footer-contact p {
+    color: #d1d5db;
+    margin-bottom: 0.5rem;
+}
+
+.footer-contact i {
+    color: var(--rwanda-green);
+    margin-right: 0.5rem;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid #4b5563;
+    color: #9ca3af;
+}
+
+/* New Animations */
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.7; }
+}
+
+
+/* Modal Enhancements for New Services */
+.service-modal, .portfolio-modal, .ai-tool-modal, .contact-modal {
+    padding: 1rem;
+}
+
+.service-modal h3, .portfolio-modal h3, .ai-tool-modal h3 {
+    color: var(--rwanda-green);
+    margin-bottom: 1rem;
+    border-bottom: 2px solid var(--rwanda-green);
+    padding-bottom: 0.5rem;
+}
+
+.rwanda-advantage-mini ul, .portfolio-features ul, .ai-capabilities ul {
+    list-style: none;
+    margin: 1rem 0;
+}
+
+.rwanda-advantage-mini li, .portfolio-features li, .ai-capabilities li {
+    padding: 0.5rem 0;
+    border-left: 3px solid var(--rwanda-green);
+    padding-left: 1rem;
+    margin-bottom: 0.5rem;
+    background: var(--light-gray);
+}
+
+.creative-stats {
+    background: linear-gradient(135deg, var(--light-gray), #e0f7fa);
+    padding: 1rem;
+    border-radius: 10px;
+    margin: 1rem 0;
+}
+
+.stat-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.stat-row span {
+    font-size: 0.9rem;
+    color: var(--dark-text);
+}
+
+.ai-demo-area {
+    background: var(--light-gray);
+    border-radius: 10px;
+    padding: 1rem;
+    margin: 1rem 0;
+    text-align: center;
+}
+
+.sentiment-demo, .network-demo, .pipeline-demo {
+    font-size: 1.1rem;
+    color: var(--primary-blue);
+    font-weight: 600;
+}
+
+.sentiment-bar {
+    background: linear-gradient(90deg, var(--rwanda-green), var(--primary-blue));
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+.contact-btn {
+    background: linear-gradient(135deg, var(--rwanda-green) 0%, var(--primary-blue) 100%);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.contact-btn:hover {
+    transform: translateY(-2px);
+}
+
+.contact-info {
+    background: var(--light-gray);
+    border-radius: 10px;
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+.contact-detail {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0;
+    color: var(--dark-text);
+}
+
+.contact-detail i {
+    color: var(--rwanda-green);
+    margin-right: 1rem;
+    width: 20px;
+}
+
+.contact-form-placeholder {
+    text-align: center;
+    padding: 1rem;
+    background: linear-gradient(135deg, #e8f5e8, #e6f3ff);
+    border-radius: 10px;
+    margin-top: 1rem;
+}
+
+.next-steps ol {
+    text-align: left;
+    max-width: 300px;
+    margin: 1rem auto;
+}
+
+.next-steps li {
+    padding: 0.3rem 0;
+    color: var(--dark-text);
+}
+
+/* Enhanced Responsive Design */
+@media (max-width: 768px) {
+    .cloud-services-grid,
+    .media-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .advantage-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .footer-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+    
+    .stat-row {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .contact-detail {
+        justify-content: center;
+    }
+}
+
 /* KaiTech News Specific Styles */
 
 /* Logo styling */
 .logo {
-    height: 40px;
+    height: 45px;
     width: auto;
-    transition: transform 0.3s ease;
+    max-width: 260px;
+    transition: all 0.3s ease;
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.12));
 }
 
 .logo:hover {
-    transform: scale(1.05);
+    transform: scale(1.02);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+}
+
+/* Enhanced nav brand */
+.nav-brand {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
 }
 
 /* Breaking News Bar */
