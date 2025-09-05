@@ -1,11 +1,12 @@
 version: '3.8'
 
 services:
-  # Frontend Web Application
+  # Frontend Web Application with SSL
   web:
     build: .
     ports:
-      - "80:80"
+      - "80:80"   # HTTP (redirects to HTTPS)
+      - "443:443" # HTTPS
     depends_on:
       - news-api
       - redis
@@ -15,6 +16,8 @@ services:
     restart: unless-stopped
     environment:
       - NODE_ENV=production
+    volumes:
+      - ./ssl:/etc/nginx/ssl:ro  # Mount SSL certificates
 
   # News API Service for Real-time Breaking News
   news-api:
@@ -92,13 +95,15 @@ services:
       - postgres_data:/var/lib/postgresql/data
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
 
-  # Load Balancer (for scaling)
+  # Load Balancer with SSL Support (for scaling)
   nginx-lb:
     image: nginx:alpine
     ports:
-      - "8080:80"
+      - "8080:80"   # HTTP load balancer
+      - "8443:443"  # HTTPS load balancer
     volumes:
       - ./nginx-lb.conf:/etc/nginx/nginx.conf
+      - ./ssl:/etc/nginx/ssl:ro  # Mount SSL certificates
     depends_on:
       - web
     networks:

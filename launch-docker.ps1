@@ -52,9 +52,16 @@ try {
     exit 1
 }
 
+# Check and generate SSL certificates
+$sslDir = Join-Path $PSScriptRoot "ssl"
+if (!(Test-Path $sslDir) -or !(Test-Path (Join-Path $sslDir "kaitech-local.crt"))) {
+    Write-Host "Generating SSL certificates for HTTPS..." -ForegroundColor Yellow
+    & (Join-Path $PSScriptRoot "generate-ssl-certs.ps1")
+}
+
 # Change to project directory
 Set-Location $PSScriptRoot
-Write-Host "Building Docker services..." -ForegroundColor Yellow
+Write-Host "Building Docker services with SSL support..." -ForegroundColor Yellow
 
 # Build and start services
 docker compose build
@@ -63,12 +70,17 @@ if ($LASTEXITCODE -eq 0) {
     docker compose up -d
     
     if ($LASTEXITCODE -eq 0) {
-        Write-Host "Services started successfully!" -ForegroundColor Green
+        Write-Host "Services started successfully with HTTPS!" -ForegroundColor Green
         Write-Host ""
         Write-Host "Available endpoints:" -ForegroundColor Cyan
-        Write-Host "- News API: http://localhost/api/breaking-news"
-        Write-Host "- AI Analyzer: http://localhost:3003/insights"
-        Write-Host "- Trending: http://localhost:3003/trending"
+        Write-Host "🔒 Main Site: https://localhost" -ForegroundColor Green
+        Write-Host "📡 News API: https://localhost/api/breaking-news" -ForegroundColor White
+        Write-Host "🤖 AI Analyzer: http://localhost:3003/insights" -ForegroundColor White
+        Write-Host "📈 Trending: http://localhost:3003/trending" -ForegroundColor White
+        Write-Host "🔍 Load Balancer: https://localhost:8443" -ForegroundColor White
+        Write-Host "❤️ Health Check: https://localhost/health" -ForegroundColor White
+        Write-Host ""
+        Write-Host "⚠️  Note: Accept the self-signed certificate warning in your browser" -ForegroundColor Yellow
         Write-Host ""
         Write-Host "Service status:" -ForegroundColor Yellow
         docker compose ps

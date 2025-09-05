@@ -52,8 +52,17 @@ if ($dockerPath) {
             & $dockerPath ps > $null
             Write-Host "✅ Docker daemon is running!" -ForegroundColor Green
             
+            # Check and generate SSL certificates
+            $sslDir = Join-Path $PSScriptRoot "ssl"
+            if (!(Test-Path $sslDir) -or !(Test-Path (Join-Path $sslDir "kaitech-local.crt"))) {
+                Write-Host "`n🔒 SSL certificates not found. Generating them..." -ForegroundColor Yellow
+                & (Join-Path $PSScriptRoot "generate-ssl-certs.ps1")
+            } else {
+                Write-Host "`n🔒 SSL certificates found and ready!" -ForegroundColor Green
+            }
+            
             # Now start the services
-            Write-Host "`n🏗️ Building and starting Docker services..." -ForegroundColor Cyan
+            Write-Host "`n🏗️ Building and starting Docker services with SSL..." -ForegroundColor Cyan
             Write-Host "This may take a few minutes the first time..." -ForegroundColor Yellow
             
             # Change to project directory
@@ -68,11 +77,17 @@ if ($dockerPath) {
                 if ($LASTEXITCODE -eq 0) {
                     Write-Host "✅ Services started successfully!" -ForegroundColor Green
                     
-                    Write-Host "`n🌐 Services are now running:" -ForegroundColor Cyan
-                    Write-Host "├── News API: http://localhost/api/breaking-news" -ForegroundColor White
-                    Write-Host "├── AI Analyzer: http://localhost:3003/insights" -ForegroundColor White
-                    Write-Host "├── Trending Topics: http://localhost:3003/trending" -ForegroundColor White
-                    Write-Host "└── Service Health: http://localhost:3003/health" -ForegroundColor White
+                    Write-Host "`n🌐 Services are now running with HTTPS:" -ForegroundColor Cyan
+                    Write-Host "├── 🔒 Main Site: https://localhost" -ForegroundColor Green
+                    Write-Host "├── 🔐 HTTP Redirect: http://localhost (redirects to HTTPS)" -ForegroundColor Yellow
+                    Write-Host "├── 📡 News API: https://localhost/api/breaking-news" -ForegroundColor White
+                    Write-Host "├── 🤖 AI Analyzer: http://localhost:3003/insights" -ForegroundColor White
+                    Write-Host "├── 📈 Trending Topics: http://localhost:3003/trending" -ForegroundColor White
+                    Write-Host "├── 🔍 Load Balancer: https://localhost:8443" -ForegroundColor White
+                    Write-Host "└── ❤️ Service Health: https://localhost/health" -ForegroundColor White
+                    Write-Host ""
+                    Write-Host "⚠️  Note: You may need to accept the self-signed certificate warning in your browser." -ForegroundColor Yellow
+                    Write-Host "🔒 For trusted SSL: Import ssl/kaitech-local.crt into your browser's trusted certificates" -ForegroundColor Cyan
                     
                     Write-Host "`n📊 Checking service status..." -ForegroundColor Yellow
                     & $dockerPath compose ps
