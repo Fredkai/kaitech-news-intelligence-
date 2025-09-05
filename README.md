@@ -1,6 +1,10 @@
-# AI-Powered Website Project
+# KaiTech - Voice of Time
 
-A modern, responsive website showcasing various AI features and tools. This project demonstrates how to integrate AI capabilities into web applications with a beautiful, user-friendly interface.
+> **"Transforming businesses with enterprise cloud solutions, and creative technology"**
+
+## 🌐 Live Website
+
+**🚀 Visit Live Site**: [https://fredkai.github.io/kaitech-news-intelligence-/](https://fredkai.github.io/kaitech-news-intelligence-/)
 
 ## 🚀 Features
 
