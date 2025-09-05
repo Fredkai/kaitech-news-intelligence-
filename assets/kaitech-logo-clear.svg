@@ -1,0 +1,74 @@
+<svg width="120" height="120" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Crystal clear gradients -->
+    <linearGradient id="primaryGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#a855f7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#9333ea;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="techGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#06d6a0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#048c5a;stop-opacity:1" />
+    </linearGradient>
+    
+    <radialGradient id="glowEffect" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:rgba(139, 92, 246, 0.3);stop-opacity:1" />
+      <stop offset="100%" style="stop-color:rgba(139, 92, 246, 0);stop-opacity:0" />
+    </radialGradient>
+    
+    <filter id="dropShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="2" dy="3" stdDeviation="4" flood-color="rgba(0,0,0,0.25)"/>
+    </filter>
+  </defs>
+  
+  <!-- Outer glow ring -->
+  <circle cx="60" cy="60" r="56" fill="url(#glowEffect)" opacity="0.6"/>
+  
+  <!-- Main background circle with shadow -->
+  <circle cx="60" cy="60" r="50" fill="url(#primaryGrad)" stroke="url(#accentGrad)" stroke-width="3" filter="url(#dropShadow)"/>
+  
+  <!-- Tech circuit pattern background -->
+  <g opacity="0.25" stroke-width="1.5" fill="none">
+    <path d="M25 35 L35 35 L35 25 M85 35 L95 35 L95 25" stroke="url(#techGrad)"/>
+    <path d="M25 85 L35 85 L35 95 M85 85 L95 85 L95 95" stroke="url(#techGrad)"/>
+    <circle cx="35" cy="35" r="2" fill="url(#techGrad)"/>
+    <circle cx="85" cy="35" r="2" fill="url(#techGrad)"/>
+    <circle cx="35" cy="85" r="2" fill="url(#techGrad)"/>
+    <circle cx="85" cy="85" r="2" fill="url(#techGrad)"/>
+  </g>
+  
+  <!-- Central K letter design - very clear and bold -->
+  <g transform="translate(60, 60)">
+    <!-- White outline for clarity -->
+    <path d="M-18 -25 L-18 25 M-18 -8 L15 -25 M-18 3 L15 25" 
+          stroke="#ffffff" stroke-width="8" stroke-linecap="round" 
+          stroke-linejoin="round" fill="none" opacity="0.9"/>
+    <!-- Main K letter -->
+    <path d="M-18 -25 L-18 25 M-18 -8 L15 -25 M-18 3 L15 25" 
+          stroke="url(#accentGrad)" stroke-width="5" stroke-linecap="round" 
+          stroke-linejoin="round" fill="none"/>
+  </g>
+  
+  <!-- Tech accent elements for modern look -->
+  <g opacity="0.8">
+    <!-- Corner tech indicators -->
+    <rect x="30" y="30" width="10" height="2" fill="url(#techGrad)" rx="1"/>
+    <rect x="80" y="30" width="10" height="2" fill="url(#techGrad)" rx="1"/>
+    <rect x="30" y="88" width="10" height="2" fill="url(#techGrad)" rx="1"/>
+    <rect x="80" y="88" width="10" height="2" fill="url(#techGrad)" rx="1"/>
+    
+    <!-- Central data flow line -->
+    <path d="M35 60 Q50 55 60 60 Q70 65 85 60" stroke="url(#techGrad)" stroke-width="2" fill="none" opacity="0.7"/>
+  </g>
+  
+  <!-- Highlight dots for premium tech effect -->
+  <circle cx="40" cy="40" r="1.5" fill="#ffffff" opacity="0.9"/>
+  <circle cx="80" cy="80" r="1.5" fill="#ffffff" opacity="0.9"/>
+  <circle cx="80" cy="40" r="1" fill="#ffffff" opacity="0.7"/>
+  <circle cx="40" cy="80" r="1" fill="#ffffff" opacity="0.7"/>
+</svg>

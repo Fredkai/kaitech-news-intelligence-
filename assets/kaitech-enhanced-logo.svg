@@ -1,0 +1,166 @@
+<svg width="280" height="80" viewBox="0 0 280 80" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Enhanced Professional Gradients -->
+    <linearGradient id="primaryBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a237e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#283593;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="accentPurple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4a148c;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6a1b9a;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="techGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="newsOrange" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#f59e0b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d97706;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Enhanced Professional Shadow -->
+    <filter id="modernShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="2" dy="3" stdDeviation="4" flood-opacity="0.25"/>
+    </filter>
+    
+    <!-- Glow Effect -->
+    <filter id="glowEffect" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Enhanced Tech Lion Symbol -->
+  <g transform="translate(40, 40)" filter="url(#modernShadow)">
+    <!-- Main lion head with enhanced design -->
+    <circle cx="0" cy="-2" r="20" fill="url(#primaryBlue)" opacity="0.95"/>
+    
+    <!-- Enhanced tech mane representing AI networks -->
+    <g stroke="url(#techGreen)" stroke-width="2" fill="none" opacity="0.8">
+      <circle cx="-14" cy="-14" r="4.5"/>
+      <circle cx="14" cy="-14" r="4.5"/>
+      <circle cx="-16" cy="2" r="3.5"/>
+      <circle cx="16" cy="2" r="3.5"/>
+      <circle cx="0" cy="-20" r="3.5"/>
+      <!-- Connection lines representing data flow -->
+      <path d="M -14 -14 Q 0 -18 14 -14" stroke-width="1.5"/>
+      <path d="M -16 2 Q 0 -2 16 2" stroke-width="1.5"/>
+    </g>
+    
+    <!-- Enhanced lion face -->
+    <ellipse cx="0" cy="-2" rx="14" ry="12" fill="url(#accentPurple)" opacity="0.9"/>
+    
+    <!-- AI-enhanced eyes with data processing -->
+    <g>
+      <circle cx="-5" cy="-7" r="2.5" fill="url(#techGreen)"/>
+      <circle cx="5" cy="-7" r="2.5" fill="url(#techGreen)"/>
+      <circle cx="-5" cy="-7" r="1.5" fill="white"/>
+      <circle cx="5" cy="-7" r="1.5" fill="white"/>
+      <!-- Pupil with tech element -->
+      <circle cx="-5" cy="-7" r="0.5" fill="url(#primaryBlue)"/>
+      <circle cx="5" cy="-7" r="0.5" fill="url(#primaryBlue)"/>
+    </g>
+    
+    <!-- Enhanced digital sensor/nose -->
+    <rect x="-1.5" y="-1" width="3" height="4" fill="white" rx="1.5"/>
+    <rect x="-1" y="0" width="2" height="2" fill="url(#newsOrange)" rx="1"/>
+    
+    <!-- Enhanced circuit whiskers -->
+    <g stroke="white" stroke-width="1.5" opacity="0.9">
+      <line x1="-9" y1="-3" x2="-14" y2="-2"/>
+      <line x1="-9" y1="1" x2="-14" y2="2"/>
+      <line x1="9" y1="-3" x2="14" y2="-2"/>
+      <line x1="9" y1="1" x2="14" y2="2"/>
+      <!-- Additional tech details -->
+      <circle cx="-14" cy="-2" r="1" fill="white"/>
+      <circle cx="-14" cy="2" r="1" fill="white"/>
+      <circle cx="14" cy="-2" r="1" fill="white"/>
+      <circle cx="14" cy="2" r="1" fill="white"/>
+    </g>
+    
+    <!-- Enhanced tech connection points -->
+    <g fill="white" opacity="1">
+      <circle cx="-12" cy="-10" r="1.5"/>
+      <circle cx="12" cy="-10" r="1.5"/>
+      <circle cx="-10" cy="10" r="1.5"/>
+      <circle cx="10" cy="10" r="1.5"/>
+    </g>
+    
+    <!-- Business service indicators -->
+    <g opacity="0.7">
+      <!-- News/AI indicator -->
+      <rect x="-18" y="-8" width="3" height="1" fill="url(#newsOrange)" rx="0.5"/>
+      <!-- Cloud indicator -->
+      <rect x="15" y="-8" width="3" height="1" fill="url(#primaryBlue)" rx="0.5"/>
+      <!-- Creative indicator -->
+      <rect x="-18" y="6" width="3" height="1" fill="url(#accentPurple)" rx="0.5"/>
+      <!-- Integration indicator -->
+      <rect x="15" y="6" width="3" height="1" fill="url(#techGreen)" rx="0.5"/>
+    </g>
+  </g>
+  
+  <!-- Enhanced Company Name -->
+  <g font-family="'Inter', 'Segoe UI', Arial, sans-serif" font-weight="bold">
+    <!-- KaiTech Text with enhanced styling -->
+    <text x="90" y="35" font-size="36" fill="url(#primaryBlue)" font-weight="800" letter-spacing="-1.5px">Kai</text>
+    <text x="148" y="35" font-size="36" fill="url(#accentPurple)" font-weight="800" letter-spacing="-1.5px">Tech</text>
+    
+    <!-- Enhanced Voice of Time tagline -->
+    <text x="90" y="52" font-size="16" fill="#64748b" font-weight="600" font-style="italic">"Voice of Time"</text>
+    
+    <!-- Business integration tagline -->
+    <text x="90" y="68" font-size="12" fill="#94a3b8" font-weight="500">AI Intelligence • Cloud Solutions • Creative Technology</text>
+  </g>
+  
+  <!-- Enhanced decorative elements -->
+  <g opacity="0.7">
+    <!-- Main connecting line -->
+    <line x1="88" y1="38" x2="265" y2="38" stroke="url(#primaryBlue)" stroke-width="1.5"/>
+    
+    <!-- Service integration elements -->
+    <g fill="url(#techGreen)" opacity="0.8">
+      <rect x="250" y="10" width="3" height="3" rx="1.5"/>
+      <rect x="255" y="13" width="3" height="3" rx="1.5"/>
+      <rect x="260" y="16" width="3" height="3" rx="1.5"/>
+    </g>
+    
+    <!-- Enhanced data visualization -->
+    <g stroke="url(#accentPurple)" stroke-width="1.5" fill="none" opacity="0.6">
+      <path d="M 235 18 L 242 12 L 248 15 L 255 9" stroke-linecap="round"/>
+      <circle cx="242" cy="12" r="1.5" fill="url(#accentPurple)"/>
+      <circle cx="248" cy="15" r="1.5" fill="url(#accentPurple)"/>
+      <circle cx="255" cy="9" r="1.5" fill="url(#accentPurple)"/>
+    </g>
+    
+    <!-- Business service indicators -->
+    <g opacity="0.6">
+      <!-- News AI indicator -->
+      <circle cx="225" cy="25" r="6" fill="url(#newsOrange)" opacity="0.3"/>
+      <rect x="222" y="22" width="6" height="6" fill="url(#newsOrange)" rx="1" opacity="0.8"/>
+      
+      <!-- Cloud indicator -->
+      <circle cx="245" cy="25" r="6" fill="url(#primaryBlue)" opacity="0.3"/>
+      <ellipse cx="245" cy="25" rx="4" ry="2.5" fill="url(#primaryBlue)" opacity="0.8"/>
+      <ellipse cx="243" cy="23" rx="2" ry="1.5" fill="url(#primaryBlue)" opacity="0.8"/>
+      <ellipse cx="247" cy="23" rx="2" ry="1.5" fill="url(#primaryBlue)" opacity="0.8"/>
+      
+      <!-- Creative indicator -->
+      <circle cx="265" cy="25" r="6" fill="url(#accentPurple)" opacity="0.3"/>
+      <path d="M 262 22 L 268 22 L 265 28 Z" fill="url(#accentPurple)" opacity="0.8"/>
+    </g>
+  </g>
+  
+  <!-- Professional accent line -->
+  <rect x="88" y="72" width="40" height="2" fill="url(#techGreen)" opacity="0.5" rx="1"/>
+  
+  <!-- Subtle integration connectors -->
+  <g opacity="0.3" stroke="url(#techGreen)" stroke-width="0.5">
+    <path d="M 225 33 Q 235 40 245 33 Q 255 40 265 33"/>
+  </g>
+</svg>

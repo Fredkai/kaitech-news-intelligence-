@@ -2,13 +2,13 @@
   <defs>
     <!-- Professional gradients -->
     <linearGradient id="primaryBlue" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#1e40af;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1" />
+      <stop offset="0%" style="stop-color:#1a237e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#283593;stop-opacity:1" />
     </linearGradient>
     
     <linearGradient id="accentBlue" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#3b82f6;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#6366f1;stop-opacity:1" />
+      <stop offset="0%" style="stop-color:#4a148c;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6a1b9a;stop-opacity:1" />
     </linearGradient>
     
     <linearGradient id="techGreen" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -22,36 +22,48 @@
     </filter>
   </defs>
   
-  <!-- Modern tech icon -->
+  <!-- Tech Lion Form -->
   <g transform="translate(35, 35)" filter="url(#modernShadow)">
-    <!-- Main hexagonal tech shape -->
-    <polygon points="-18,0 -9,-15 9,-15 18,0 9,15 -9,15" fill="url(#primaryBlue)" opacity="0.9"/>
+    <!-- Lion head shape with tech elements -->
+    <circle cx="0" cy="-2" r="18" fill="url(#primaryBlue)" opacity="0.9"/>
     
-    <!-- Inner tech core -->
-    <polygon points="-12,0 -6,-10 6,-10 12,0 6,10 -6,10" fill="url(#accentBlue)"/>
-    
-    <!-- Central processing unit -->
-    <rect x="-8" y="-8" width="16" height="16" fill="url(#techGreen)" rx="2" opacity="0.8"/>
-    
-    <!-- Circuit board elements -->
-    <g stroke="white" stroke-width="1" fill="none" opacity="0.9">
-      <circle cx="0" cy="0" r="4" stroke-width="1.5"/>
-      <line x1="-4" y1="0" x2="4" y2="0"/>
-      <line x1="0" y1="-4" x2="0" y2="4"/>
+    <!-- Lion mane as circuit pattern -->
+    <g stroke="url(#techGreen)" stroke-width="1.5" fill="none" opacity="0.7">
+      <circle cx="-12" cy="-12" r="4"/>
+      <circle cx="12" cy="-12" r="4"/>
+      <circle cx="-14" cy="2" r="3"/>
+      <circle cx="14" cy="2" r="3"/>
+      <circle cx="0" cy="-18" r="3"/>
     </g>
     
-    <!-- Tech connection nodes -->
-    <g fill="white" opacity="0.8">
-      <circle cx="-10" cy="-6" r="1.5"/>
-      <circle cx="10" cy="-6" r="1.5"/>
-      <circle cx="-10" cy="6" r="1.5"/>
-      <circle cx="10" cy="6" r="1.5"/>
+    <!-- Lion face with tech integration -->
+    <ellipse cx="0" cy="-2" rx="12" ry="10" fill="url(#accentBlue)" opacity="0.9"/>
+    
+    <!-- Tech-enhanced eyes -->
+    <g fill="url(#techGreen)">
+      <circle cx="-4" cy="-6" r="2"/>
+      <circle cx="4" cy="-6" r="2"/>
+      <circle cx="-4" cy="-6" r="1" fill="white"/>
+      <circle cx="4" cy="-6" r="1" fill="white"/>
     </g>
     
-    <!-- Data flow lines -->
-    <g stroke="url(#techGreen)" stroke-width="1" fill="none" opacity="0.6">
-      <path d="M -15 -8 Q -8 -12 0 -8 Q 8 -4 15 -8" stroke-dasharray="2,2"/>
-      <path d="M -15 8 Q -8 4 0 8 Q 8 12 15 8" stroke-dasharray="2,2"/>
+    <!-- Digital nose/sensor -->
+    <rect x="-1" y="0" width="2" height="3" fill="white" rx="1"/>
+    
+    <!-- Circuit whiskers -->
+    <g stroke="white" stroke-width="1" opacity="0.8">
+      <line x1="-8" y1="-2" x2="-12" y2="-1"/>
+      <line x1="-8" y1="1" x2="-12" y2="2"/>
+      <line x1="8" y1="-2" x2="12" y2="-1"/>
+      <line x1="8" y1="1" x2="12" y2="2"/>
+    </g>
+    
+    <!-- Tech connection points -->
+    <g fill="white" opacity="0.9">
+      <circle cx="-10" cy="-8" r="1"/>
+      <circle cx="10" cy="-8" r="1"/>
+      <circle cx="-8" cy="8" r="1"/>
+      <circle cx="8" cy="8" r="1"/>
     </g>
   </g>
   
@@ -62,10 +74,7 @@
     <text x="130" y="28" font-size="32" fill="url(#accentBlue)" font-weight="700" letter-spacing="-1px">Tech</text>
     
     <!-- Voice of Time tagline -->
-    <text x="80" y="45" font-size="12" fill="#6b7280" font-weight="500" font-style="italic">"Voice of Time"</text>
-    
-    <!-- Professional subtitle -->
-    <text x="80" y="58" font-size="9" fill="#9ca3af" font-weight="400" letter-spacing="0.5px">TECHNOLOGY SOLUTIONS • CLOUD • MEDIA</text>
+    <text x="80" y="45" font-size="14" fill="#6b7280" font-weight="600" font-style="italic">"Voice of Time"</text>
   </g>
   
   <!-- Modern decorative elements -->

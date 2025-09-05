@@ -3,31 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KaiTech Rwanda - Voice of Time | News, Cloud & Media Services</title>
+    <title>KaiTech - Voice of Time | World Headlines, Cloud Solutions & Creative Technology</title>
     <link rel="stylesheet" href="css/styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link rel="icon" type="image/svg+xml" href="assets/kaitech-favicon-new.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="assets/kaitech-enhanced-logo.svg">
+    <script src="js/tech-animations.js" defer></script>
 </head>
 <body>
+    <!-- Futuristic Background Elements -->
+    <div class="grid-background"></div>
+    <div class="floating-orbs">
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
+    </div>
+    
     <!-- Breaking News Bar -->
     <div id="breakingNewsBar" class="breaking-news-bar">
         <div class="breaking-news-content">
             <span class="breaking-label">BREAKING</span>
-            <span id="breakingNewsText">Voice of Time: Rwanda's tech hub delivers real-time global intelligence - KaiTech Rwanda</span>
+            <span id="breakingNewsText">🚀 Voice of Time: Transforming businesses with world headlines coverage, enterprise cloud solutions, and cutting-edge creative technology</span>
         </div>
     </div>
     
-    <header class="header">
+    <header class="header" id="mainHeader">
         <nav class="nav">
             <div class="nav-brand">
-                <img src="assets/kaitech-logo-new.svg" alt="KaiTech Rwanda - Voice of Time" class="logo">
+                <img src="assets/kaitech-professional-logo.svg" alt="KaiTech - Voice of Time" class="logo">
             </div>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
-                <li><a href="#news">News Platform</a></li>
+                <li><a href="#news">World Headlines</a></li>
                 <li><a href="#cloud">Cloud Services</a></li>
                 <li><a href="#media">Media & Design</a></li>
-                <li><a href="#about">About Rwanda</a></li>
             </ul>
         </nav>
     </header>
@@ -37,62 +46,1055 @@
         <section id="home" class="hero">
             <div class="hero-content">
                 <h1>Voice of Time</h1>
-                <h2 class="hero-subtitle">KaiTech Rwanda - Where Innovation Meets Excellence</h2>
-                <p>From Rwanda's tech hub to the world: Real-time news intelligence, cloud computing excellence, and cutting-edge media production services.</p>
+                <h2 class="hero-subtitle">KaiTech - Where Innovation Meets Excellence</h2>
+                <p>Professional technology solutions: Real-time world headlines coverage, cloud computing excellence, and cutting-edge media production services.</p>
                 <div class="hero-buttons">
-                    <button class="cta-button primary" onclick="scrollToSection('news')">
-                        <i class="fas fa-newspaper"></i> News Intelligence
+                    <button class="cta-button primary" onclick="launchWorldHeadlines()">
+                        <i class="fas fa-newspaper"></i> World Headlines
+                        <small>Explore Global News</small>
                     </button>
-                    <button class="cta-button secondary" onclick="scrollToSection('cloud')">
+                    <button class="cta-button secondary" onclick="launchCloudServices()">
                         <i class="fas fa-cloud"></i> Cloud Services
+                        <small>Enterprise Solutions</small>
                     </button>
-                    <button class="cta-button tertiary" onclick="scrollToSection('media')">
+                    <button class="cta-button tertiary" onclick="launchMediaDesign()">
                         <i class="fas fa-palette"></i> Media & Design
+                        <small>Creative Solutions</small>
                     </button>
                 </div>
             </div>
             <div class="hero-stats">
                 <div class="stat">
-                    <span class="stat-number" id="storiesAnalyzed">24,567</span>
-                    <span class="stat-label">Stories Analyzed Today</span>
+                    <span class="stat-number" id="serviceTypes">3</span>
+                    <span class="stat-label">Core Services</span>
                 </div>
                 <div class="stat">
-                    <span class="stat-number" id="countriesCovered">195</span>
-                    <span class="stat-label">Countries Covered</span>
+                    <span class="stat-number" id="designTypes">12+</span>
+                    <span class="stat-label">Design Capabilities</span>
                 </div>
                 <div class="stat">
-                    <span class="stat-number" id="liveUpdates">∞</span>
-                    <span class="stat-label">Live Updates</span>
+                    <span class="stat-number" id="supportHours">24/7</span>
+                    <span class="stat-label">Customer Support</span>
                 </div>
             </div>
         </section>
 
-        <!-- Live News Section -->
-        <section id="news" class="news-section">
+        <!-- Advanced News Explorer -->
+        <section id="news" class="news-explorer-section">
             <div class="container">
-                <h2><i class="fas fa-newspaper"></i> Live News Feed</h2>
-                <div class="news-filters">
-                    <button class="filter-btn active" data-category="all">All News</button>
-                    <button class="filter-btn" data-category="breaking">Breaking</button>
-                    <button class="filter-btn" data-category="politics">Politics</button>
-                    <button class="filter-btn" data-category="technology">Technology</button>
-                    <button class="filter-btn" data-category="business">Business</button>
-                    <button class="filter-btn" data-category="world">World</button>
+                <h2><i class="fas fa-globe"></i> World Headlines Platform</h2>
+                <p class="section-description">
+                    Stay informed with comprehensive world headlines coverage from trusted global sources. 
+                    Monitor breaking news, analyze global events, and stay ahead of trends that impact your industry 
+                    with real-time updates and intelligent news filtering.
+                </p>
+                <div class="news-dashboard">
+                    <!-- News Search & AI Assistant -->
+                    <div class="news-control-panel">
+                        <div class="search-container">
+                            <input type="text" id="newsSearch" placeholder="Ask me about any topic or search news..." class="news-search-input">
+                            <button class="search-btn" onclick="searchNews()"><i class="fas fa-search"></i></button>
+                            <button class="ai-assistant-btn" onclick="openAIAssistant()"><i class="fas fa-robot"></i> World News Assistant</button>
+                        </div>
+                        
+                        <div class="news-tabs">
+                            <div class="tab-container">
+                                <button class="news-tab active" data-tab="discover" onclick="switchNewsTab('discover')">🔍 Discover</button>
+                                <button class="news-tab" data-tab="trending" onclick="switchNewsTab('trending')">📈 Trending</button>
+                                <button class="news-tab" data-tab="markets" onclick="switchNewsTab('markets')">💹 Markets</button>
+                                <button class="news-tab" data-tab="personalized" onclick="switchNewsTab('personalized')">⭐ For You</button>
+                                <button class="news-tab" data-tab="analysis" onclick="switchNewsTab('analysis')">🧠 Analysis</button>
+                                <button class="news-tab" data-tab="live" onclick="switchNewsTab('live')">🔴 Live</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="news-grid" id="newsGrid">
-                    <!-- News articles will be loaded here -->
-                    <div class="news-card">
+                <!-- Dynamic News Content Areas -->
+                <div class="news-content-container">
+                    <!-- Discover Tab Content -->
+                    <div id="discover-content" class="news-tab-content active">
+                        <!-- Discovery Controls -->
+                        <div class="discovery-controls">
+                            <div class="discovery-header">
+                                <h3>🔍 News Discovery Hub</h3>
+                                <p>Explore comprehensive news coverage across all major categories and industries</p>
+                            </div>
+                            <div class="discovery-actions">
+                                <button class="discovery-btn active" onclick="showAllTopics()">
+                                    <i class="fas fa-th"></i> All Topics
+                                </button>
+                                <button class="discovery-btn" onclick="showDiscoveryApp()">
+                                    <i class="fas fa-rocket"></i> Discovery App
+                                </button>
+                                <button class="discovery-btn" onclick="showTrendingTopics()">
+                                    <i class="fas fa-fire"></i> Trending Now
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="news-topics-grid" id="newsTopicsGrid">
+                            <div class="topic-card" onclick="exploreNewsTopic('ai-technology')">
+                                <div class="topic-icon">🤖</div>
+                                <h3>AI & Technology</h3>
+                                <p>Latest in artificial intelligence, machine learning, and tech innovation</p>
+                                <span class="topic-count">247 articles</span>
+                            </div>
+                            <div class="topic-card" onclick="exploreNewsTopic('global-markets')">
+                                <div class="topic-icon">💹</div>
+                                <h3>Global Markets</h3>
+                                <p>Financial news, market trends, and economic developments</p>
+                                <span class="topic-count">189 articles</span>
+                            </div>
+                            <div class="topic-card" onclick="exploreNewsTopic('climate-tech')">
+                                <div class="topic-icon">🌱</div>
+                                <h3>Climate & Sustainability</h3>
+                                <p>Environmental technology and sustainable business practices</p>
+                                <span class="topic-count">156 articles</span>
+                            </div>
+                            <div class="topic-card" onclick="exploreNewsTopic('space-exploration')">
+                                <div class="topic-icon">🚀</div>
+                                <h3>Space & Exploration</h3>
+                                <p>Space missions, astronomical discoveries, and space technology</p>
+                                <span class="topic-count">98 articles</span>
+                            </div>
+                            <div class="topic-card" onclick="exploreNewsTopic('health-innovation')">
+                                <div class="topic-icon">🏥</div>
+                                <h3>Health Innovation</h3>
+                                <p>Medical breakthroughs, healthcare technology, and wellness trends</p>
+                                <span class="topic-count">134 articles</span>
+                            </div>
+                            <div class="topic-card" onclick="exploreNewsTopic('cybersecurity')">
+                                <div class="topic-icon">🛡️</div>
+                                <h3>Cybersecurity</h3>
+                                <p>Digital security, privacy, and cyber threat intelligence</p>
+                                <span class="topic-count">87 articles</span>
+                            </div>
+                            <div class="topic-card" onclick="exploreNewsTopic('gaming-esports')">
+                                <div class="topic-icon">🎮</div>
+                                <h3>Gaming & Esports</h3>
+                                <p>Gaming industry news, esports tournaments, and digital entertainment</p>
+                                <span class="topic-count">178 articles</span>
+                            </div>
+                            <div class="topic-card" onclick="exploreNewsTopic('religion-faith')">
+                                <div class="topic-icon">🙏</div>
+                                <h3>Religion & Faith</h3>
+                                <p>World religions, interfaith initiatives, and spiritual movements</p>
+                                <span class="topic-count">92 articles</span>
+                            </div>
+                            <div class="topic-card" onclick="exploreNewsTopic('politics-government')">
+                                <div class="topic-icon">🏛️</div>
+                                <h3>Politics & Government</h3>
+                                <p>Political developments, policy changes, and governance updates</p>
+                                <span class="topic-count">203 articles</span>
+                            </div>
+                            <div class="topic-card" onclick="exploreNewsTopic('entertainment-culture')">
+                                <div class="topic-icon">🎨</div>
+                                <h3>Entertainment & Culture</h3>
+                                <p>Movies, music, arts, and cultural developments worldwide</p>
+                                <span class="topic-count">145 articles</span>
+                            </div>
+                            <div class="topic-card" onclick="exploreNewsTopic('education-research')">
+                                <div class="topic-icon">🎓</div>
+                                <h3>Education & Research</h3>
+                                <p>Academic discoveries, educational innovation, and scientific research</p>
+                                <span class="topic-count">112 articles</span>
+                            </div>
+                            <div class="topic-card" onclick="exploreNewsTopic('sports-fitness')">
+                                <div class="topic-icon">⚽</div>
+                                <h3>Sports & Fitness</h3>
+                                <p>Sports news, fitness trends, and athletic achievements</p>
+                                <span class="topic-count">167 articles</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Discovery App Container -->
+                        <div class="discovery-app-container" id="discoveryApp" style="display: none;">
+                            <!-- Discovery App will be loaded here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Trending Tab Content -->
+                    <div id="trending-content" class="news-tab-content">
+                        <div class="trending-dashboard">
+                            <!-- Trending Controls -->
+                            <div class="trending-controls">
+                                <div class="trending-filters">
+                                    <button class="trending-filter-btn active" onclick="filterTrendingNews('all')" data-filter="all">
+                                        <i class="fas fa-globe"></i> All News
+                                    </button>
+                                    <button class="trending-filter-btn" onclick="filterTrendingNews('breaking')" data-filter="breaking">
+                                        <i class="fas fa-bolt"></i> Breaking
+                                    </button>
+                                    <button class="trending-filter-btn" onclick="filterTrendingNews('world')" data-filter="world">
+                                        <i class="fas fa-earth-americas"></i> World
+                                    </button>
+                                    <button class="trending-filter-btn" onclick="filterTrendingNews('technology')" data-filter="technology">
+                                        <i class="fas fa-microchip"></i> Tech
+                                    </button>
+                                    <button class="trending-filter-btn" onclick="filterTrendingNews('politics')" data-filter="politics">
+                                        <i class="fas fa-landmark"></i> Politics
+                                    </button>
+                                    <button class="trending-filter-btn" onclick="filterTrendingNews('business')" data-filter="business">
+                                        <i class="fas fa-briefcase"></i> Business
+                                    </button>
+                                </div>
+                                <div class="trending-actions">
+                                    <button class="ai-summary-btn" onclick="generateAISummary()">
+                                        <i class="fas fa-brain"></i> AI News Summary
+                                    </button>
+                                    <button class="news-alerts-btn" onclick="openNewsAlerts()">
+                                        <i class="fas fa-bell"></i> News Alerts
+                                    </button>
+                                    <button class="refresh-news-btn" onclick="refreshTrendingNews()">
+                                        <i class="fas fa-sync-alt"></i> Refresh
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Live News Stats -->
+                            <div class="live-news-stats">
+                                <div class="news-stat">
+                                    <div class="stat-icon"><i class="fas fa-newspaper"></i></div>
+                                    <div class="stat-info">
+                                        <div class="stat-number" id="totalArticles">2,847</div>
+                                        <div class="stat-label">Articles Today</div>
+                                    </div>
+                                </div>
+                                <div class="news-stat">
+                                    <div class="stat-icon"><i class="fas fa-fire"></i></div>
+                                    <div class="stat-info">
+                                        <div class="stat-number" id="trendingStories">156</div>
+                                        <div class="stat-label">Trending Stories</div>
+                                    </div>
+                                </div>
+                                <div class="news-stat">
+                                    <div class="stat-icon"><i class="fas fa-globe"></i></div>
+                                    <div class="stat-info">
+                                        <div class="stat-number" id="globalSources">89</div>
+                                        <div class="stat-label">Global Sources</div>
+                                    </div>
+                                </div>
+                                <div class="news-stat">
+                                    <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                                    <div class="stat-info">
+                                        <div class="stat-number" id="lastUpdate">2m</div>
+                                        <div class="stat-label">Last Update</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- AI News Assistant Panel -->
+                            <div class="ai-news-assistant" id="aiNewsAssistant">
+                                <div class="ai-assistant-header">
+                                    <div class="ai-avatar">
+                                        <i class="fas fa-robot"></i>
+                                    </div>
+                                    <div class="ai-info">
+                                        <h4>Global News AI Assistant</h4>
+                                        <p>Ask me about any current event or get personalized news insights</p>
+                                    </div>
+                                    <button class="close-ai-assistant" onclick="closeAINewsAssistant()">&times;</button>
+                                </div>
+                                <div class="ai-chat-container">
+                                    <div class="ai-suggestions">
+                                        <div class="suggestion-chip" onclick="askAINews('What are the top 3 global news stories today?')">
+                                            Top Global Stories
+                                        </div>
+                                        <div class="suggestion-chip" onclick="askAINews('Summarize the latest technology news')">
+                                            Tech News Summary
+                                        </div>
+                                        <div class="suggestion-chip" onclick="askAINews('What major world events happened this week?')">
+                                            Weekly Highlights
+                                        </div>
+                                        <div class="suggestion-chip" onclick="askAINews('Show me breaking news analysis')">
+                                            Breaking News Analysis
+                                        </div>
+                                    </div>
+                                    <div class="ai-chat-messages" id="aiChatMessages">
+                                        <div class="ai-message">
+                                            <div class="message-avatar"><i class="fas fa-robot"></i></div>
+                                            <div class="message-content">
+                                                <p>Hello! I'm your AI news assistant. I can help you understand current events, provide news summaries, explain complex stories, and answer questions about global news. What would you like to know?</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ai-chat-input">
+                                        <input type="text" id="aiNewsInput" placeholder="Ask about any news topic or current event..." onkeypress="handleAINewsEnter(event)">
+                                        <button onclick="sendAINewsMessage()" class="send-ai-btn">
+                                            <i class="fas fa-paper-plane"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Trending News Content -->
+                            <div class="trending-stories">
+                                <div class="trending-header">
+                                    <h3>🔥 Top Current Global News</h3>
+                                    <div class="trending-header-actions">
+                                        <span class="update-time">Updated 2 minutes ago</span>
+                                        <button class="view-mode-btn" onclick="toggleViewMode()" id="viewModeBtn">
+                                            <i class="fas fa-th-list"></i> List View
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="trending-list" id="trendingNewsList">
+                                    <!-- Trending news will be loaded here dynamically -->
+                                </div>
+                                <div class="load-more-trending">
+                                    <button class="load-more-btn" onclick="loadMoreTrendingNews()">
+                                        <i class="fas fa-plus"></i> Load More Stories
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Financial Markets Tab Content -->
+                    <div id="markets-content" class="news-tab-content">
+                        <div class="financial-markets-dashboard">
+                            <div class="markets-header">
+                                <h3>💹 Financial Markets & Trading Hub</h3>
+                                <span class="update-time">Real-time data - Updated live</span>
+                            </div>
+                            
+                            <!-- Market Overview -->
+                            <div class="market-overview">
+                                <div class="market-indices">
+                                    <div class="index-card positive">
+                                        <div class="index-name">S&P 500</div>
+                                        <div class="index-value">4,567.89</div>
+                                        <div class="index-change">+24.56 (+0.54%)</div>
+                                    </div>
+                                    <div class="index-card positive">
+                                        <div class="index-name">NASDAQ</div>
+                                        <div class="index-value">14,235.67</div>
+                                        <div class="index-change">+89.34 (+0.63%)</div>
+                                    </div>
+                                    <div class="index-card negative">
+                                        <div class="index-name">Dow Jones</div>
+                                        <div class="index-value">33,876.12</div>
+                                        <div class="index-change">-45.23 (-0.13%)</div>
+                                    </div>
+                                    <div class="index-card positive">
+                                        <div class="index-name">FTSE 100</div>
+                                        <div class="index-value">7,489.56</div>
+                                        <div class="index-change">+32.18 (+0.43%)</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Cryptocurrency Section -->
+                            <div class="crypto-section">
+                                <div class="section-header">
+                                    <h4>₿ Cryptocurrency Markets</h4>
+                                    <button onclick="openCryptoTrader()" class="crypto-trade-btn">
+                                        <i class="fas fa-chart-line"></i> Open Crypto Trader
+                                    </button>
+                                </div>
+                                <div class="crypto-grid">
+                                    <div class="crypto-card btc">
+                                        <div class="crypto-header">
+                                            <div class="crypto-icon">₿</div>
+                                            <div class="crypto-info">
+                                                <div class="crypto-name">Bitcoin</div>
+                                                <div class="crypto-symbol">BTC/USD</div>
+                                            </div>
+                                        </div>
+                                        <div class="crypto-price">$43,567.89</div>
+                                        <div class="crypto-change positive">+$1,234.56 (+2.91%)</div>
+                                        <div class="crypto-24h">
+                                            <span class="metric">24h Vol: $28.5B</span>
+                                            <span class="metric">Mkt Cap: $854B</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="crypto-card eth">
+                                        <div class="crypto-header">
+                                            <div class="crypto-icon">Ξ</div>
+                                            <div class="crypto-info">
+                                                <div class="crypto-name">Ethereum</div>
+                                                <div class="crypto-symbol">ETH/USD</div>
+                                            </div>
+                                        </div>
+                                        <div class="crypto-price">$2,634.12</div>
+                                        <div class="crypto-change negative">-$45.78 (-1.71%)</div>
+                                        <div class="crypto-24h">
+                                            <span class="metric">24h Vol: $12.3B</span>
+                                            <span class="metric">Mkt Cap: $316B</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="crypto-card ada">
+                                        <div class="crypto-header">
+                                            <div class="crypto-icon">₳</div>
+                                            <div class="crypto-info">
+                                                <div class="crypto-name">Cardano</div>
+                                                <div class="crypto-symbol">ADA/USD</div>
+                                            </div>
+                                        </div>
+                                        <div class="crypto-price">$0.4567</div>
+                                        <div class="crypto-change positive">+$0.0234 (+5.41%)</div>
+                                        <div class="crypto-24h">
+                                            <span class="metric">24h Vol: $456M</span>
+                                            <span class="metric">Mkt Cap: $16.2B</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="crypto-card sol">
+                                        <div class="crypto-header">
+                                            <div class="crypto-icon">◎</div>
+                                            <div class="crypto-info">
+                                                <div class="crypto-name">Solana</div>
+                                                <div class="crypto-symbol">SOL/USD</div>
+                                            </div>
+                                        </div>
+                                        <div class="crypto-price">$98.76</div>
+                                        <div class="crypto-change positive">+$7.23 (+7.91%)</div>
+                                        <div class="crypto-24h">
+                                            <span class="metric">24h Vol: $2.1B</span>
+                                            <span class="metric">Mkt Cap: $42.8B</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Top Stocks Section -->
+                            <div class="stocks-section">
+                                <div class="section-header">
+                                    <h4>🏢 Top Company Stocks</h4>
+                                    <button onclick="openStockAnalyzer()" class="stock-analyzer-btn">
+                                        <i class="fas fa-search"></i> Stock Analyzer
+                                    </button>
+                                </div>
+                                <div class="stocks-grid">
+                                    <div class="stock-card aapl">
+                                        <div class="stock-header">
+                                            <div class="company-logo">🍎</div>
+                                            <div class="stock-info">
+                                                <div class="company-name">Apple Inc.</div>
+                                                <div class="stock-symbol">AAPL</div>
+                                            </div>
+                                        </div>
+                                        <div class="stock-price">$189.45</div>
+                                        <div class="stock-change positive">+$2.34 (+1.25%)</div>
+                                        <div class="stock-details">
+                                            <span class="detail">P/E: 28.4</span>
+                                            <span class="detail">Mkt Cap: $2.96T</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="stock-card tsla">
+                                        <div class="stock-header">
+                                            <div class="company-logo">⚡</div>
+                                            <div class="stock-info">
+                                                <div class="company-name">Tesla Inc.</div>
+                                                <div class="stock-symbol">TSLA</div>
+                                            </div>
+                                        </div>
+                                        <div class="stock-price">$243.67</div>
+                                        <div class="stock-change negative">-$8.23 (-3.27%)</div>
+                                        <div class="stock-details">
+                                            <span class="detail">P/E: 67.8</span>
+                                            <span class="detail">Mkt Cap: $773B</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="stock-card googl">
+                                        <div class="stock-header">
+                                            <div class="company-logo">🅶</div>
+                                            <div class="stock-info">
+                                                <div class="company-name">Alphabet Inc.</div>
+                                                <div class="stock-symbol">GOOGL</div>
+                                            </div>
+                                        </div>
+                                        <div class="stock-price">$138.92</div>
+                                        <div class="stock-change positive">+$4.56 (+3.39%)</div>
+                                        <div class="stock-details">
+                                            <span class="detail">P/E: 24.1</span>
+                                            <span class="detail">Mkt Cap: $1.71T</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="stock-card msft">
+                                        <div class="stock-header">
+                                            <div class="company-logo">🕸️</div>
+                                            <div class="stock-info">
+                                                <div class="company-name">Microsoft Corp.</div>
+                                                <div class="stock-symbol">MSFT</div>
+                                            </div>
+                                        </div>
+                                        <div class="stock-price">$378.12</div>
+                                        <div class="stock-change positive">+$6.78 (+1.83%)</div>
+                                        <div class="stock-details">
+                                            <span class="detail">P/E: 32.5</span>
+                                            <span class="detail">Mkt Cap: $2.81T</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="stock-card nvda">
+                                        <div class="stock-header">
+                                            <div class="company-logo">📹</div>
+                                            <div class="stock-info">
+                                                <div class="company-name">NVIDIA Corp.</div>
+                                                <div class="stock-symbol">NVDA</div>
+                                            </div>
+                                        </div>
+                                        <div class="stock-price">$467.89</div>
+                                        <div class="stock-change positive">+$23.45 (+5.28%)</div>
+                                        <div class="stock-details">
+                                            <span class="detail">P/E: 68.9</span>
+                                            <span class="detail">Mkt Cap: $1.15T</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="stock-card amzn">
+                                        <div class="stock-header">
+                                            <div class="company-logo">📦</div>
+                                            <div class="stock-info">
+                                                <div class="company-name">Amazon.com Inc.</div>
+                                                <div class="stock-symbol">AMZN</div>
+                                            </div>
+                                        </div>
+                                        <div class="stock-price">$145.67</div>
+                                        <div class="stock-change positive">+$1.89 (+1.31%)</div>
+                                        <div class="stock-details">
+                                            <span class="detail">P/E: 45.2</span>
+                                            <span class="detail">Mkt Cap: $1.52T</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Trading Tools Section -->
+                            <div class="trading-tools-section">
+                                <div class="section-header">
+                                    <h4>🛠️ Trading Tools & Analytics</h4>
+                                </div>
+                                <div class="tools-grid">
+                                    <div class="tool-card" onclick="openPortfolioTracker()">
+                                        <div class="tool-icon">💼</div>
+                                        <h5>Portfolio Tracker</h5>
+                                        <p>Track your investments and analyze performance</p>
+                                    </div>
+                                    <div class="tool-card" onclick="openMarketAnalyzer()">
+                                        <div class="tool-icon">📈</div>
+                                        <h5>Market Analyzer</h5>
+                                        <p>Advanced technical analysis and market insights</p>
+                                    </div>
+                                    <div class="tool-card" onclick="openRiskCalculator()">
+                                        <div class="tool-icon">⚖️</div>
+                                        <h5>Risk Calculator</h5>
+                                        <p>Calculate and manage investment risk profiles</p>
+                                    </div>
+                                    <div class="tool-card" onclick="openPriceAlerts()">
+                                        <div class="tool-icon">🔔</div>
+                                        <h5>Price Alerts</h5>
+                                        <p>Set custom alerts for price movements</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Other tab contents -->
+                    <div id="personalized-content" class="news-tab-content">
+                        <div class="personalized-feed" id="personalizedFeed">
+                            <h3>⭐ Personalized for You</h3>
+                            <p class="feed-description">Based on your reading preferences and interests</p>
+                            <!-- Personalized content will be loaded -->
+                        </div>
+                    </div>
+                    
+                    <div id="analysis-content" class="news-tab-content">
+                        <div class="world-news-analytics-dashboard">
+                            <!-- Analytics Header -->
+                            <div class="analytics-header">
+                                <h3>📋 World News Intelligence Center</h3>
+                                <p>Advanced AI-powered analysis and insights for global news patterns, trends, and impact</p>
+                                <div class="analytics-controls">
+                                    <button class="analytics-btn active" onclick="showOverview()">
+                                        <i class="fas fa-chart-pie"></i> Overview
+                                    </button>
+                                    <button class="analytics-btn" onclick="showSentimentAnalysis()">
+                                        <i class="fas fa-heart-pulse"></i> Sentiment
+                                    </button>
+                                    <button class="analytics-btn" onclick="showTrendAnalysis()">
+                                        <i class="fas fa-trending-up"></i> Trends
+                                    </button>
+                                    <button class="analytics-btn" onclick="showGlobalImpact()">
+                                        <i class="fas fa-globe-americas"></i> Impact
+                                    </button>
+                                    <button class="analytics-btn" onclick="showPredictiveAnalysis()">
+                                        <i class="fas fa-crystal-ball"></i> Predictions
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Real-time Analytics Stats -->
+                            <div class="analytics-stats-grid">
+                                <div class="analytics-stat-card">
+                                    <div class="stat-icon">📈</div>
+                                    <div class="stat-content">
+                                        <div class="stat-number" id="totalAnalyzed">2,847,392</div>
+                                        <div class="stat-label">Articles Analyzed</div>
+                                        <div class="stat-change positive">+15.2% today</div>
+                                    </div>
+                                </div>
+                                <div class="analytics-stat-card">
+                                    <div class="stat-icon">🌍</div>
+                                    <div class="stat-content">
+                                        <div class="stat-number" id="globalSources">1,247</div>
+                                        <div class="stat-label">Global Sources</div>
+                                        <div class="stat-change positive">+8 new today</div>
+                                    </div>
+                                </div>
+                                <div class="analytics-stat-card">
+                                    <div class="stat-icon">🧠</div>
+                                    <div class="stat-content">
+                                        <div class="stat-number" id="aiInsights">45,672</div>
+                                        <div class="stat-label">AI Insights Generated</div>
+                                        <div class="stat-change positive">+234 today</div>
+                                    </div>
+                                </div>
+                                <div class="analytics-stat-card">
+                                    <div class="stat-icon">⚡</div>
+                                    <div class="stat-content">
+                                        <div class="stat-number" id="accuracyRate">98.7%</div>
+                                        <div class="stat-label">Prediction Accuracy</div>
+                                        <div class="stat-change positive">+0.3% this week</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Analytics Content Container -->
+                            <div class="analytics-content-container" id="analyticsContent">
+                                <!-- Content will be loaded based on selected analysis type -->
+                            </div>
+                            
+                            <!-- World News Analysis Tools -->
+                            <div class="analysis-tools-section">
+                                <div class="tools-header">
+                                    <h4>🛠️ Professional Analysis Tools</h4>
+                                    <p>Industry-grade software for comprehensive news analysis and intelligence</p>
+                                </div>
+                                
+                                <div class="analysis-tools-grid">
+                                    <div class="analysis-tool-card" onclick="launchNewsIntelligence()">
+                                        <div class="tool-icon">🔍</div>
+                                        <h5>News Intelligence Suite</h5>
+                                        <p>Advanced search, filtering, and categorization across global news sources</p>
+                                        <div class="tool-features">
+                                            <span class="feature-tag">Real-time</span>
+                                            <span class="feature-tag">AI-Powered</span>
+                                        </div>
+                                        <button class="tool-launch-btn">Launch Tool</button>
+                                    </div>
+                                    
+                                    <div class="analysis-tool-card" onclick="launchSentimentTracker()">
+                                        <div class="tool-icon">📊</div>
+                                        <h5>Global Sentiment Tracker</h5>
+                                        <p>Track public sentiment and emotional responses to world events</p>
+                                        <div class="tool-features">
+                                            <span class="feature-tag">Multi-language</span>
+                                            <span class="feature-tag">Predictive</span>
+                                        </div>
+                                        <button class="tool-launch-btn">Launch Tool</button>
+                                    </div>
+                                    
+                                    <div class="analysis-tool-card" onclick="launchTrendPredictor()">
+                                        <div class="tool-icon">🔮</div>
+                                        <h5>News Trend Predictor</h5>
+                                        <p>Predict emerging stories and trending topics before they break</p>
+                                        <div class="tool-features">
+                                            <span class="feature-tag">Machine Learning</span>
+                                            <span class="feature-tag">Forecasting</span>
+                                        </div>
+                                        <button class="tool-launch-btn">Launch Tool</button>
+                                    </div>
+                                    
+                                    <div class="analysis-tool-card" onclick="launchImpactAnalyzer()">
+                                        <div class="tool-icon">🌐</div>
+                                        <h5>Global Impact Analyzer</h5>
+                                        <p>Measure how news events affect markets, politics, and society</p>
+                                        <div class="tool-features">
+                                            <span class="feature-tag">Cross-reference</span>
+                                            <span class="feature-tag">Analytics</span>
+                                        </div>
+                                        <button class="tool-launch-btn">Launch Tool</button>
+                                    </div>
+                                    
+                                    <div class="analysis-tool-card" onclick="launchBiasDetector()">
+                                        <div class="tool-icon">⚖️</div>
+                                        <h5>Media Bias Detector</h5>
+                                        <p>Identify editorial bias and source reliability across news outlets</p>
+                                        <div class="tool-features">
+                                            <span class="feature-tag">Objectivity</span>
+                                            <span class="feature-tag">Source Rating</span>
+                                        </div>
+                                        <button class="tool-launch-btn">Launch Tool</button>
+                                    </div>
+                                    
+                                    <div class="analysis-tool-card" onclick="launchFactChecker()">
+                                        <div class="tool-icon">✓</div>
+                                        <h5>AI Fact Checker</h5>
+                                        <p>Verify claims and statements in news articles with AI-powered fact-checking</p>
+                                        <div class="tool-features">
+                                            <span class="feature-tag">Verification</span>
+                                            <span class="feature-tag">Truth Score</span>
+                                        </div>
+                                        <button class="tool-launch-btn">Launch Tool</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Professional Analytics Software -->
+                            <div class="professional-software-section">
+                                <div class="software-header">
+                                    <h4>💻 Professional News Analysis Software</h4>
+                                    <p>Enterprise-grade tools used by news organizations, governments, and research institutions</p>
+                                </div>
+                                
+                                <div class="software-recommendations">
+                                    <div class="software-card premium">
+                                        <div class="software-icon">🚀</div>
+                                        <div class="software-info">
+                                            <h5>NewsAnalytica Pro</h5>
+                                            <p class="software-desc">Advanced news analysis platform with real-time monitoring and predictive capabilities</p>
+                                            <div class="software-features">
+                                                <span class="feature-tag premium">Real-time Analysis</span>
+                                                <span class="feature-tag premium">Global Coverage</span>
+                                                <span class="feature-tag premium">API Integration</span>
+                                                <span class="feature-tag premium">Custom Reports</span>
+                                            </div>
+                                            <div class="software-pricing">
+                                                <strong>Enterprise License:</strong> $299/month
+                                            </div>
+                                        </div>
+                                        <div class="software-actions">
+                                            <button class="demo-btn" onclick="startSoftwareDemo('newsanalytica')">
+                                                <i class="fas fa-play"></i> Start Demo
+                                            </button>
+                                            <button class="trial-btn" onclick="startFreeTrial('newsanalytica')">
+                                                <i class="fas fa-rocket"></i> Free Trial
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="software-card">
+                                        <div class="software-icon">📋</div>
+                                        <div class="software-info">
+                                            <h5>Global News Intelligence</h5>
+                                            <p class="software-desc">Comprehensive news monitoring and analysis for media professionals</p>
+                                            <div class="software-features">
+                                                <span class="feature-tag">Sentiment Analysis</span>
+                                                <span class="feature-tag">Trend Tracking</span>
+                                                <span class="feature-tag">Source Monitoring</span>
+                                                <span class="feature-tag">Alerts System</span>
+                                            </div>
+                                            <div class="software-pricing">
+                                                <strong>Professional:</strong> $149/month
+                                            </div>
+                                        </div>
+                                        <div class="software-actions">
+                                            <button class="demo-btn" onclick="startSoftwareDemo('gni')">
+                                                <i class="fas fa-play"></i> Start Demo
+                                            </button>
+                                            <button class="trial-btn" onclick="startFreeTrial('gni')">
+                                                <i class="fas fa-rocket"></i> Free Trial
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="software-card">
+                                        <div class="software-icon">🧠</div>
+                                        <div class="software-info">
+                                            <h5>AI News Predictor</h5>
+                                            <p class="software-desc">Machine learning platform for predicting news trends and emerging stories</p>
+                                            <div class="software-features">
+                                                <span class="feature-tag">ML Algorithms</span>
+                                                <span class="feature-tag">Predictive Models</span>
+                                                <span class="feature-tag">Risk Assessment</span>
+                                                <span class="feature-tag">Scenario Planning</span>
+                                            </div>
+                                            <div class="software-pricing">
+                                                <strong>Analytics:</strong> $199/month
+                                            </div>
+                                        </div>
+                                        <div class="software-actions">
+                                            <button class="demo-btn" onclick="startSoftwareDemo('aipredictor')">
+                                                <i class="fas fa-play"></i> Start Demo
+                                            </button>
+                                            <button class="trial-btn" onclick="startFreeTrial('aipredictor')">
+                                                <i class="fas fa-rocket"></i> Free Trial
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="live-content" class="news-tab-content">
+                        <div class="live-news-dashboard">
+                            <!-- Live News Header -->
+                            <div class="live-news-header">
+                                <h3>🔴 Live Breaking News & Updates</h3>
+                                <div class="live-status">
+                                    <div class="status-indicator pulse"></div>
+                                    <span>Live Updates Active</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Live News Stats -->
+                            <div class="live-news-stats-bar">
+                                <div class="live-stat">
+                                    <div class="stat-icon"><i class="fas fa-bolt"></i></div>
+                                    <div class="stat-info">
+                                        <div class="stat-number" id="breakingCount">12</div>
+                                        <div class="stat-label">Breaking Stories</div>
+                                    </div>
+                                </div>
+                                <div class="live-stat">
+                                    <div class="stat-icon"><i class="fas fa-globe"></i></div>
+                                    <div class="stat-info">
+                                        <div class="stat-number" id="liveUpdates">247</div>
+                                        <div class="stat-label">Live Updates Today</div>
+                                    </div>
+                                </div>
+                                <div class="live-stat">
+                                    <div class="stat-icon"><i class="fas fa-rss"></i></div>
+                                    <div class="stat-info">
+                                        <div class="stat-number" id="activeSources">89</div>
+                                        <div class="stat-label">Active News Sources</div>
+                                    </div>
+                                </div>
+                                <div class="live-stat">
+                                    <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                                    <div class="stat-info">
+                                        <div class="stat-number" id="lastUpdateLive">30s</div>
+                                        <div class="stat-label">Last Update</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Breaking News Ticker -->
+                            <div class="breaking-news-ticker">
+                                <div class="ticker-label">BREAKING</div>
+                                <div class="ticker-content" id="liveNewsTicker">
+                                    <span>🚨 Major AI breakthrough announced • 📈 Global markets surge on tech optimism • 🌍 International climate summit reaches historic agreement</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Live News Feed -->
+                            <div class="live-news-feed">
+                                <div class="feed-header">
+                                    <h4>📡 Real-Time News Feed</h4>
+                                    <div class="feed-controls">
+                                        <button class="refresh-live-btn" onclick="refreshLiveNews()">
+                                            <i class="fas fa-sync-alt"></i> Refresh
+                                        </button>
+                                        <button class="filter-live-btn" onclick="filterLiveNews()">
+                                            <i class="fas fa-filter"></i> Filter
+                                        </button>
+                                        <button class="auto-refresh-btn active" onclick="toggleAutoRefresh()">
+                                            <i class="fas fa-play"></i> Auto-Refresh
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="live-news-list" id="liveNewsList">
+                                    <!-- Live news items will be loaded here dynamically -->
+                                </div>
+                            </div>
+                            
+                            <!-- Emergency Alerts Section -->
+                            <div class="emergency-alerts" id="emergencyAlerts" style="display: none;">
+                                <div class="alert-header">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                    <h4>Emergency Alert</h4>
+                                </div>
+                                <div class="alert-content" id="emergencyAlertContent">
+                                    <!-- Emergency alerts will appear here -->
+                                </div>
+                            </div>
+                            
+                            <!-- Live News Sources -->
+                            <div class="live-news-sources">
+                                <h4>📻 Active News Sources</h4>
+                                <div class="sources-grid">
+                                    <div class="source-card active">
+                                        <div class="source-icon">📺</div>
+                                        <div class="source-info">
+                                            <h5>Global News Network</h5>
+                                            <span class="source-status">🔴 Live</span>
+                                        </div>
+                                    </div>
+                                    <div class="source-card active">
+                                        <div class="source-icon">🌐</div>
+                                        <div class="source-info">
+                                            <h5>Reuters International</h5>
+                                            <span class="source-status">🔴 Live</span>
+                                        </div>
+                                    </div>
+                                    <div class="source-card active">
+                                        <div class="source-icon">📡</div>
+                                        <div class="source-info">
+                                            <h5>AP News Wire</h5>
+                                            <span class="source-status">🔴 Live</span>
+                                        </div>
+                                    </div>
+                                    <div class="source-card active">
+                                        <div class="source-icon">🎯</div>
+                                        <div class="source-info">
+                                            <h5>Breaking News Direct</h5>
+                                            <span class="source-status">🔴 Live</span>
+                                        </div>
+                                    </div>
+                                    <div class="source-card">
+                                        <div class="source-icon">📰</div>
+                                        <div class="source-info">
+                                            <h5>World News Feed</h5>
+                                            <span class="source-status">⚡ Standby</span>
+                                        </div>
+                                    </div>
+                                    <div class="source-card active">
+                                        <div class="source-icon">🏛️</div>
+                                        <div class="source-info">
+                                            <h5>Government Updates</h5>
+                                            <span class="source-status">🔴 Live</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Advanced Article Viewer Modal -->
+                <div id="articleViewer" class="article-modal">
+                    <div class="article-modal-content">
+                        <div class="article-header">
+                            <button class="close-article" onclick="closeArticleViewer()">&times;</button>
+                            <div class="article-actions">
+                                <button class="action-btn" onclick="shareArticle()"><i class="fas fa-share"></i> Share</button>
+                                <button class="action-btn" onclick="bookmarkArticle()"><i class="fas fa-bookmark"></i> Save</button>
+                                <button class="action-btn" onclick="summarizeArticle()"><i class="fas fa-robot"></i> AI Summary</button>
+                            </div>
+                        </div>
+                        <div class="article-body" id="articleBody">
+                            <!-- Article content will be loaded here -->
+                        </div>
+                        <div class="article-footer">
+                            <div class="related-articles">
+                                <h4>Related Articles</h4>
+                                <div id="relatedArticles" class="related-list">
+                                    <!-- Related articles will be loaded -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="news-grid" id="newsGrid" style="display: none;">
+                    <!-- Breaking News -->
+                    <div class="news-card" data-category="breaking">
                         <div class="news-header">
                             <span class="news-category breaking">BREAKING</span>
-                            <span class="news-time">2 min ago</span>
+                            <span class="news-time">15 min ago</span>
                         </div>
-                        <h3 class="news-title">Global Markets React to AI Technology Breakthrough</h3>
-                        <p class="news-excerpt">KaiTech AI analysis reveals significant market movements following latest artificial intelligence developments...</p>
+                        <h3 class="news-title">OpenAI Announces GPT-5 with Revolutionary Multimodal Capabilities</h3>
+                        <p class="news-excerpt">The latest iteration promises unprecedented reasoning abilities across text, images, video, and audio, marking a significant leap in artificial general intelligence development...</p>
                         <div class="news-footer">
-                            <span class="news-source">KaiTech Intelligence</span>
+                            <span class="news-source">AI Tech Today</span>
                             <div class="news-actions">
-                                <button class="action-btn"><i class="fas fa-share"></i></button>
-                                <button class="action-btn"><i class="fas fa-bookmark"></i></button>
+                                <button class="action-btn" onclick="shareNews('GPT-5 Announcement')"><i class="fas fa-share"></i></button>
+                                <button class="action-btn" onclick="bookmarkNews('GPT-5 Announcement')"><i class="fas fa-bookmark"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Technology News -->
+                    <div class="news-card" data-category="technology">
+                        <div class="news-header">
+                            <span class="news-category technology">TECHNOLOGY</span>
+                            <span class="news-time">1 hour ago</span>
+                        </div>
+                        <h3 class="news-title">Google DeepMind Achieves Breakthrough in AI Weather Prediction</h3>
+                        <p class="news-excerpt">New GraphCast model outperforms traditional weather forecasting by 10 days, using machine learning to predict global weather patterns with unprecedented accuracy...</p>
+                        <div class="news-footer">
+                            <span class="news-source">TechCrunch</span>
+                            <div class="news-actions">
+                                <button class="action-btn" onclick="shareNews('AI Weather Prediction')"><i class="fas fa-share"></i></button>
+                                <button class="action-btn" onclick="bookmarkNews('AI Weather Prediction')"><i class="fas fa-bookmark"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Business News -->
+                    <div class="news-card" data-category="business">
+                        <div class="news-header">
+                            <span class="news-category business">BUSINESS</span>
+                            <span class="news-time">2 hours ago</span>
+                        </div>
+                        <h3 class="news-title">Microsoft Invests $10B in AI Infrastructure Expansion</h3>
+                        <p class="news-excerpt">Tech giant announces massive investment in AI data centers and cloud computing infrastructure to support growing demand for artificial intelligence services worldwide...</p>
+                        <div class="news-footer">
+                            <span class="news-source">Reuters Business</span>
+                            <div class="news-actions">
+                                <button class="action-btn" onclick="shareNews('Microsoft AI Investment')"><i class="fas fa-share"></i></button>
+                                <button class="action-btn" onclick="bookmarkNews('Microsoft AI Investment')"><i class="fas fa-bookmark"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Politics News -->
+                    <div class="news-card" data-category="politics">
+                        <div class="news-header">
+                            <span class="news-category politics">POLITICS</span>
+                            <span class="news-time">3 hours ago</span>
+                        </div>
+                        <h3 class="news-title">EU Finalizes AI Regulation Act with Global Implications</h3>
+                        <p class="news-excerpt">European Union's comprehensive AI legislation sets new global standards for artificial intelligence governance, affecting tech companies worldwide with strict compliance requirements...</p>
+                        <div class="news-footer">
+                            <span class="news-source">EU Policy Watch</span>
+                            <div class="news-actions">
+                                <button class="action-btn" onclick="shareNews('EU AI Regulation')"><i class="fas fa-share"></i></button>
+                                <button class="action-btn" onclick="bookmarkNews('EU AI Regulation')"><i class="fas fa-bookmark"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- World News -->
+                    <div class="news-card" data-category="world">
+                        <div class="news-header">
+                            <span class="news-category world">WORLD</span>
+                            <span class="news-time">4 hours ago</span>
+                        </div>
+                        <h3 class="news-title">China Launches National AI Research Initiative</h3>
+                        <p class="news-excerpt">Beijing announces $50 billion investment in artificial intelligence research centers across major cities, aiming to achieve AI leadership by 2030 through massive public-private partnerships...</p>
+                        <div class="news-footer">
+                            <span class="news-source">Global AI Report</span>
+                            <div class="news-actions">
+                                <button class="action-btn" onclick="shareNews('China AI Initiative')"><i class="fas fa-share"></i></button>
+                                <button class="action-btn" onclick="bookmarkNews('China AI Initiative')"><i class="fas fa-bookmark"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Additional Breaking News -->
+                    <div class="news-card" data-category="breaking">
+                        <div class="news-header">
+                            <span class="news-category breaking">BREAKING</span>
+                            <span class="news-time">5 hours ago</span>
+                        </div>
+                        <h3 class="news-title">AI-Powered Drug Discovery Achieves FDA Approval</h3>
+                        <p class="news-excerpt">First medication developed entirely through artificial intelligence receives regulatory approval, revolutionizing pharmaceutical industry and reducing drug development time from decades to years...</p>
+                        <div class="news-footer">
+                            <span class="news-source">Medical AI News</span>
+                            <div class="news-actions">
+                                <button class="action-btn" onclick="shareNews('AI Drug Discovery')"><i class="fas fa-share"></i></button>
+                                <button class="action-btn" onclick="bookmarkNews('AI Drug Discovery')"><i class="fas fa-bookmark"></i></button>
                             </div>
                         </div>
                     </div>
@@ -104,262 +1106,68 @@
         </section>
 
         <!-- Cloud Services Section -->
-        <section id="cloud" class="cloud-section">
+        <section id="cloud" class="section">
             <div class="container">
-                <h2><i class="fas fa-cloud"></i> Cloud Computing Excellence</h2>
-                <div class="cloud-hero">
-                    <p>Leveraging Rwanda's advanced tech infrastructure to deliver world-class cloud solutions</p>
-                </div>
-                <div class="cloud-services-grid">
-                    <div class="service-card premium">
-                        <div class="service-icon">
+                <h2><i class="fas fa-cloud"></i> Cloud Services</h2>
+                <p>Reliable, scalable cloud solutions for your business needs</p>
+                <div class="tools-grid">
+                    <div class="tool-card">
+                        <div class="tool-icon">
                             <i class="fas fa-server"></i>
                         </div>
-                        <h3>Infrastructure as a Service (IaaS)</h3>
-                        <p>Scalable computing resources hosted in Rwanda's state-of-the-art data centers</p>
-                        <ul class="service-features">
-                            <li>99.9% uptime guarantee</li>
-                            <li>Auto-scaling capabilities</li>
-                            <li>24/7 technical support</li>
-                            <li>Local data sovereignty</li>
-                        </ul>
-                        <button class="service-btn" onclick="openCloudService('iaas')">Learn More</button>
+                        <h3>Infrastructure</h3>
+                        <p>Scalable computing resources with 99.9% uptime guarantee</p>
+                        <button class="tool-button" onclick="openCloudService('infrastructure')">Learn More</button>
                     </div>
-                    
-                    <div class="service-card premium">
-                        <div class="service-icon">
+                    <div class="tool-card">
+                        <div class="tool-icon">
                             <i class="fas fa-cogs"></i>
                         </div>
-                        <h3>Platform as a Service (PaaS)</h3>
-                        <p>Complete development and deployment platform for modern applications</p>
-                        <ul class="service-features">
-                            <li>Multiple programming languages</li>
-                            <li>Integrated CI/CD pipelines</li>
-                            <li>Database management</li>
-                            <li>API gateway services</li>
-                        </ul>
-                        <button class="service-btn" onclick="openCloudService('paas')">Learn More</button>
+                        <h3>Platform Services</h3>
+                        <p>Complete development and deployment platform</p>
+                        <button class="tool-button" onclick="openCloudService('platform')">Learn More</button>
                     </div>
-                    
-                    <div class="service-card premium">
-                        <div class="service-icon">
+                    <div class="tool-card">
+                        <div class="tool-icon">
                             <i class="fas fa-shield-alt"></i>
                         </div>
-                        <h3>Security & Compliance</h3>
-                        <p>Enterprise-grade security solutions meeting international standards</p>
-                        <ul class="service-features">
-                            <li>End-to-end encryption</li>
-                            <li>GDPR compliance</li>
-                            <li>Regular security audits</li>
-                            <li>Disaster recovery</li>
-                        </ul>
-                        <button class="service-btn" onclick="openCloudService('security')">Learn More</button>
-                    </div>
-                    
-                </div>
-                
-                <div class="rwanda-advantage">
-                    <h3><i class="fas fa-map-marker-alt"></i> Rwanda Tech Hub Advantage</h3>
-                    <div class="advantage-grid">
-                        <div class="advantage-item">
-                            <i class="fas fa-bolt"></i>
-                            <h4>High-Speed Connectivity</h4>
-                            <p>Fiber optic infrastructure across the country</p>
-                        </div>
-                        <div class="advantage-item">
-                            <i class="fas fa-leaf"></i>
-                            <h4>Green Energy</h4>
-                            <p>100% renewable energy powering our data centers</p>
-                        </div>
-                        <div class="advantage-item">
-                            <i class="fas fa-users"></i>
-                            <h4>Skilled Workforce</h4>
-                            <p>Top-tier tech talent from local universities</p>
-                        </div>
-                        <div class="advantage-item">
-                            <i class="fas fa-gavel"></i>
-                            <h4>Stable Legal Framework</h4>
-                            <p>Business-friendly policies and regulations</p>
-                        </div>
+                        <h3>Security</h3>
+                        <p>Enterprise-grade security and compliance</p>
+                        <button class="tool-button" onclick="openCloudService('security')">Learn More</button>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Media & Design Section -->
-        <section id="media" class="media-section">
+        <section id="media" class="section">
             <div class="container">
-                <h2><i class="fas fa-palette"></i> Media & Design Studio</h2>
-                <div class="media-hero">
-                    <p>Creating visually stunning content that tells your story with impact and creativity</p>
-                </div>
-                
-                <div class="media-services">
-                    <div class="media-category">
-                        <h3><i class="fas fa-paint-brush"></i> Graphic Design</h3>
-                        <div class="media-grid">
-                            <div class="media-card">
-                                <div class="media-preview">
-                                    <i class="fas fa-image"></i>
-                                </div>
-                                <h4>Brand Identity</h4>
-                                <p>Logos, brand guidelines, and visual identity systems</p>
-                                <button class="media-btn" onclick="showMediaPortfolio('branding')">View Portfolio</button>
-                            </div>
-                            <div class="media-card">
-                                <div class="media-preview">
-                                    <i class="fas fa-chart-pie"></i>
-                                </div>
-                                <h4>Infographics</h4>
-                                <p>Data visualization and information design</p>
-                                <button class="media-btn" onclick="showMediaPortfolio('infographics')">View Portfolio</button>
-                            </div>
-                            <div class="media-card">
-                                <div class="media-preview">
-                                    <i class="fas fa-mobile-alt"></i>
-                                </div>
-                                <h4>Digital Marketing</h4>
-                                <p>Social media graphics and digital campaigns</p>
-                                <button class="media-btn" onclick="showMediaPortfolio('digital')">View Portfolio</button>
-                            </div>
+                <h2><i class="fas fa-palette"></i> Media & Design</h2>
+                <p>Creative design solutions for your brand and marketing needs</p>
+                <div class="tools-grid">
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <i class="fas fa-paint-brush"></i>
                         </div>
+                        <h3>Graphic Design</h3>
+                        <p>Professional logo design, branding, and print materials</p>
+                        <button class="tool-button" onclick="showMediaPortfolio('graphic')">View Portfolio</button>
                     </div>
-                    
-                    <div class="media-category">
-                        <h3><i class="fas fa-video"></i> Video & Animation</h3>
-                        <div class="media-grid">
-                            <div class="media-card">
-                                <div class="media-preview">
-                                    <i class="fas fa-film"></i>
-                                </div>
-                                <h4>Corporate Videos</h4>
-                                <p>Professional video production and editing</p>
-                                <button class="media-btn" onclick="showMediaPortfolio('corporate')">View Portfolio</button>
-                            </div>
-                            <div class="media-card">
-                                <div class="media-preview">
-                                    <i class="fas fa-magic"></i>
-                                </div>
-                                <h4>Motion Graphics</h4>
-                                <p>Animated graphics and visual effects</p>
-                                <button class="media-btn" onclick="showMediaPortfolio('motion')">View Portfolio</button>
-                            </div>
-                            <div class="media-card">
-                                <div class="media-preview">
-                                    <i class="fas fa-microphone"></i>
-                                </div>
-                                <h4>Audio Production</h4>
-                                <p>Music composition and sound design</p>
-                                <button class="media-btn" onclick="showMediaPortfolio('audio')">View Portfolio</button>
-                            </div>
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <i class="fas fa-video"></i>
                         </div>
+                        <h3>Video Production</h3>
+                        <p>Corporate videos, animations, and promotional content</p>
+                        <button class="tool-button" onclick="showMediaPortfolio('video')">View Portfolio</button>
                     </div>
-                </div>
-            </div>
-        </section>
-
-
-        <!-- AI Analysis Section -->
-        <section id="analysis" class="analysis-section">
-            <div class="container">
-                <h2><i class="fas fa-chart-line"></i> AI News Analysis</h2>
-                <div class="analysis-grid">
-                    <div class="analysis-card">
-                        <div class="analysis-icon">
-                            <i class="fas fa-brain"></i>
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <i class="fas fa-globe"></i>
                         </div>
-                        <h3>Sentiment Analysis</h3>
-                        <p>Real-time sentiment tracking across global news stories and social media.</p>
-                        <div class="analysis-metric">
-                            <span class="metric-value positive">+72%</span>
-                            <span class="metric-label">Global Sentiment</span>
-                        </div>
-                        <button class="analysis-button" onclick="openAnalysis('sentiment')">View Details</button>
-                    </div>
-                    
-                    <div class="analysis-card">
-                        <div class="analysis-icon">
-                            <i class="fas fa-globe-americas"></i>
-                        </div>
-                        <h3>Geographic Trends</h3>
-                        <p>Track news patterns and developments across different regions worldwide.</p>
-                        <div class="analysis-metric">
-                            <span class="metric-value neutral">195</span>
-                            <span class="metric-label">Active Regions</span>
-                        </div>
-                        <button class="analysis-button" onclick="openAnalysis('geographic')">View Map</button>
-                    </div>
-                    
-                    <div class="analysis-card">
-                        <div class="analysis-icon">
-                            <i class="fas fa-trending-up"></i>
-                        </div>
-                        <h3>Trending Topics</h3>
-                        <p>AI-powered identification of emerging stories and viral content.</p>
-                        <div class="analysis-metric">
-                            <span class="metric-value trending">AI Tech</span>
-                            <span class="metric-label">#1 Trending</span>
-                        </div>
-                        <button class="analysis-button" onclick="openAnalysis('trending')">Explore Trends</button>
-                    </div>
-                    
-                    <div class="analysis-card">
-                        <div class="analysis-icon">
-                            <i class="fas fa-search"></i>
-                        </div>
-                        <h3>News Verification</h3>
-                        <p>Advanced fact-checking and source credibility analysis.</p>
-                        <div class="analysis-metric">
-                            <span class="metric-value verified">98.7%</span>
-                            <span class="metric-label">Accuracy Rate</span>
-                        </div>
-                        <button class="analysis-button" onclick="openAnalysis('verification')">Check Facts</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Global Coverage Section -->
-        <section id="global" class="global-section">
-            <div class="container">
-                <h2><i class="fas fa-globe"></i> Global Coverage</h2>
-                <div class="global-content">
-                    <div class="world-map">
-                        <div class="map-placeholder">
-                            <i class="fas fa-globe-americas" style="font-size: 4rem; color: #1e40af; opacity: 0.3;"></i>
-                            <p>Interactive World Map</p>
-                            <small>Real-time news activity visualization</small>
-                        </div>
-                    </div>
-                    <div class="regional-stats">
-                        <div class="region-card">
-                            <h4>North America</h4>
-                            <div class="region-metrics">
-                                <span class="region-count">2,847</span>
-                                <span class="region-label">Active Stories</span>
-                            </div>
-                        </div>
-                        <div class="region-card">
-                            <h4>Europe</h4>
-                            <div class="region-metrics">
-                                <span class="region-count">3,291</span>
-                                <span class="region-label">Active Stories</span>
-                            </div>
-                        </div>
-                        <div class="region-card">
-                            <h4>Asia Pacific</h4>
-                            <div class="region-metrics">
-                                <span class="region-count">4,156</span>
-                                <span class="region-label">Active Stories</span>
-                            </div>
-                        </div>
-                        <div class="region-card">
-                            <h4>Middle East</h4>
-                            <div class="region-metrics">
-                                <span class="region-count">1,923</span>
-                                <span class="region-label">Active Stories</span>
-                            </div>
-                        </div>
+                        <h3>Web Design</h3>
+                        <p>Modern, responsive websites and digital experiences</p>
+                        <button class="tool-button" onclick="showMediaPortfolio('web')">View Portfolio</button>
                     </div>
                 </div>
             </div>
@@ -378,78 +1186,33 @@
             </div>
         </div>
 
-        <!-- About Section -->
-        <section id="about" class="about-section">
-            <div class="container">
-                <h2>About KaiTech Rwanda - Voice of Time</h2>
-                <div class="about-content">
-                    <p>Born in Rwanda's thriving tech ecosystem, KaiTech embodies the "Voice of Time" - delivering timely, 
-                    authoritative insights that matter. We leverage Rwanda's position as Africa's technology hub to provide 
-                    world-class news intelligence, cloud computing excellence, and innovative media production services.</p>
-                    
-                    <div class="features">
-                        <div class="feature">
-                            <i class="fas fa-newspaper"></i>
-                            <h4>News Intelligence</h4>
-                            <p>Real-time global news analysis with AI-powered insights and fact verification</p>
-                        </div>
-                        <div class="feature">
-                            <i class="fas fa-cloud"></i>
-                            <h4>Cloud Excellence</h4>
-                            <p>Enterprise-grade cloud computing services powered by Rwanda's tech infrastructure</p>
-                        </div>
-                        <div class="feature">
-                            <i class="fas fa-palette"></i>
-                            <h4>Media & Design</h4>
-                            <p>Creative content production including graphics, videos, music, and interactive visualizations</p>
-                        </div>
-                        <div class="feature">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <h4>Rwanda Advantage</h4>
-                            <p>Strategic location with fiber connectivity, green energy, and stable governance</p>
-                        </div>
-                        <div class="feature">
-                            <i class="fas fa-users"></i>
-                            <h4>Local Expertise</h4>
-                            <p>Top-tier African talent delivering global solutions with local understanding</p>
-                        </div>
-                        <div class="feature">
-                            <i class="fas fa-rocket"></i>
-                            <h4>Innovation Hub</h4>
-                            <p>Part of Africa's Silicon Valley - driving technological advancement across the continent</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
     </main>
 
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
                 <div class="footer-brand">
-                    <h3>KaiTech Rwanda</h3>
+                    <h3>KaiTech</h3>
                     <p class="footer-slogan">"Voice of Time"</p>
-                    <p>Rwanda's premier technology company delivering global solutions</p>
+                    <p>Transforming businesses with enterprise cloud solutions, and creative technology</p>
                 </div>
                 <div class="footer-services">
-                    <h4>Our Services</h4>
+                    <h4>Business Solutions</h4>
                     <ul>
-                        <li>News Intelligence Platform</li>
-                        <li>Cloud Computing Solutions</li>
+                        <li>World Updates</li>
+                        <li>Enterprise Cloud Infrastructure</li>
                         <li>Media & Design Services</li>
-                        <li>AI Solutions & Visualizations</li>
                     </ul>
                 </div>
                 <div class="footer-contact">
-                    <h4>Rwanda Tech Hub</h4>
-                    <p><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</p>
+                    <h4>Contact Information</h4>
                     <p><i class="fas fa-phone"></i> +48 881754311</p>
-                    <p><i class="fas fa-envelope"></i> info@kaitech.rw</p>
+                    <p><i class="fas fa-envelope"></i> info@kaitech.pro</p>
+                    <p><i class="fas fa-globe"></i> www.kaitech.pro</p>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 KaiTech Rwanda. Voice of Time - Empowering the world through technology excellence.</p>
+                <p>&copy; 2024 KaiTech. Voice of Time - Empowering businesses through cloud innovation, and creative excellence.</p>
             </div>
         </div>
     </footer>
