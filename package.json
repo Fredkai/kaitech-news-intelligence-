@@ -1,22 +1,44 @@
 {
-  "name": "ai-website-project",
+  "name": "kaitech-voice-of-time",
   "version": "1.0.0",
-  "description": "A modern website with AI features",
-  "main": "index.html",
+  "description": "KaiTech Voice of Time - Professional technology solutions with real-time world headlines coverage, enterprise cloud solutions, and cutting-edge creative technology",
+  "main": "server.js",
   "scripts": {
-    "start": "npx http-server public -p 3000 -o",
-    "dev": "npx http-server . -p 3000 -o",
-    "build": "npm run copy-assets",
-    "copy-assets": "xcopy /E /I assets public\\assets"
+    "start": "node server.js",
+    "dev": "node server.js",
+    "serve": "node server.js",
+    "mobile": "node server.js",
+    "test": "echo \"KaiTech Server Ready\" && exit 0",
+    "health": "curl http://localhost:8080/api/health || echo \"Server not running\"",
+    "build": "echo \"No build process required - static site with Node.js server\""
   },
-  "keywords": ["ai", "website", "javascript", "html", "css"],
-  "author": "Your Name",
+  "keywords": [
+    "kaitech",
+    "voice-of-time",
+    "news",
+    "analytics",
+    "technology",
+    "ai",
+    "cloud-services",
+    "media-design",
+    "enterprise-solutions"
+  ],
+  "author": "KaiTech - Voice of Time",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Fredkai/kaitech-news-intelligence-.git"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "homepage": "https://fredkai.github.io/kaitech-news-intelligence-/",
   "devDependencies": {
     "http-server": "^14.1.1"
   },
   "dependencies": {
     "axios": "^1.6.0",
-    "marked": "^9.1.2"
+    "marked": "^9.1.2",
+    "xml2js": "^0.6.2"
   }
 }

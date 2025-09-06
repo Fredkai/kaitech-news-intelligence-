@@ -2,23 +2,23 @@
 
 /* CSS Variables - Clean Emerald Green Minimal Palette */
 :root {
-    /* Primary Color Scheme - Clean & Minimal */
-    --primary-blue: #10b981;
-    --secondary-blue: #059669;
-    --dark-blue: #065f46;
-    --electric-blue: #34d399;
+    /* Primary Color Scheme - Classic & Calm */
+    --primary-blue: #2c3e50;
+    --secondary-blue: #34495e;
+    --dark-blue: #1a252f;
+    --electric-blue: #5dade2;
     --midnight-black: #000000;
-    --dark-slate: #1f2937;
-    --deep-space: #111827;
-    --neural-blue: #047857;
+    --dark-slate: #2c3e50;
+    --deep-space: #1a252f;
+    --neural-blue: #3498db;
     --quantum-white: #ffffff;
-    --cyber-white: #f9fafb;
-    --matrix-silver: #e5e7eb;
-    --steel-blue: #6b7280;
-    --arctic-white: #f3f4f6;
-    --electric-cyan: #6ee7b7;
-    --neon-blue: #34d399;
-    --cosmic-blue: #10b981;
+    --cyber-white: #f8f9fa;
+    --matrix-silver: #e9ecef;
+    --steel-blue: #6c757d;
+    --arctic-white: #f1f3f4;
+    --electric-cyan: #85c1e9;
+    --neon-blue: #5dade2;
+    --cosmic-blue: #3498db;
     
     /* UI Colors - Minimal Palette */
     --white: #ffffff;
@@ -34,18 +34,18 @@
     --text-accent: #10b981;
     
     /* Glass & Materials */
-    --glass-bg: rgba(16, 185, 129, 0.15);
-    --glass-border: rgba(16, 185, 129, 0.2);
-    --glass-hover: rgba(16, 185, 129, 0.25);
+    --glass-bg: rgba(44, 62, 80, 0.12);
+    --glass-border: rgba(52, 73, 94, 0.18);
+    --glass-hover: rgba(52, 152, 219, 0.15);
     --dark-glass: rgba(0, 0, 0, 0.6);
-    --neural-glass: rgba(16, 185, 129, 0.1);
+    --neural-glass: rgba(44, 62, 80, 0.08);
     
     /* Shadows & Glows */
-    --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.15);
-    --shadow-strong: 0 8px 40px rgba(0, 0, 0, 0.3);
-    --glow-emerald: 0 0 30px rgba(16, 185, 129, 0.6);
-    --glow-light: 0 0 30px rgba(52, 211, 153, 0.4);
-    --glow-white: 0 0 30px rgba(255, 255, 255, 0.4);
+    --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.12);
+    --shadow-strong: 0 8px 40px rgba(0, 0, 0, 0.25);
+    --glow-blue: 0 0 25px rgba(52, 152, 219, 0.4);
+    --glow-light: 0 0 25px rgba(93, 173, 226, 0.3);
+    --glow-white: 0 0 25px rgba(255, 255, 255, 0.3);
     
     /* Animations */
     --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -70,7 +70,7 @@ body {
     font-family: 'Poppins', 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
     line-height: 1.6;
     color: var(--text-primary);
-    background: linear-gradient(135deg, #ffffff 0%, #f8fafc 25%, #f1f5f9 50%, #e2e8f0 75%, #cbd5e1 100%);
+    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 30%, #e9ecef 60%, #dee2e6 100%);
     background-attachment: fixed;
     min-height: 100vh;
     overflow-x: hidden;
@@ -123,11 +123,11 @@ body {
     height: 100%;
     z-index: -1;
     background-image: 
-        linear-gradient(rgba(16, 185, 129, 0.1) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(16, 185, 129, 0.1) 1px, transparent 1px);
+        linear-gradient(rgba(44, 62, 80, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(44, 62, 80, 0.08) 1px, transparent 1px);
     background-size: 60px 60px;
-    opacity: 0.3;
-    animation: gridPulse 6s ease-in-out infinite alternate;
+    opacity: 0.4;
+    animation: gridPulse 8s ease-in-out infinite alternate;
 }
 
 @keyframes gridPulse {
@@ -144,10 +144,10 @@ body {
     height: 100%;
     z-index: -3;
     background-image: 
-        linear-gradient(rgba(16, 185, 129, 0.05) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(16, 185, 129, 0.05) 1px, transparent 1px);
+        linear-gradient(rgba(44, 62, 80, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(44, 62, 80, 0.04) 1px, transparent 1px);
     background-size: 40px 40px;
-    opacity: 0.7;
+    opacity: 0.6;
 }
 
 /* Floating Orbs */
@@ -165,7 +165,7 @@ body {
 .orb {
     position: absolute;
     border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, rgba(16, 185, 129, 0.3), rgba(52, 211, 153, 0.1));
+    background: radial-gradient(circle at 30% 30%, rgba(52, 152, 219, 0.2), rgba(93, 173, 226, 0.08));
     filter: blur(1px);
     animation: floatOrb 20s ease-in-out infinite;
 }

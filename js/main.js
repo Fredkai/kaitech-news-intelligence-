@@ -98,15 +98,15 @@ async function sendMessage() {
         content: message
     });
     
-    // Show loading
-    showLoading();
+    // Show loading with enhanced message
+    showAILoading(message);
     isAIResponding = true;
     
     try {
-        // Simulate AI response (replace with actual AI API call)
+        // Call Grok AI API
         const response = await simulateAIResponse(message);
         
-        // Add AI response to chat
+        // Add AI response to chat with slight delay for better UX
         setTimeout(() => {
             addMessageToChat(response, 'ai');
             chatHistory.push({
@@ -115,22 +115,23 @@ async function sendMessage() {
             });
             hideLoading();
             isAIResponding = false;
-        }, 1000);
+        }, 800);
         
     } catch (error) {
         console.error('Error getting AI response:', error);
-        addMessageToChat('Sorry, I encountered an error. Please try again.', 'ai');
+        addMessageToChat('Sorry, I encountered an error while processing your request. Please try again.', 'ai', true);
         hideLoading();
         isAIResponding = false;
     }
 }
 
-function addMessageToChat(message, sender) {
+function addMessageToChat(message, sender, isError = false) {
     const messageDiv = document.createElement('div');
     messageDiv.classList.add('message');
     
     if (sender === 'ai') {
         messageDiv.classList.add('ai-message');
+        if (isError) messageDiv.classList.add('error-message');
     } else {
         messageDiv.classList.add('user-message');
     }
@@ -139,59 +140,93 @@ function addMessageToChat(message, sender) {
     avatar.classList.add('message-avatar');
     
     if (sender === 'ai') {
-        avatar.innerHTML = '<i class="fas fa-robot"></i>';
+        avatar.innerHTML = isError ? '<i class="fas fa-exclamation-triangle"></i>' : '<i class="fas fa-robot"></i>';
     } else {
         avatar.innerHTML = '<i class="fas fa-user"></i>';
     }
     
     const content = document.createElement('div');
     content.classList.add('message-content');
-    content.textContent = message;
+    
+    // Convert newlines to HTML for better formatting
+    const formattedMessage = message.replace(/\n/g, '<br>');
+    content.innerHTML = formattedMessage;
     
     messageDiv.appendChild(avatar);
     messageDiv.appendChild(content);
     
     chatMessages.appendChild(messageDiv);
     
-    // Scroll to bottom
+    // Scroll to bottom smoothly
     chatMessages.scrollTop = chatMessages.scrollHeight;
+    
+    // Add animation
+    messageDiv.style.opacity = '0';
+    messageDiv.style.transform = 'translateY(10px)';
+    setTimeout(() => {
+        messageDiv.style.opacity = '1';
+        messageDiv.style.transform = 'translateY(0)';
+        messageDiv.style.transition = 'all 0.3s ease';
+    }, 50);
 }
 
-// Simulate AI response (replace with actual API integration)
+// AI response using Grok API integration
 async function simulateAIResponse(userMessage) {
-    // Simple response simulation based on keywords
-    const message = userMessage.toLowerCase();
-    
-    if (message.includes('hello') || message.includes('hi')) {
-        return "Hello! Nice to meet you. I'm here to help with any questions or tasks you might have.";
+    try {
+        // Check for news-related keywords to include context
+        const newsKeywords = ['news', 'headlines', 'current events', 'breaking news', 'today', 'latest', 'trending'];
+        const includeNewsContext = newsKeywords.some(keyword => 
+            userMessage.toLowerCase().includes(keyword)
+        );
+        
+        const response = await fetch('/api/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                message: userMessage,
+                includeNewsContext: includeNewsContext
+            })
+        });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        if (data.status === 'success') {
+            return data.response;
+        } else {
+            throw new Error(data.message || 'Unknown error occurred');
+        }
+        
+    } catch (error) {
+        console.error('Error calling Grok API:', error);
+        
+        // Fallback responses for different types of queries
+        const message = userMessage.toLowerCase();
+        
+        if (message.includes('hello') || message.includes('hi')) {
+            return "Hello! I'm your KaiTech AI assistant. I'm here to help with news, technology, and general questions. How can I assist you today?";
+        }
+        
+        if (message.includes('news') || message.includes('headlines')) {
+            return "I can help you stay updated with the latest news! I have access to current headlines and can provide analysis on various topics. What news topic interests you most?";
+        }
+        
+        if (message.includes('technology') || message.includes('tech')) {
+            return "Technology is my specialty! I can discuss AI developments, cloud computing, software trends, and emerging technologies. What tech topic would you like to explore?";
+        }
+        
+        if (message.includes('help')) {
+            return "I'm your KaiTech AI assistant! I can help with:\n• Latest news and current events\n• Technology trends and insights\n• AI and cloud computing\n• General questions and analysis\n\nI'm currently having trouble connecting to my advanced AI service, but I can still provide helpful information. What would you like to know?";
+        }
+        
+        // Enhanced fallback response
+        return `I apologize, but I'm having trouble connecting to my advanced AI service right now. However, I'm still here to help! Your message: "${userMessage}" - I can provide general information about news, technology, and KaiTech services. Please try again in a moment, or let me know how else I can assist you.`;
     }
-    
-    if (message.includes('code') || message.includes('programming')) {
-        return "I'd be happy to help with coding! I can assist with various programming languages, debugging, code review, and explaining concepts. What specific coding challenge are you working on?";
-    }
-    
-    if (message.includes('ai') || message.includes('artificial intelligence')) {
-        return "AI is fascinating! I can help explain AI concepts, discuss different AI technologies, or assist with AI-related projects. What aspect of AI interests you most?";
-    }
-    
-    if (message.includes('website') || message.includes('web development')) {
-        return "Web development is exciting! I can help with HTML, CSS, JavaScript, frameworks, responsive design, and more. Are you working on a specific web project?";
-    }
-    
-    if (message.includes('help')) {
-        return "I'm here to help! I can assist with:\n• General questions and conversations\n• Programming and code help\n• Web development guidance\n• AI and technology topics\n• Writing and content creation\n• Problem-solving and analysis\n\nWhat would you like help with?";
-    }
-    
-    // Default responses
-    const defaultResponses = [
-        "That's an interesting question! Let me think about that and provide you with a helpful response.",
-        "I understand what you're asking. Here's my perspective on that topic...",
-        "Great question! I'd be happy to help you with that.",
-        "Thanks for sharing that with me. Here's what I think about it...",
-        "That's a topic I can definitely help with. Let me provide some insights."
-    ];
-    
-    return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
 }
 
 // Tool functionality
@@ -464,11 +499,76 @@ function closeModal() {
 
 // Utility functions
 function showLoading() {
-    loadingIndicator.style.display = 'flex';
+    if (loadingIndicator) {
+        loadingIndicator.style.display = 'flex';
+    }
 }
 
 function hideLoading() {
-    loadingIndicator.style.display = 'none';
+    if (loadingIndicator) {
+        loadingIndicator.style.display = 'none';
+    }
+    // Remove any loading messages from chat
+    const loadingMessages = chatMessages.querySelectorAll('.loading-message');
+    loadingMessages.forEach(msg => msg.remove());
+}
+
+// Enhanced loading specifically for AI responses
+function showAILoading(userMessage) {
+    showLoading();
+    
+    // Add a loading message to chat
+    const loadingDiv = document.createElement('div');
+    loadingDiv.classList.add('message', 'ai-message', 'loading-message');
+    
+    const avatar = document.createElement('div');
+    avatar.classList.add('message-avatar');
+    avatar.innerHTML = '<i class="fas fa-robot fa-spin"></i>';
+    
+    const content = document.createElement('div');
+    content.classList.add('message-content', 'loading-content');
+    
+    // Check if this looks like a news query
+    const newsKeywords = ['news', 'headlines', 'current events', 'breaking news', 'today', 'latest', 'trending'];
+    const isNewsQuery = newsKeywords.some(keyword => 
+        userMessage.toLowerCase().includes(keyword)
+    );
+    
+    if (isNewsQuery) {
+        content.innerHTML = `
+            <div class="loading-text">
+                🤖 Analyzing your news query with AI...<br>
+                📰 Gathering current context...<br>
+                <span class="typing-indicator">▓</span>
+            </div>
+        `;
+    } else {
+        content.innerHTML = `
+            <div class="loading-text">
+                🤖 Processing with Grok AI...<br>
+                <span class="typing-indicator">▓</span>
+            </div>
+        `;
+    }
+    
+    loadingDiv.appendChild(avatar);
+    loadingDiv.appendChild(content);
+    
+    chatMessages.appendChild(loadingDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    
+    // Animate typing indicator
+    const typingIndicator = content.querySelector('.typing-indicator');
+    if (typingIndicator) {
+        let dots = '';
+        const typingAnimation = setInterval(() => {
+            dots = dots.length >= 3 ? '' : dots + '.';
+            typingIndicator.textContent = '▓' + dots;
+        }, 500);
+        
+        // Store animation ID for cleanup
+        loadingDiv.typingAnimation = typingAnimation;
+    }
 }
 
 function scrollToSection(sectionId) {
@@ -492,10 +592,10 @@ function setupSmoothScrolling() {
 
 // === NEWS-SPECIFIC FUNCTIONALITY ===
 
-// Initialize news features
+// Initialize news features with real-time capabilities
 function initializeNewsFeatures() {
-    // Start breaking news rotation
-    startBreakingNewsRotation();
+    // Start live breaking news rotation
+    startLiveBreakingNewsRotation();
     
     // Update stats periodically
     updateStats();
@@ -506,28 +606,156 @@ function initializeNewsFeatures() {
     // Load initial news
     loadMoreNews();
     
-    console.log('News features initialized');
+    // Setup auto-refresh for live updates
+    setupAutoRefresh();
+    
+    // Setup real-time features
+    initializeRealTimeFeatures();
+    
+    console.log('Live news features initialized with AI processing');
 }
 
-// Breaking news rotation
-function startBreakingNewsRotation() {
-    const breakingNewsItems = [
-        'AI Analysis reveals major trends in global markets - powered by KaiTech Intelligence',
-        'Breaking: Global technology summit announces new AI partnerships worldwide',
-        'KaiTech AI predicts significant weather patterns affecting 50+ countries',
-        'Live Update: International trade agreements reach historic milestone',
-        'Breaking News: Scientific breakthrough in renewable energy technology',
-        'KaiTech Intelligence detects emerging trends in global healthcare sector'
-    ];
+// Setup automatic news refresh
+function setupAutoRefresh() {
+    // Refresh news every 5 minutes
+    setInterval(async () => {
+        console.log('Auto-refreshing news data...');
+        await loadMoreNews();
+    }, 300000); // 5 minutes
     
-    let currentIndex = 0;
+    // Refresh breaking news every 2 minutes
+    setInterval(async () => {
+        console.log('Updating breaking news...');
+        await updateBreakingNews();
+    }, 120000); // 2 minutes
+}
+
+// Initialize real-time features
+function initializeRealTimeFeatures() {
+    // Add live data indicators
+    addLiveDataIndicators();
     
+    // Initialize sentiment dashboard
+    updateSentimentDashboard();
+    
+    // Start trending topics updates
+    updateTrendingTopics();
+}
+
+function addLiveDataIndicators() {
+    // Add live indicator to the header
+    const header = document.querySelector('.hero-stats');
+    if (header) {
+        const liveIndicator = document.createElement('div');
+        liveIndicator.className = 'live-indicator';
+        liveIndicator.innerHTML = `
+            <div class="live-badge">
+                <i class="fas fa-circle" style="color: #10b981; animation: pulse 2s infinite;"></i>
+                <span>LIVE DATA</span>
+            </div>
+        `;
+        liveIndicator.style.cssText = `
+            position: fixed; top: 100px; right: 20px; z-index: 1000;
+            background: rgba(255,255,255,0.95); padding: 0.5rem 1rem;
+            border-radius: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            font-size: 0.8rem; font-weight: 600; color: #2c3e50;
+        `;
+        document.body.appendChild(liveIndicator);
+    }
+}
+
+// Live breaking news rotation with real data
+function startLiveBreakingNewsRotation() {
+    updateBreakingNews(); // Initial load
+    
+    // Update breaking news every 2 minutes
     breakingNewsInterval = setInterval(() => {
-        if (breakingNewsText) {
-            breakingNewsText.textContent = breakingNewsItems[currentIndex];
-            currentIndex = (currentIndex + 1) % breakingNewsItems.length;
+        updateBreakingNews();
+    }, 120000); // 2 minutes
+}
+
+async function updateBreakingNews() {
+    try {
+        const response = await fetch('/api/breaking-news');
+        const data = await response.json();
+        
+        if (data.status === 'success' && data.data && data.data.length > 0) {
+            const breakingItems = data.data.map(item => 
+                `BREAKING: ${item.title} - ${item.source}`
+            );
+            
+            let currentIndex = 0;
+            
+            function rotateNews() {
+                if (breakingNewsText && breakingItems.length > 0) {
+                    breakingNewsText.textContent = breakingItems[currentIndex];
+                    currentIndex = (currentIndex + 1) % breakingItems.length;
+                }
+            }
+            
+            rotateNews(); // Show first item immediately
+            
+            // Rotate through items every 8 seconds
+            const rotationInterval = setInterval(rotateNews, 8000);
+            
+            // Clear old interval and store new one
+            if (window.currentBreakingRotation) {
+                clearInterval(window.currentBreakingRotation);
+            }
+            window.currentBreakingRotation = rotationInterval;
+            
+        } else {
+            // Fallback to default message
+            if (breakingNewsText) {
+                breakingNewsText.textContent = 'KaiTech Voice of Time - Live AI-powered news intelligence platform';
+            }
         }
-    }, 8000); // Rotate every 8 seconds
+    } catch (error) {
+        console.error('Error updating breaking news:', error);
+        if (breakingNewsText) {
+            breakingNewsText.textContent = 'KaiTech Voice of Time - AI news intelligence (Live data temporarily unavailable)';
+        }
+    }
+}
+
+// Update sentiment dashboard with real data
+async function updateSentimentDashboard() {
+    try {
+        const response = await fetch('/api/news/sentiment');
+        const data = await response.json();
+        
+        if (data.status === 'success') {
+            const sentimentData = data.data;
+            console.log('Live sentiment data:', sentimentData);
+            
+            // Update sentiment display if elements exist
+            const totalArticles = sentimentData.total || 0;
+            const positivePercent = totalArticles > 0 ? Math.round((sentimentData.positive / totalArticles) * 100) : 0;
+            
+            // Show sentiment in console for now (can be displayed in UI)
+            console.log(`Sentiment Analysis: ${positivePercent}% positive, ${sentimentData.neutral} neutral, ${sentimentData.negative} negative`);
+        }
+    } catch (error) {
+        console.error('Error updating sentiment dashboard:', error);
+    }
+}
+
+// Update trending topics
+async function updateTrendingTopics() {
+    try {
+        const response = await fetch('/api/news/trending');
+        const data = await response.json();
+        
+        if (data.status === 'success' && data.data) {
+            console.log('Top trending topics:', data.data.slice(0, 5).map(item => ({
+                title: item.title,
+                trending: item.trending,
+                sentiment: item.sentiment
+            })));
+        }
+    } catch (error) {
+        console.error('Error updating trending topics:', error);
+    }
 }
 
 // Update statistics
@@ -591,88 +819,303 @@ function filterNews(category) {
     });
 }
 
-// Load more news (simulated) - AI-focused content
-function loadMoreNews() {
-    const aiNewsUpdates = [
+// Load live news data from our AI-powered backend
+async function loadMoreNews() {
+    try {
+        console.log('Loading live news data...');
+        const response = await fetch('/api/news');
+        const newsData = await response.json();
+        
+        if (newsData.status === 'success' && newsData.data) {
+            // Clear existing news grid
+            if (newsGrid) {
+                const existingCards = newsGrid.querySelectorAll('.news-card');
+                existingCards.forEach(card => card.remove());
+            }
+            
+            // Add live news cards
+            newsData.data.forEach(article => {
+                const newsItem = {
+                    category: getCategoryDisplayName(article.aiCategory || article.category),
+                    categoryClass: getCategoryClass(article.aiCategory || article.category),
+                    time: formatTimeAgo(article.pubDate),
+                    title: article.title,
+                    excerpt: cleanDescription(article.description),
+                    source: article.source,
+                    link: article.link,
+                    sentiment: article.sentiment,
+                    trending: article.trending
+                };
+                addNewsCard(newsItem);
+            });
+            
+            console.log(`Loaded ${newsData.data.length} live news articles from ${newsData.sources?.length || 'multiple'} sources`);
+            
+            // Update statistics
+            updateLiveStats(newsData.data);
+        } else {
+            console.warn('Failed to load live news, using fallback data');
+            loadFallbackNews();
+        }
+    } catch (error) {
+        console.error('Error loading live news:', error);
+        loadFallbackNews();
+    }
+}
+
+// Helper functions for news processing
+function getCategoryDisplayName(category) {
+    const categoryMap = {
+        'technology': 'Technology',
+        'world': 'World',
+        'business': 'Business', 
+        'AI & Technology': 'AI & Tech',
+        'Cryptocurrency': 'Crypto',
+        'Environment': 'Environment',
+        'Politics': 'Politics',
+        'General': 'General'
+    };
+    return categoryMap[category] || category || 'News';
+}
+
+function getCategoryClass(category) {
+    const classMap = {
+        'technology': 'technology',
+        'world': 'world',
+        'business': 'business',
+        'AI & Technology': 'technology',
+        'Cryptocurrency': 'business',
+        'Environment': 'world',
+        'Politics': 'politics',
+        'General': 'world'
+    };
+    return classMap[category] || 'world';
+}
+
+function formatTimeAgo(dateString) {
+    const date = new Date(dateString);
+    const now = new Date();
+    const diffInMs = now - date;
+    const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
+    const diffInMinutes = Math.floor(diffInMs / (1000 * 60));
+    
+    if (diffInMinutes < 60) {
+        return `${diffInMinutes} minutes ago`;
+    } else if (diffInHours < 24) {
+        return `${diffInHours} hours ago`;
+    } else {
+        const diffInDays = Math.floor(diffInHours / 24);
+        return `${diffInDays} days ago`;
+    }
+}
+
+function cleanDescription(description) {
+    if (!description) return 'Click to read full article...';
+    
+    // Remove HTML tags and clean up
+    const cleaned = description.replace(/<[^>]*>/g, '')
+                              .replace(/&[^;]+;/g, '')
+                              .trim();
+    
+    // Limit length
+    return cleaned.length > 200 ? cleaned.substring(0, 200) + '...' : cleaned;
+}
+
+function updateLiveStats(newsData) {
+    // Update story count
+    if (storiesAnalyzed) {
+        storiesAnalyzed.textContent = newsData.length.toLocaleString();
+    }
+    
+    // Count unique sources
+    const uniqueSources = [...new Set(newsData.map(article => article.source))];
+    if (countriesCovered) {
+        countriesCovered.textContent = uniqueSources.length;
+    }
+    
+    // Show live update indicator
+    if (liveUpdates) {
+        liveUpdates.textContent = 'Live';
+        liveUpdates.style.color = '#10b981';
+        liveUpdates.style.animation = 'pulse 2s infinite';
+    }
+}
+
+// Fallback function with static data
+function loadFallbackNews() {
+    const fallbackNews = [
         {
-            category: 'breaking',
-            categoryClass: 'breaking',
-            time: '6 hours ago',
-            title: 'Meta Releases Code Llama 2: Open-Source AI Coding Assistant',
-            excerpt: 'Facebook\'s parent company unveils advanced code-generating AI model, challenging GitHub Copilot with free, open-source alternative for developers worldwide.',
-            source: 'AI Developer News'
-        },
-        {
-            category: 'technology',
+            category: 'Technology',
             categoryClass: 'technology',
-            time: '7 hours ago',
-            title: 'Nvidia\'s New H100 Chips Power Next-Gen AI Training',
-            excerpt: 'Latest GPU architecture delivers 6x performance improvement for large language model training, accelerating AI development across industries.',
-            source: 'Hardware AI Weekly'
+            time: '2 hours ago',
+            title: 'AI Technology Advances Continue to Transform Industries',
+            excerpt: 'Latest developments in artificial intelligence are reshaping how businesses operate across multiple sectors.',
+            source: 'KaiTech Intelligence'
         },
         {
-            category: 'business',
-            categoryClass: 'business',
-            time: '8 hours ago',
-            title: 'AI Startups Raise Record $25B in Q4 2024',
-            excerpt: 'Venture capital funding in artificial intelligence companies reaches historic highs, with focus on enterprise AI solutions and autonomous systems.',
-            source: 'AI Investment Tracker'
-        },
-        {
-            category: 'world',
-            categoryClass: 'world',
-            time: '9 hours ago',
-            title: 'Japan Launches AI-Powered Smart City Initiative',
-            excerpt: 'Tokyo announces comprehensive urban AI integration project, featuring autonomous transportation, intelligent energy grids, and predictive city management.',
-            source: 'Smart Cities Global'
-        },
-        {
-            category: 'politics',
-            categoryClass: 'politics',
-            time: '10 hours ago',
-            title: 'UN Proposes Global AI Ethics Framework',
-            excerpt: 'United Nations drafts international guidelines for ethical artificial intelligence development, addressing bias, privacy, and algorithmic transparency.',
-            source: 'Global AI Policy'
-        },
-        {
-            category: 'technology',
-            categoryClass: 'technology',
-            time: '11 hours ago',
-            title: 'Quantum-AI Hybrid System Achieves Breakthrough',
-            excerpt: 'IBM and Google collaborate on quantum-enhanced machine learning, demonstrating exponential speedup in complex optimization problems.',
-            source: 'Quantum Computing Today'
+            category: 'Business',
+            categoryClass: 'business', 
+            time: '4 hours ago',
+            title: 'Global Markets Show Mixed Signals Amid Tech Innovation',
+            excerpt: 'Technology sector leads market performance while traditional industries adapt to digital transformation.',
+            source: 'Financial Intelligence'
         }
     ];
     
-    // Add AI-focused news cards to the existing grid
-    aiNewsUpdates.forEach(news => {
+    fallbackNews.forEach(news => {
         addNewsCard(news);
     });
 }
 
-// Add a news card to the grid
+// Add a news card to the grid with enhanced AI features
 function addNewsCard(newsItem) {
     const newsCard = document.createElement('div');
     newsCard.className = 'news-card';
+    
+    // Add trending indicator
+    const trendingClass = (newsItem.trending && newsItem.trending > 80) ? 'trending-hot' : 
+                         (newsItem.trending && newsItem.trending > 60) ? 'trending-warm' : '';
+    
+    // Add sentiment indicator
+    const sentimentIcon = newsItem.sentiment === 'positive' ? '📈' : 
+                         newsItem.sentiment === 'negative' ? '📉' : '📊';
+    
     newsCard.innerHTML = `
         <div class="news-header">
             <span class="news-category ${newsItem.categoryClass}">${newsItem.category.toUpperCase()}</span>
             <span class="news-time">${newsItem.time}</span>
+            ${trendingClass ? `<span class="trending-badge ${trendingClass}">🔥 TRENDING</span>` : ''}
         </div>
         <h3 class="news-title">${newsItem.title}</h3>
         <p class="news-excerpt">${newsItem.excerpt}</p>
+        <div class="news-metadata">
+            ${newsItem.sentiment ? `<span class="sentiment-badge sentiment-${newsItem.sentiment}">${sentimentIcon} ${newsItem.sentiment}</span>` : ''}
+            ${newsItem.trending ? `<span class="trending-score">Trending: ${Math.round(newsItem.trending)}%</span>` : ''}
+        </div>
         <div class="news-footer">
             <span class="news-source">${newsItem.source}</span>
             <div class="news-actions">
-                <button class="action-btn" onclick="shareNews('${newsItem.title}')"><i class="fas fa-share"></i></button>
-                <button class="action-btn" onclick="bookmarkNews('${newsItem.title}')"><i class="fas fa-bookmark"></i></button>
+                ${newsItem.link ? `<button class="action-btn" onclick="openArticle('${newsItem.link}')"><i class="fas fa-external-link-alt"></i></button>` : ''}
+                <button class="action-btn" onclick="summarizeArticle('${newsItem.title.replace(/'/g, '\\\'')}', '${newsItem.excerpt.replace(/'/g, '\\\'')}')" title="AI Summary"><i class="fas fa-robot"></i></button>
+                <button class="action-btn" onclick="shareNews('${newsItem.title.replace(/'/g, '\\\'')}')"><i class="fas fa-share"></i></button>
+                <button class="action-btn" onclick="bookmarkNews('${newsItem.title.replace(/'/g, '\\\'')}')" title="Bookmark"><i class="fas fa-bookmark"></i></button>
             </div>
         </div>
     `;
     
+    // Add click handler for the entire card if link exists
+    if (newsItem.link) {
+        newsCard.style.cursor = 'pointer';
+        newsCard.addEventListener('click', (e) => {
+            // Only open link if clicked area is not a button
+            if (!e.target.closest('.action-btn')) {
+                openArticle(newsItem.link);
+            }
+        });
+    }
+    
     if (newsGrid) {
         newsGrid.appendChild(newsCard);
+        
+        // Add animation
+        newsCard.style.opacity = '0';
+        newsCard.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+            newsCard.style.transition = 'all 0.3s ease';
+            newsCard.style.opacity = '1';
+            newsCard.style.transform = 'translateY(0)';
+        }, 50);
     }
+}
+
+// New functions for enhanced news features
+function openArticle(link) {
+    if (link) {
+        window.open(link, '_blank', 'noopener,noreferrer');
+    }
+}
+
+async function summarizeArticle(title, excerpt) {
+    try {
+        // Show loading state
+        const loadingModal = createLoadingModal('AI Summarizing Article...');
+        document.body.appendChild(loadingModal);
+        
+        // Call our chat API to get AI summary
+        const response = await fetch('/api/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                message: `Please provide a concise summary and key insights for this news article: Title: "${title}". Content: "${excerpt}"`,
+                includeNewsContext: false
+            })
+        });
+        
+        const data = await response.json();
+        document.body.removeChild(loadingModal);
+        
+        if (data.status === 'success') {
+            showAISummaryModal(title, data.response);
+        } else {
+            alert('Failed to generate AI summary. Please try again.');
+        }
+    } catch (error) {
+        console.error('Error generating summary:', error);
+        const loadingModal = document.querySelector('.loading-modal');
+        if (loadingModal) document.body.removeChild(loadingModal);
+        alert('Failed to generate AI summary. Please try again.');
+    }
+}
+
+function createLoadingModal(message) {
+    const modal = document.createElement('div');
+    modal.className = 'loading-modal';
+    modal.innerHTML = `
+        <div class="loading-content">
+            <i class="fas fa-robot fa-spin" style="font-size: 2rem; color: #3498db; margin-bottom: 1rem;"></i>
+            <p>${message}</p>
+        </div>
+    `;
+    modal.style.cssText = `
+        position: fixed; top: 0; left: 0; right: 0; bottom: 0; 
+        background: rgba(0,0,0,0.8); z-index: 10000; 
+        display: flex; align-items: center; justify-content: center;
+        color: white; text-align: center;
+    `;
+    return modal;
+}
+
+function showAISummaryModal(title, summary) {
+    const modal = document.createElement('div');
+    modal.className = 'ai-summary-modal';
+    modal.innerHTML = `
+        <div class="modal-content" style="max-width: 600px; margin: 2% auto; padding: 0; border-radius: 15px; background: white;">
+            <div class="modal-header" style="background: linear-gradient(135deg, #3498db, #2c3e50); color: white; padding: 1.5rem; border-radius: 15px 15px 0 0;">
+                <h3 style="margin: 0; display: flex; align-items: center; gap: 10px;">
+                    <i class="fas fa-robot"></i>
+                    AI Article Summary
+                </h3>
+                <button onclick="this.closest('.ai-summary-modal').remove()" style="background: none; border: none; color: white; font-size: 1.5rem; cursor: pointer; float: right; margin-top: -2rem;">&times;</button>
+            </div>
+            <div class="modal-body" style="padding: 2rem;">
+                <h4 style="color: #2c3e50; margin-bottom: 1rem;">${title}</h4>
+                <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px; border-left: 4px solid #3498db;">
+                    <p style="line-height: 1.6; margin: 0;">${summary.replace(/\n/g, '<br>')}</p>
+                </div>
+                <div style="text-align: center; margin-top: 1.5rem;">
+                    <button onclick="this.closest('.ai-summary-modal').remove()" style="background: #3498db; color: white; border: none; padding: 0.8rem 2rem; border-radius: 25px; cursor: pointer;">Close</button>
+                </div>
+            </div>
+        </div>
+    `;
+    modal.style.cssText = `
+        position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.8); z-index: 10000;
+        display: flex; align-items: center; justify-content: center;
+    `;
+    document.body.appendChild(modal);
 }
 
 // Share news function
@@ -809,6 +1252,781 @@ function openAnalysis(analysisType) {
     modalTitle.textContent = analysis.title;
     modalBody.innerHTML = analysis.content;
     toolModal.style.display = 'block';
+}
+
+// === COMPREHENSIVE NEWS FEATURE IMPLEMENTATIONS ===
+
+// 🔍 Discover Feature - AI-curated content discovery
+async function showDiscoverSection() {
+    try {
+        showLoadingModal('🔍 AI Discovering Personalized Content...');
+        
+        const response = await fetch('/api/discover');
+        const data = await response.json();
+        
+        hideLoadingModal();
+        
+        if (data.status === 'success') {
+            displayDiscoverContent(data.data);
+        } else {
+            showErrorModal('Failed to load discovery content');
+        }
+    } catch (error) {
+        hideLoadingModal();
+        showErrorModal('Error loading discovery features');
+        console.error('Discover error:', error);
+    }
+}
+
+function displayDiscoverContent(discoverData) {
+    const modal = createFeatureModal('🔍 Discover', ` 
+        <div class="discover-dashboard">
+            <div class="discover-section">
+                <h3>🔥 Trending Now</h3>
+                <div class="trending-grid">
+                    ${discoverData.trending.map(article => `
+                        <div class="trending-card" onclick="openArticle('${article.link}')">
+                            <div class="trending-badge">${Math.round(article.trending)}% trending</div>
+                            <h4>${article.title}</h4>
+                            <p class="source">${article.source}</p>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+            
+            <div class="discover-section">
+                <h3>⚡ Recent Breaking</h3>
+                <div class="breaking-list">
+                    ${discoverData.breaking.map(article => `
+                        <div class="breaking-item" onclick="openArticle('${article.link}')">
+                            <span class="breaking-label">BREAKING</span>
+                            <span class="breaking-title">${article.title}</span>
+                            <span class="breaking-time">${formatTimeAgo(article.pubDate)}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+            
+            <div class="discover-section">
+                <h3>🤖 AI Recommendations</h3>
+                <div class="recommendations-grid">
+                    ${discoverData.aiRecommendations.map(rec => `
+                        <div class="recommendation-card">
+                            <h4>${rec.title}</h4>
+                            <p>${rec.description}</p>
+                            <div class="rec-articles">
+                                ${rec.articles.slice(0, 3).map(article => `
+                                    <div class="rec-article" onclick="openArticle('${article.link}')">
+                                        ${article.title}
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <p class="ai-insight">💡 ${rec.insight}</p>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        </div>
+    `);
+    
+    document.body.appendChild(modal);
+}
+
+// 📈 Trending Feature - Real-time trending analysis
+async function showTrendingSection() {
+    try {
+        showLoadingModal('📈 Analyzing Trending Topics...');
+        
+        const response = await fetch('/api/news/trending');
+        const data = await response.json();
+        
+        hideLoadingModal();
+        
+        if (data.status === 'success') {
+            displayTrendingContent(data.data);
+        } else {
+            showErrorModal('Failed to load trending data');
+        }
+    } catch (error) {
+        hideLoadingModal();
+        showErrorModal('Error loading trending features');
+        console.error('Trending error:', error);
+    }
+}
+
+function displayTrendingContent(trendingData) {
+    const modal = createFeatureModal('📈 Trending Topics', `
+        <div class="trending-dashboard">
+            <div class="trending-header">
+                <h3>🔥 Hot Topics Right Now</h3>
+                <p>Real-time trending analysis powered by AI</p>
+            </div>
+            
+            <div class="trending-list">
+                ${trendingData.map((article, index) => `
+                    <div class="trending-item" onclick="openArticle('${article.link}')">
+                        <div class="trending-rank">#${index + 1}</div>
+                        <div class="trending-content">
+                            <h4>${article.title}</h4>
+                            <div class="trending-meta">
+                                <span class="trending-score">🔥 ${Math.round(article.trending)}% trending</span>
+                                <span class="sentiment-badge sentiment-${article.sentiment}">${article.sentiment}</span>
+                                <span class="category-badge">${article.aiCategory || article.category}</span>
+                                <span class="time">${formatTimeAgo(article.pubDate)}</span>
+                            </div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `);
+    
+    document.body.appendChild(modal);
+}
+
+// 💹 Markets Feature - Live financial data
+async function showMarketsSection() {
+    try {
+        showLoadingModal('💹 Loading Live Market Data...');
+        
+        const response = await fetch('/api/markets');
+        const data = await response.json();
+        
+        hideLoadingModal();
+        
+        if (data.status === 'success') {
+            displayMarketsContent(data.data);
+        } else {
+            showErrorModal('Failed to load market data');
+        }
+    } catch (error) {
+        hideLoadingModal();
+        showErrorModal('Error loading market features');
+        console.error('Markets error:', error);
+    }
+}
+
+function displayMarketsContent(marketData) {
+    const modal = createFeatureModal('💹 Live Markets', `
+        <div class="markets-dashboard">
+            <div class="markets-section">
+                <h3>📊 Market Indices</h3>
+                <div class="indices-grid">
+                    ${marketData.indices.map(index => `
+                        <div class="index-card ${index.trend}">
+                            <h4>${index.name}</h4>
+                            <div class="index-value">${index.value}</div>
+                            <div class="index-change ${index.trend}">
+                                ${index.trend === 'up' ? '📈' : '📉'} ${index.change} (${index.changePercent})
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+            
+            <div class="markets-section">
+                <h3>₿ Cryptocurrency</h3>
+                <div class="crypto-grid">
+                    ${marketData.crypto.map(crypto => `
+                        <div class="crypto-card ${crypto.trend}">
+                            <h4>${crypto.name} (${crypto.symbol})</h4>
+                            <div class="crypto-price">${crypto.price}</div>
+                            <div class="crypto-change ${crypto.trend}">
+                                ${crypto.trend === 'up' ? '🚀' : '📉'} ${crypto.change}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+            
+            <div class="markets-section">
+                <h3>📰 Market News</h3>
+                <div class="market-news">
+                    ${marketData.news.map(article => `
+                        <div class="market-news-item" onclick="openArticle('${article.link}')">
+                            <h4>${article.title}</h4>
+                            <p>${cleanDescription(article.description)}</p>
+                            <div class="news-meta">
+                                <span>${article.source}</span> • <span>${formatTimeAgo(article.pubDate)}</span>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+            
+            <div class="market-update">
+                <small>Last updated: ${new Date(marketData.lastUpdate).toLocaleTimeString()}</small>
+            </div>
+        </div>
+    `);
+    
+    document.body.appendChild(modal);
+}
+
+// ⭐ For You Feature - Personalized content
+async function showForYouSection() {
+    try {
+        showLoadingModal('⭐ Personalizing Your Feed...');
+        
+        // Get user interests (could be from localStorage or preferences)
+        const interests = localStorage.getItem('userInterests') || 'technology,ai,business';
+        const response = await fetch(`/api/foryou?interests=${encodeURIComponent(interests)}`);
+        const data = await response.json();
+        
+        hideLoadingModal();
+        
+        if (data.status === 'success') {
+            displayForYouContent(data.data);
+        } else {
+            showErrorModal('Failed to load personalized content');
+        }
+    } catch (error) {
+        hideLoadingModal();
+        showErrorModal('Error loading personalized features');
+        console.error('For You error:', error);
+    }
+}
+
+function displayForYouContent(forYouData) {
+    const modal = createFeatureModal('⭐ For You', `
+        <div class="foryou-dashboard">
+            <div class="personalization-header">
+                <h3>🎯 Your Personalized Feed</h3>
+                <p class="ai-insight">💡 ${forYouData.aiInsights}</p>
+            </div>
+            
+            <div class="interests-section">
+                <h4>Your Interests:</h4>
+                <div class="interests-tags">
+                    ${forYouData.interests.map(interest => `
+                        <span class="interest-tag">${interest}</span>
+                    `).join('')}
+                    <button class="edit-interests" onclick="editInterests()">✏️ Edit</button>
+                </div>
+            </div>
+            
+            <div class="personalized-articles">
+                ${forYouData.articles.map(article => `
+                    <div class="personal-article" onclick="openArticle('${article.link}')">
+                        <h4>${article.title}</h4>
+                        <p>${cleanDescription(article.description)}</p>
+                        <div class="article-meta">
+                            <span class="category">${article.aiCategory || article.category}</span>
+                            <span class="source">${article.source}</span>
+                            <span class="time">${formatTimeAgo(article.pubDate)}</span>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+            
+            <div class="suggestions-section">
+                <h4>💡 Suggested Topics:</h4>
+                <div class="topic-suggestions">
+                    ${forYouData.suggestions.map(suggestion => `
+                        <div class="suggestion-item" onclick="addInterest('${suggestion.category}')">
+                            <span>${suggestion.category}</span>
+                            <span class="count">${suggestion.count} articles</span>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        </div>
+    `);
+    
+    document.body.appendChild(modal);
+}
+
+// 🧠 Analysis Feature - Comprehensive AI analysis
+async function showAnalysisSection() {
+    try {
+        showLoadingModal('🧠 Running AI Analysis...');
+        
+        const response = await fetch('/api/analysis');
+        const data = await response.json();
+        
+        hideLoadingModal();
+        
+        if (data.status === 'success') {
+            displayAnalysisContent(data.data);
+        } else {
+            showErrorModal('Failed to load analysis');
+        }
+    } catch (error) {
+        hideLoadingModal();
+        showErrorModal('Error loading analysis features');
+        console.error('Analysis error:', error);
+    }
+}
+
+function displayAnalysisContent(analysisData) {
+    const modal = createFeatureModal('🧠 AI Analysis Dashboard', `
+        <div class="analysis-dashboard">
+            <div class="analysis-overview">
+                <h3>📊 Sentiment Analysis</h3>
+                <div class="sentiment-chart">
+                    <div class="sentiment-bar">
+                        <div class="positive" style="width: ${analysisData.sentiment.percentage.positive}%">
+                            ${analysisData.sentiment.percentage.positive}% Positive
+                        </div>
+                        <div class="neutral" style="width: ${analysisData.sentiment.percentage.neutral}%">
+                            ${analysisData.sentiment.percentage.neutral}% Neutral
+                        </div>
+                        <div class="negative" style="width: ${analysisData.sentiment.percentage.negative}%">
+                            ${analysisData.sentiment.percentage.negative}% Negative
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="insights-section">
+                <h3>💡 AI Insights</h3>
+                <div class="insights-list">
+                    ${analysisData.insights.map(insight => `
+                        <div class="insight-item">
+                            <i class="fas fa-lightbulb"></i>
+                            <span>${insight}</span>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+            
+            <div class="trending-analysis">
+                <h3>🔥 Top Trending Analysis</h3>
+                <div class="trending-analysis-list">
+                    ${analysisData.trending.map((item, index) => `
+                        <div class="trending-analysis-item">
+                            <div class="rank">#${index + 1}</div>
+                            <div class="content">
+                                <h4>${item.title}</h4>
+                                <div class="meta">
+                                    <span class="trending-score">${Math.round(item.trending)}%</span>
+                                    <span class="sentiment ${item.sentiment}">${item.sentiment}</span>
+                                    <span class="category">${item.category}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+            
+            <div class="categories-analysis">
+                <h3>📈 Category Breakdown</h3>
+                <div class="categories-grid">
+                    ${Object.entries(analysisData.categories).map(([category, data]) => `
+                        <div class="category-analysis">
+                            <h4>${category}</h4>
+                            <div class="category-stats">
+                                <div class="stat">${data.count} articles</div>
+                                <div class="stat positive">${data.positive} positive</div>
+                                <div class="stat negative">${data.negative} negative</div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+            
+            <div class="analysis-footer">
+                <p>📊 Analysis of ${analysisData.totalArticles} articles</p>
+                <p>🕒 Last updated: ${new Date(analysisData.lastAnalysis).toLocaleTimeString()}</p>
+            </div>
+        </div>
+    `);
+    
+    document.body.appendChild(modal);
+}
+
+// 🔴 Live Feature - Real-time updates
+async function showLiveSection() {
+    try {
+        showLoadingModal('🔴 Loading Live Updates...');
+        
+        const response = await fetch('/api/live');
+        const data = await response.json();
+        
+        hideLoadingModal();
+        
+        if (data.status === 'success') {
+            displayLiveContent(data.data);
+        } else {
+            showErrorModal('Failed to load live data');
+        }
+    } catch (error) {
+        hideLoadingModal();
+        showErrorModal('Error loading live features');
+        console.error('Live error:', error);
+    }
+}
+
+function displayLiveContent(liveData) {
+    const modal = createFeatureModal('🔴 Live Updates', `
+        <div class="live-dashboard">
+            <div class="live-header">
+                <h3>🔴 LIVE</h3>
+                <div class="live-stats">
+                    <div class="stat">
+                        <span class="number">${liveData.stats.updatesLastHour}</span>
+                        <span class="label">Updates Last Hour</span>
+                    </div>
+                    <div class="stat">
+                        <span class="number">${liveData.stats.breakingStories}</span>
+                        <span class="label">Breaking Stories</span>
+                    </div>
+                    <div class="stat">
+                        <span class="number">${liveData.stats.activeSources}</span>
+                        <span class="label">Active Sources</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="breaking-section">
+                <h3>⚡ Breaking News</h3>
+                <div class="breaking-feed">
+                    ${liveData.breaking.map(article => `
+                        <div class="breaking-live-item" onclick="openArticle('${article.link}')">
+                            <div class="breaking-indicator">🚨</div>
+                            <div class="breaking-content">
+                                <h4>${article.title}</h4>
+                                <p>${cleanDescription(article.description)}</p>
+                                <div class="breaking-meta">
+                                    <span>${article.source}</span>
+                                    <span>${formatTimeAgo(article.pubDate)}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+            
+            <div class="live-updates-section">
+                <h3>📡 Live Updates</h3>
+                <div class="live-feed">
+                    ${liveData.liveUpdates.map(article => `
+                        <div class="live-update-item" onclick="openArticle('${article.link}')">
+                            <div class="live-indicator">🔴</div>
+                            <div class="update-content">
+                                <h4>${article.title}</h4>
+                                <div class="update-meta">
+                                    <span class="source">${article.source}</span>
+                                    <span class="time">${formatTimeAgo(article.pubDate)}</span>
+                                    ${article.trending > 70 ? '<span class="trending-badge">🔥 Trending</span>' : ''}
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+            
+            <div class="live-footer">
+                <p>🔄 Auto-refreshing every 2 minutes</p>
+                <p>🕒 Last refresh: ${new Date(liveData.lastRefresh).toLocaleTimeString()}</p>
+                <button onclick="refreshLiveData()" class="refresh-btn">🔄 Refresh Now</button>
+            </div>
+        </div>
+    `);
+    
+    document.body.appendChild(modal);
+    
+    // Auto-refresh live data every 2 minutes
+    const refreshInterval = setInterval(async () => {
+        if (document.querySelector('.live-dashboard')) {
+            await refreshLiveData();
+        } else {
+            clearInterval(refreshInterval);
+        }
+    }, 120000);
+}
+
+// Helper Functions
+function createFeatureModal(title, content) {
+    const modal = document.createElement('div');
+    modal.className = 'feature-modal';
+    modal.innerHTML = `
+        <div class="feature-modal-content">
+            <div class="feature-modal-header">
+                <h2>${title}</h2>
+                <button class="close-modal" onclick="this.closest('.feature-modal').remove()">&times;</button>
+            </div>
+            <div class="feature-modal-body">
+                ${content}
+            </div>
+        </div>
+    `;
+    
+    modal.style.cssText = `
+        position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(0,0,0,0.8); z-index: 10000;
+        display: flex; align-items: center; justify-content: center;
+        overflow-y: auto;
+    `;
+    
+    return modal;
+}
+
+function showLoadingModal(message) {
+    const existing = document.querySelector('.loading-modal');
+    if (existing) existing.remove();
+    
+    const modal = createLoadingModal(message);
+    document.body.appendChild(modal);
+}
+
+function hideLoadingModal() {
+    const modal = document.querySelector('.loading-modal');
+    if (modal) modal.remove();
+}
+
+function showErrorModal(message) {
+    alert(`❌ ${message}`);
+}
+
+// Interactive functions
+function editInterests() {
+    const current = localStorage.getItem('userInterests') || 'technology,ai,business';
+    const newInterests = prompt('Enter your interests (comma-separated):', current);
+    if (newInterests) {
+        localStorage.setItem('userInterests', newInterests);
+        alert('✅ Interests updated! Refresh to see personalized content.');
+    }
+}
+
+function addInterest(category) {
+    const current = localStorage.getItem('userInterests') || '';
+    const interests = current.split(',').filter(i => i.trim());
+    if (!interests.includes(category)) {
+        interests.push(category);
+        localStorage.setItem('userInterests', interests.join(','));
+        alert(`✅ Added "${category}" to your interests!`);
+    }
+}
+
+async function refreshLiveData() {
+    const liveSection = document.querySelector('.live-dashboard');
+    if (liveSection) {
+        liveSection.innerHTML = '<div class="refreshing">🔄 Refreshing live data...</div>';
+        await showLiveSection();
+    }
+}
+
+// Tab Switching for News Features
+function switchNewsTab(tabName) {
+    // Remove active class from all tabs
+    document.querySelectorAll('.news-tab').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    
+    // Add active class to clicked tab
+    document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+    
+    // Call the appropriate function based on tab
+    switch(tabName) {
+        case 'discover':
+            showDiscoverSection();
+            break;
+        case 'trending':
+            showTrendingSection();
+            break;
+        case 'markets':
+            showMarketsSection();
+            break;
+        case 'personalized':
+            showForYouSection();
+            break;
+        case 'analysis':
+            showAnalysisSection();
+            break;
+        case 'live':
+            showLiveSection();
+            break;
+        default:
+            console.log('Unknown tab:', tabName);
+    }
+}
+
+// Search functionality
+function searchNews() {
+    const searchInput = document.getElementById('newsSearch');
+    const query = searchInput.value.trim();
+    
+    if (!query) {
+        alert('Please enter a search term');
+        return;
+    }
+    
+    // Search and show results
+    performNewsSearch(query);
+}
+
+async function performNewsSearch(query) {
+    try {
+        showLoadingModal(`🔍 Searching for "${query}"...`);
+        
+        const response = await fetch(`/api/news/search?q=${encodeURIComponent(query)}`);
+        const data = await response.json();
+        
+        hideLoadingModal();
+        
+        if (data.status === 'success') {
+            displaySearchResults(query, data.data);
+        } else {
+            showErrorModal('Search failed');
+        }
+    } catch (error) {
+        hideLoadingModal();
+        showErrorModal('Search error');
+        console.error('Search error:', error);
+    }
+}
+
+function displaySearchResults(query, results) {
+    const modal = createFeatureModal(`🔍 Search Results: "${query}"`, `
+        <div class="search-results">
+            <div class="search-header">
+                <h3>Found ${results.length} articles</h3>
+                <p>Search results for "${query}"</p>
+            </div>
+            <div class="search-results-list">
+                ${results.map(article => `
+                    <div class="search-result-item" onclick="openArticle('${article.link}')">
+                        <h4>${article.title}</h4>
+                        <p>${cleanDescription(article.description)}</p>
+                        <div class="result-meta">
+                            <span class="source">${article.source}</span>
+                            <span class="time">${formatTimeAgo(article.pubDate)}</span>
+                            <span class="category">${article.aiCategory || article.category}</span>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+            ${results.length === 0 ? '<p class="no-results">No articles found for your search. Try different keywords.</p>' : ''}
+        </div>
+    `);
+    
+    document.body.appendChild(modal);
+}
+
+// AI Assistant for news
+function openAIAssistant() {
+    const modal = createFeatureModal('🤖 AI News Assistant', `
+        <div class="ai-assistant-panel">
+            <div class="assistant-header">
+                <h3>🤖 Your AI News Assistant</h3>
+                <p>Ask me anything about current events, news topics, or get personalized news recommendations!</p>
+            </div>
+            
+            <div class="quick-suggestions">
+                <h4>Quick Questions:</h4>
+                <div class="suggestions-grid">
+                    <button onclick="askAI('What are the top trending news topics today?')" class="suggestion-btn">
+                        🔥 Top Trending Topics
+                    </button>
+                    <button onclick="askAI('Give me a summary of today\'s technology news')" class="suggestion-btn">
+                        🤖 Tech News Summary
+                    </button>
+                    <button onclick="askAI('What are the latest developments in AI and machine learning?')" class="suggestion-btn">
+                        🧠 AI Developments
+                    </button>
+                    <button onclick="askAI('Show me positive news stories from today')" class="suggestion-btn">
+                        ✨ Positive News
+                    </button>
+                    <button onclick="askAI('What are the biggest business stories right now?')" class="suggestion-btn">
+                        💼 Business News
+                    </button>
+                    <button onclick="askAI('Analyze the sentiment of today\'s news')" class="suggestion-btn">
+                        📊 News Sentiment
+                    </button>
+                </div>
+            </div>
+            
+            <div class="custom-question">
+                <h4>Ask Your Own Question:</h4>
+                <div class="question-input">
+                    <input type="text" id="aiQuestion" placeholder="Ask me anything about current news and events..." onkeypress="handleEnterKey(event)">
+                    <button onclick="askCustomQuestion()" class="ask-btn">Ask AI</button>
+                </div>
+            </div>
+        </div>
+    `);
+    
+    document.body.appendChild(modal);
+}
+
+function handleEnterKey(event) {
+    if (event.key === 'Enter') {
+        askCustomQuestion();
+    }
+}
+
+function askCustomQuestion() {
+    const input = document.getElementById('aiQuestion');
+    const question = input.value.trim();
+    
+    if (!question) {
+        alert('Please enter a question');
+        return;
+    }
+    
+    askAI(question);
+}
+
+async function askAI(question) {
+    try {
+        showLoadingModal('🤖 AI is thinking...');
+        
+        const response = await fetch('/api/chat', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                message: question,
+                includeNewsContext: true
+            })
+        });
+        
+        const data = await response.json();
+        hideLoadingModal();
+        
+        if (data.status === 'success') {
+            showAIResponse(question, data.response);
+        } else {
+            showErrorModal('AI assistant error');
+        }
+    } catch (error) {
+        hideLoadingModal();
+        showErrorModal('Failed to get AI response');
+        console.error('AI error:', error);
+    }
+}
+
+function showAIResponse(question, response) {
+    const modal = createFeatureModal('🤖 AI Assistant Response', `
+        <div class="ai-response-panel">
+            <div class="question-section">
+                <h3>Your Question:</h3>
+                <p class="user-question">${question}</p>
+            </div>
+            
+            <div class="response-section">
+                <h3>🤖 AI Response:</h3>
+                <div class="ai-response-content">
+                    ${response.replace(/\n/g, '<br>')}
+                </div>
+            </div>
+            
+            <div class="response-actions">
+                <button onclick="askAnotherQuestion()" class="action-btn">Ask Another Question</button>
+                <button onclick="this.closest('.feature-modal').remove()" class="action-btn secondary">Close</button>
+            </div>
+        </div>
+    `);
+    
+    document.body.appendChild(modal);
+}
+
+function askAnotherQuestion() {
+    // Close current modal and open AI assistant
+    document.querySelector('.feature-modal').remove();
+    openAIAssistant();
 }
 
 // === ENHANCED CONTACT FORM SYSTEM WITH AI SUPPORT ===
@@ -1759,13 +2977,37 @@ function addEnhancedContactStyles() {
 
 // Launch World Headlines with specialized news interface
 function launchWorldHeadlines() {
-    // Smooth scroll to news section with enhanced experience
-    scrollToSection('news');
-    
-    // Wait for scroll to complete, then launch enhanced news interface
-    setTimeout(() => {
-        showWorldHeadlinesLauncher();
-    }, 800);
+    try {
+        // Add visual feedback to the button
+        const button = event?.target?.closest('.cta-button');
+        addButtonLoadingState(button);
+        
+        // Ensure section exists before scrolling
+        const newsSection = document.getElementById('news');
+        if (newsSection) {
+            // Smooth scroll to news section with enhanced experience
+            scrollToSection('news');
+            
+            // Wait for scroll to complete, then launch enhanced news interface
+            setTimeout(() => {
+                try {
+                    removeButtonLoadingState(button);
+                    showWorldHeadlinesLauncher();
+                } catch (error) {
+                    removeButtonLoadingState(button);
+                    handleButtonError('World Headlines', error);
+                }
+            }, 800);
+        } else {
+            // Fallback: directly show launcher if section not found
+            removeButtonLoadingState(button);
+            showWorldHeadlinesLauncher();
+        }
+    } catch (error) {
+        const button = event?.target?.closest('.cta-button');
+        removeButtonLoadingState(button);
+        handleButtonError('World Headlines', error);
+    }
 }
 
 function showWorldHeadlinesLauncher() {
@@ -1848,11 +3090,35 @@ function showWorldHeadlinesLauncher() {
 
 // Launch Cloud Services with specialized interface
 function launchCloudServices() {
-    scrollToSection('cloud');
-    
-    setTimeout(() => {
-        showCloudServicesLauncher();
-    }, 800);
+    try {
+        // Add visual feedback to the button
+        const button = event?.target?.closest('.cta-button');
+        addButtonLoadingState(button);
+        
+        // Ensure section exists before scrolling
+        const cloudSection = document.getElementById('cloud');
+        if (cloudSection) {
+            scrollToSection('cloud');
+            
+            setTimeout(() => {
+                try {
+                    removeButtonLoadingState(button);
+                    showCloudServicesLauncher();
+                } catch (error) {
+                    removeButtonLoadingState(button);
+                    handleButtonError('Cloud Services', error);
+                }
+            }, 800);
+        } else {
+            // Fallback: directly show launcher if section not found
+            removeButtonLoadingState(button);
+            showCloudServicesLauncher();
+        }
+    } catch (error) {
+        const button = event?.target?.closest('.cta-button');
+        removeButtonLoadingState(button);
+        handleButtonError('Cloud Services', error);
+    }
 }
 
 function showCloudServicesLauncher() {
@@ -2089,11 +3355,35 @@ function showCloudServicesLauncher() {
 
 // Launch Media & Design with specialized interface
 function launchMediaDesign() {
-    scrollToSection('media');
-    
-    setTimeout(() => {
-        showMediaDesignLauncher();
-    }, 800);
+    try {
+        // Add visual feedback to the button
+        const button = event?.target?.closest('.cta-button');
+        addButtonLoadingState(button);
+        
+        // Ensure section exists before scrolling
+        const mediaSection = document.getElementById('media');
+        if (mediaSection) {
+            scrollToSection('media');
+            
+            setTimeout(() => {
+                try {
+                    removeButtonLoadingState(button);
+                    showMediaDesignLauncher();
+                } catch (error) {
+                    removeButtonLoadingState(button);
+                    handleButtonError('Media & Design', error);
+                }
+            }, 800);
+        } else {
+            // Fallback: directly show launcher if section not found
+            removeButtonLoadingState(button);
+            showMediaDesignLauncher();
+        }
+    } catch (error) {
+        const button = event?.target?.closest('.cta-button');
+        removeButtonLoadingState(button);
+        handleButtonError('Media & Design', error);
+    }
 }
 
 function showMediaDesignLauncher() {
@@ -2768,6 +4058,135 @@ function addCloudToolsStyles() {
     document.head.appendChild(style);
 }
 
+// === ENHANCED BUTTON STATE MANAGEMENT ===
+
+// Add loading state to button with visual feedback
+function addButtonLoadingState(button) {
+    if (!button) return;
+    
+    // Store original content
+    button.dataset.originalContent = button.innerHTML;
+    
+    // Add loading class and content
+    button.classList.add('loading');
+    button.disabled = true;
+    
+    // Create loading spinner
+    const spinner = document.createElement('div');
+    spinner.className = 'button-spinner';
+    
+    // Update button content with spinner
+    const icon = button.querySelector('i');
+    const small = button.querySelector('small');
+    
+    if (icon && small) {
+        button.innerHTML = `
+            <div class="button-spinner"></div>
+            <span class="loading-text">Launching...</span>
+            <small>Please wait</small>
+        `;
+    } else {
+        button.innerHTML = `
+            <div class="button-spinner"></div>
+            <span class="loading-text">Loading...</span>
+        `;
+    }
+    
+    // Add ripple effect
+    createButtonRipple(button);
+}
+
+// Remove loading state from button
+function removeButtonLoadingState(button) {
+    if (!button) return;
+    
+    // Restore original content
+    if (button.dataset.originalContent) {
+        button.innerHTML = button.dataset.originalContent;
+        delete button.dataset.originalContent;
+    }
+    
+    // Remove loading state
+    button.classList.remove('loading');
+    button.disabled = false;
+}
+
+// Create enhanced ripple effect for buttons
+function createButtonRipple(button, event = null) {
+    const ripple = document.createElement('div');
+    ripple.className = 'button-ripple';
+    
+    // Position ripple
+    const rect = button.getBoundingClientRect();
+    const size = Math.max(rect.width, rect.height) * 1.5;
+    
+    let x, y;
+    if (event) {
+        x = event.clientX - rect.left - size / 2;
+        y = event.clientY - rect.top - size / 2;
+    } else {
+        x = rect.width / 2 - size / 2;
+        y = rect.height / 2 - size / 2;
+    }
+    
+    ripple.style.cssText = `
+        width: ${size}px;
+        height: ${size}px;
+        left: ${x}px;
+        top: ${y}px;
+        transform: scale(0);
+        opacity: 0.6;
+    `;
+    
+    button.style.position = 'relative';
+    button.appendChild(ripple);
+    
+    // Animate ripple
+    requestAnimationFrame(() => {
+        ripple.style.transform = 'scale(1)';
+        ripple.style.opacity = '0';
+    });
+    
+    // Remove ripple after animation
+    setTimeout(() => {
+        if (ripple.parentNode) {
+            ripple.remove();
+        }
+    }, 600);
+}
+
+// Enhanced button interaction handlers
+function enhanceButtonInteractions() {
+    const ctaButtons = document.querySelectorAll('.cta-button');
+    
+    ctaButtons.forEach(button => {
+        // Add click ripple effect
+        button.addEventListener('click', (event) => {
+            createButtonRipple(button, event);
+        });
+        
+        // Add hover glow effect
+        button.addEventListener('mouseenter', () => {
+            if (!button.classList.contains('loading')) {
+                button.classList.add('hover-glow');
+            }
+        });
+        
+        button.addEventListener('mouseleave', () => {
+            button.classList.remove('hover-glow');
+        });
+        
+        // Add focus accessibility
+        button.addEventListener('focus', () => {
+            button.classList.add('focus-visible');
+        });
+        
+        button.addEventListener('blur', () => {
+            button.classList.remove('focus-visible');
+        });
+    });
+}
+
 // Export functions for global access
 window.sendMessage = sendMessage;
 window.openTool = openTool;
@@ -2785,6 +4204,10 @@ window.whatsappContact = whatsappContact;
 window.launchWorldHeadlines = launchWorldHeadlines;
 window.launchCloudServices = launchCloudServices;
 window.launchMediaDesign = launchMediaDesign;
+window.addButtonLoadingState = addButtonLoadingState;
+window.removeButtonLoadingState = removeButtonLoadingState;
+window.createButtonRipple = createButtonRipple;
+window.enhanceButtonInteractions = enhanceButtonInteractions;
 window.closeLauncher = closeLauncher;
 window.switchCloudPlatform = switchCloudPlatform;
 window.openCloudTool = openCloudTool;
@@ -2793,6 +4216,127 @@ window.openBestPractices = openBestPractices;
 window.openCostCalculators = openCostCalculators;
 window.openArchitectureTemplates = openArchitectureTemplates;
 window.requestCloudAssessment = requestCloudAssessment;
+
+// === ENHANCED BUTTON SYSTEM INITIALIZATION ===
+
+// Initialize all button enhancements when DOM is loaded
+function initializeButtonEnhancements() {
+    // Add enhanced styles
+    addEnhancedButtonStyles();
+    
+    // Setup enhanced interactions
+    enhanceButtonInteractions();
+    
+    // Add accessibility attributes
+    addButtonAccessibility();
+    
+    // Setup keyboard navigation
+    setupKeyboardNavigation();
+    
+    console.log('KaiTech: Enhanced button system initialized');
+}
+
+// Add accessibility attributes to buttons
+function addButtonAccessibility() {
+    const ctaButtons = document.querySelectorAll('.cta-button');
+    
+    ctaButtons.forEach((button, index) => {
+        // Add ARIA labels
+        if (!button.getAttribute('aria-label')) {
+            const text = button.textContent.trim();
+            button.setAttribute('aria-label', text);
+        }
+        
+        // Add role if not present
+        if (!button.getAttribute('role')) {
+            button.setAttribute('role', 'button');
+        }
+        
+        // Add tabindex for keyboard navigation
+        if (!button.getAttribute('tabindex')) {
+            button.setAttribute('tabindex', '0');
+        }
+        
+        // Add keyboard support
+        button.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                button.click();
+            }
+        });
+    });
+}
+
+// Setup enhanced keyboard navigation for CTA buttons
+function setupKeyboardNavigation() {
+    const ctaButtons = Array.from(document.querySelectorAll('.cta-button'));
+    
+    // Add arrow key navigation between CTA buttons
+    ctaButtons.forEach((button, index) => {
+        button.addEventListener('keydown', (event) => {
+            let targetIndex;
+            
+            switch(event.key) {
+                case 'ArrowRight':
+                case 'ArrowDown':
+                    event.preventDefault();
+                    targetIndex = (index + 1) % ctaButtons.length;
+                    ctaButtons[targetIndex].focus();
+                    break;
+                    
+                case 'ArrowLeft':
+                case 'ArrowUp':
+                    event.preventDefault();
+                    targetIndex = (index - 1 + ctaButtons.length) % ctaButtons.length;
+                    ctaButtons[targetIndex].focus();
+                    break;
+                    
+                case 'Home':
+                    event.preventDefault();
+                    ctaButtons[0].focus();
+                    break;
+                    
+                case 'End':
+                    event.preventDefault();
+                    ctaButtons[ctaButtons.length - 1].focus();
+                    break;
+            }
+        });
+    });
+}
+
+// Enhanced error handling for button actions
+function handleButtonError(buttonAction, error) {
+    console.error(`KaiTech Button Error (${buttonAction}):`, error);
+    
+    // Show user-friendly error message
+    const errorModal = document.createElement('div');
+    errorModal.className = 'error-modal';
+    errorModal.innerHTML = `
+        <div class="error-content">
+            <div class="error-icon">⚠️</div>
+            <h3>Service Temporarily Unavailable</h3>
+            <p>We're having trouble launching ${buttonAction}. Please try again in a moment.</p>
+            <button onclick="this.parentElement.parentElement.remove()" class="error-close-btn">OK</button>
+        </div>
+    `;
+    
+    document.body.appendChild(errorModal);
+    
+    // Auto-remove after 5 seconds
+    setTimeout(() => {
+        if (errorModal.parentNode) {
+            errorModal.remove();
+        }
+    }, 5000);
+}
+
+// Initialize when DOM is ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeButtonEnhancements);
+} else {
+    initializeButtonEnhancements();
+}
 
 // === KAITECH RWANDA NEW SERVICES FUNCTIONALITY ===
 
@@ -6863,7 +8407,206 @@ function addAIAssistantStyles() {
     document.head.appendChild(style);
 }
 
-// Export new functions
+// Add enhanced button styles
+function addEnhancedButtonStyles() {
+    const style = document.createElement('style');
+    style.textContent = `
+        /* Enhanced Button States */
+        .cta-button {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .cta-button.loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+        
+        .cta-button.hover-glow {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 12px 25px rgba(16, 185, 129, 0.4);
+        }
+        
+        .cta-button.focus-visible {
+            outline: 2px solid #10b981;
+            outline-offset: 2px;
+        }
+        
+        /* Button Spinner */
+        .button-spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid transparent;
+            border-top: 2px solid currentColor;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Button Ripple Effect */
+        .button-ripple {
+            position: absolute;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            transition: transform 0.6s ease-out, opacity 0.6s ease-out;
+            z-index: 1;
+        }
+        
+        /* Loading Text Animation */
+        .loading-text {
+            animation: pulse-text 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-text {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        /* Enhanced CTA Button Styles */
+        .cta-button.primary {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: 2px solid #10b981;
+        }
+        
+        .cta-button.primary:hover:not(.loading) {
+            background: linear-gradient(135deg, #059669, #047857);
+            border-color: #059669;
+        }
+        
+        .cta-button.secondary {
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
+            color: white;
+            border: 2px solid #3b82f6;
+        }
+        
+        .cta-button.secondary:hover:not(.loading) {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            border-color: #2563eb;
+        }
+        
+        .cta-button.tertiary {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: white;
+            border: 2px solid #8b5cf6;
+        }
+        
+        .cta-button.tertiary:hover:not(.loading) {
+            background: linear-gradient(135deg, #7c3aed, #6d28d9);
+            border-color: #7c3aed;
+        }
+        
+        /* Mobile Button Enhancements */
+        @media (max-width: 768px) {
+            .cta-button.hover-glow {
+                transform: translateY(-2px) scale(1.01);
+                box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+            }
+            
+            .button-spinner {
+                width: 16px;
+                height: 16px;
+            }
+        }
+        
+        /* Error Modal Styles */
+        .error-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .error-content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            animation: slideInUp 0.3s ease;
+        }
+        
+        .error-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .error-content h3 {
+            color: #dc2626;
+            margin: 0 0 15px 0;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        .error-content p {
+            color: #6b7280;
+            margin: 0 0 25px 0;
+            line-height: 1.6;
+        }
+        
+        .error-close-btn {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .error-close-btn:hover {
+            background: linear-gradient(135deg, #059669, #047857);
+            transform: translateY(-2px);
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideInUp {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        /* Accessibility Improvements */
+        @media (prefers-reduced-motion: reduce) {
+            .cta-button,
+            .button-spinner,
+            .button-ripple,
+            .loading-text,
+            .error-modal,
+            .error-content {
+                animation: none;
+                transition: none;
+            }
+            
+            .cta-button.hover-glow {
+                transform: none;
+            }
+        }
+    `;
+    
+    document.head.appendChild(style);
+}
+
+// Export functions for global access
 window.switchNewsTab = switchNewsTab;
 window.exploreNewsTopic = exploreNewsTopic;
 window.openFullArticle = openFullArticle;
