@@ -50,9 +50,9 @@ if (CloudDataIntegration) {
 }
 
 // Configuration
-const HTTP_PORT = 8080;
-const HTTPS_PORT = 8443;
-const HOST = '0.0.0.0'; // Bind to all interfaces for external access
+const HTTP_PORT = process.env.PORT || 8080;
+const HTTPS_PORT = process.env.HTTPS_PORT || 8443;
+const HOST = process.env.HOST || '0.0.0.0'; // Bind to all interfaces for external access
 
 // Grok AI Configuration 
 const GROK_API_URL = 'https://api.x.ai/v1/chat/completions';

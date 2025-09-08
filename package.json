@@ -2,9 +2,9 @@
   "name": "kaitech-voice-of-time",
   "version": "1.0.0",
   "description": "KaiTech Voice of Time - Professional technology solutions with real-time world headlines coverage, enterprise cloud solutions, and cutting-edge creative technology",
-  "main": "server.js",
+  "main": "server-with-auth.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node server-with-auth.js",
     "dev": "node server.js",
     "serve": "node server.js",
     "mobile": "node server.js",
