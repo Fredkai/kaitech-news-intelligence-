@@ -6,6 +6,8 @@
     <title>KaiTech - Voice of Time | World Headlines, Cloud Solutions & Creative Technology</title>
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/mobile-styles.css">
+    <link rel="stylesheet" href="css/enhanced-services.css">
+    <link rel="stylesheet" href="css/new-color-theme.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="assets/kaitech-enhanced-logo.svg">
@@ -1174,58 +1176,1053 @@
             </div>
         </section>
 
-        <!-- Cloud Services Section -->
-        <section id="cloud" class="section">
+        <!-- Cloud Computing & Infrastructure Section -->
+        <section id="cloud" class="section cloud-services-section">
             <div class="container">
-                <h2><i class="fas fa-cloud"></i> Cloud Services</h2>
-                <p>Professional cloud computing solutions for your business</p>
-                
-                <div class="services-list">
-                    <h3>Our Cloud Services:</h3>
-                    <ul style="font-size: 1.1rem; line-height: 1.8; max-width: 800px; margin: 2rem auto;">
-                        <li><strong>☁️ Cloud Infrastructure</strong> - Scalable servers and computing resources</li>
-                        <li><strong>🔧 Platform Services</strong> - Development and deployment platforms</li>
-                        <li><strong>🛡️ Security Solutions</strong> - Enterprise-grade security and compliance</li>
-                        <li><strong>💾 Data Storage</strong> - Secure and reliable cloud storage solutions</li>
-                        <li><strong>🔗 API Integration</strong> - Custom API development and integration</li>
-                        <li><strong>📊 Analytics & Monitoring</strong> - Real-time performance monitoring</li>
-                    </ul>
+                <!-- Section Header -->
+                <div class="section-header">
+                    <div class="section-badge">
+                        <i class="fas fa-cloud"></i>
+                        <span>Enterprise Solutions</span>
+                    </div>
+                    <h2 class="section-title">Cloud Computing & Infrastructure</h2>
+                    <p class="section-subtitle">Scalable, secure, and intelligent cloud solutions that power your digital transformation journey</p>
                 </div>
-                
-                <div class="contact-info" style="background: #f8f9fa; padding: 2rem; border-radius: 10px; margin-top: 3rem; text-align: center;">
-                    <h3>Get Cloud Services</h3>
-                    <p><strong>📧 Email:</strong> cloud@kaitech.com</p>
-                    <p><strong>📞 Phone:</strong> +1 (555) 123-4567</p>
-                    <p><strong>💬 Chat:</strong> Available 24/7 for consultations</p>
-                    <p style="margin-top: 1.5rem;"><em>Contact us for custom cloud solutions and pricing</em></p>
+
+                <!-- Cloud Services Stats -->
+                <div class="cloud-stats-grid">
+                    <div class="cloud-stat-card">
+                        <div class="stat-icon"><i class="fas fa-server"></i></div>
+                        <div class="stat-number">99.9%</div>
+                        <div class="stat-label">Uptime SLA</div>
+                    </div>
+                    <div class="cloud-stat-card">
+                        <div class="stat-icon"><i class="fas fa-shield-alt"></i></div>
+                        <div class="stat-number">256-bit</div>
+                        <div class="stat-label">Encryption</div>
+                    </div>
+                    <div class="cloud-stat-card">
+                        <div class="stat-icon"><i class="fas fa-globe"></i></div>
+                        <div class="stat-number">15+</div>
+                        <div class="stat-label">Global Regions</div>
+                    </div>
+                    <div class="cloud-stat-card">
+                        <div class="stat-icon"><i class="fas fa-users"></i></div>
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Expert Support</div>
+                    </div>
+                </div>
+
+                <!-- Service Categories -->
+                <div class="service-categories">
+                    <div class="category-tabs">
+                        <button class="category-tab active" data-category="infrastructure" onclick="switchServiceCategory('infrastructure')">
+                            <i class="fas fa-server"></i>
+                            <span>Infrastructure</span>
+                        </button>
+                        <button class="category-tab" data-category="platform" onclick="switchServiceCategory('platform')">
+                            <i class="fas fa-code"></i>
+                            <span>Platform Services</span>
+                        </button>
+                        <button class="category-tab" data-category="security" onclick="switchServiceCategory('security')">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Security & Compliance</span>
+                        </button>
+                        <button class="category-tab" data-category="analytics" onclick="switchServiceCategory('analytics')">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Analytics & AI</span>
+                        </button>
+                    </div>
+
+                    <!-- Infrastructure Services -->
+                    <div id="infrastructure-services" class="service-content active">
+                        <div class="services-grid">
+                            <div class="service-card premium">
+                                <div class="service-icon">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                </div>
+                                <h3>Compute Engine</h3>
+                                <p>High-performance virtual machines with auto-scaling capabilities</p>
+                                <div class="service-features">
+                                    <span class="feature-tag">GPU Support</span>
+                                    <span class="feature-tag">Auto-Scaling</span>
+                                    <span class="feature-tag">Load Balancing</span>
+                                </div>
+                                <div class="service-pricing">
+                                    <span class="price">From $49/month</span>
+                                </div>
+                                <button class="service-btn" onclick="selectCloudService('compute')">
+                                    <i class="fas fa-rocket"></i> Get Started
+                                </button>
+                            </div>
+
+                            <div class="service-card">
+                                <div class="service-icon">
+                                    <i class="fas fa-database"></i>
+                                </div>
+                                <h3>Cloud Storage</h3>
+                                <p>Unlimited scalable storage with multi-region replication</p>
+                                <div class="service-features">
+                                    <span class="feature-tag">Encryption</span>
+                                    <span class="feature-tag">CDN Integration</span>
+                                    <span class="feature-tag">Backup & Recovery</span>
+                                </div>
+                                <div class="service-pricing">
+                                    <span class="price">$0.02/GB/month</span>
+                                </div>
+                                <button class="service-btn" onclick="selectCloudService('storage')">
+                                    <i class="fas fa-download"></i> Learn More
+                                </button>
+                            </div>
+
+                            <div class="service-card">
+                                <div class="service-icon">
+                                    <i class="fas fa-network-wired"></i>
+                                </div>
+                                <h3>Virtual Networking</h3>
+                                <p>Private networks with advanced traffic management</p>
+                                <div class="service-features">
+                                    <span class="feature-tag">VPN Gateway</span>
+                                    <span class="feature-tag">Firewall</span>
+                                    <span class="feature-tag">DDoS Protection</span>
+                                </div>
+                                <div class="service-pricing">
+                                    <span class="price">From $29/month</span>
+                                </div>
+                                <button class="service-btn" onclick="selectCloudService('networking')">
+                                    <i class="fas fa-network-wired"></i> Configure
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Platform Services -->
+                    <div id="platform-services" class="service-content">
+                        <div class="services-grid">
+                            <div class="service-card">
+                                <div class="service-icon">
+                                    <i class="fas fa-code-branch"></i>
+                                </div>
+                                <h3>DevOps Platform</h3>
+                                <p>Complete CI/CD pipeline with automated testing and deployment</p>
+                                <div class="service-features">
+                                    <span class="feature-tag">Git Integration</span>
+                                    <span class="feature-tag">Docker Support</span>
+                                    <span class="feature-tag">Kubernetes</span>
+                                </div>
+                                <div class="service-pricing">
+                                    <span class="price">From $99/month</span>
+                                </div>
+                                <button class="service-btn" onclick="selectCloudService('devops')">
+                                    <i class="fas fa-rocket"></i> Deploy Now
+                                </button>
+                            </div>
+
+                            <div class="service-card premium">
+                                <div class="service-icon">
+                                    <i class="fas fa-cogs"></i>
+                                </div>
+                                <h3>Serverless Computing</h3>
+                                <p>Run code without managing servers - pay only for execution time</p>
+                                <div class="service-features">
+                                    <span class="feature-tag">Auto-Scaling</span>
+                                    <span class="feature-tag">Event-Driven</span>
+                                    <span class="feature-tag">Multi-Language</span>
+                                </div>
+                                <div class="service-pricing">
+                                    <span class="price">Pay-per-use</span>
+                                </div>
+                                <button class="service-btn" onclick="selectCloudService('serverless')">
+                                    <i class="fas fa-bolt"></i> Start Free
+                                </button>
+                            </div>
+
+                            <div class="service-card">
+                                <div class="service-icon">
+                                    <i class="fas fa-plug"></i>
+                                </div>
+                                <h3>API Management</h3>
+                                <p>Design, deploy, and manage APIs with advanced analytics</p>
+                                <div class="service-features">
+                                    <span class="feature-tag">Rate Limiting</span>
+                                    <span class="feature-tag">Authentication</span>
+                                    <span class="feature-tag">Analytics</span>
+                                </div>
+                                <div class="service-pricing">
+                                    <span class="price">From $79/month</span>
+                                </div>
+                                <button class="service-btn" onclick="selectCloudService('api')">
+                                    <i class="fas fa-play"></i> Try Demo
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Security Services -->
+                    <div id="security-services" class="service-content">
+                        <div class="services-grid">
+                            <div class="service-card premium">
+                                <div class="service-icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <h3>Security Center</h3>
+                                <p>Advanced threat detection and security monitoring platform</p>
+                                <div class="service-features">
+                                    <span class="feature-tag">AI Detection</span>
+                                    <span class="feature-tag">24/7 Monitoring</span>
+                                    <span class="feature-tag">Compliance</span>
+                                </div>
+                                <div class="service-pricing">
+                                    <span class="price">From $199/month</span>
+                                </div>
+                                <button class="service-btn" onclick="selectCloudService('security')">
+                                    <i class="fas fa-shield-alt"></i> Secure Now
+                                </button>
+                            </div>
+
+                            <div class="service-card">
+                                <div class="service-icon">
+                                    <i class="fas fa-key"></i>
+                                </div>
+                                <h3>Identity & Access</h3>
+                                <p>Centralized identity management with single sign-on</p>
+                                <div class="service-features">
+                                    <span class="feature-tag">SSO</span>
+                                    <span class="feature-tag">MFA</span>
+                                    <span class="feature-tag">Directory Sync</span>
+                                </div>
+                                <div class="service-pricing">
+                                    <span class="price">$5/user/month</span>
+                                </div>
+                                <button class="service-btn" onclick="selectCloudService('identity')">
+                                    <i class="fas fa-users"></i> Configure
+                                </button>
+                            </div>
+
+                            <div class="service-card">
+                                <div class="service-icon">
+                                    <i class="fas fa-certificate"></i>
+                                </div>
+                                <h3>Compliance Suite</h3>
+                                <p>Automated compliance monitoring for GDPR, SOC 2, and more</p>
+                                <div class="service-features">
+                                    <span class="feature-tag">GDPR</span>
+                                    <span class="feature-tag">SOC 2</span>
+                                    <span class="feature-tag">ISO 27001</span>
+                                </div>
+                                <div class="service-pricing">
+                                    <span class="price">From $149/month</span>
+                                </div>
+                                <button class="service-btn" onclick="selectCloudService('compliance')">
+                                    <i class="fas fa-check"></i> Audit Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Analytics Services -->
+                    <div id="analytics-services" class="service-content">
+                        <div class="services-grid">
+                            <div class="service-card premium">
+                                <div class="service-icon">
+                                    <i class="fas fa-brain"></i>
+                                </div>
+                                <h3>AI & Machine Learning</h3>
+                                <p>Pre-trained models and custom ML pipelines for your business</p>
+                                <div class="service-features">
+                                    <span class="feature-tag">AutoML</span>
+                                    <span class="feature-tag">GPU Training</span>
+                                    <span class="feature-tag">Model Deployment</span>
+                                </div>
+                                <div class="service-pricing">
+                                    <span class="price">From $299/month</span>
+                                </div>
+                                <button class="service-btn" onclick="selectCloudService('ai')">
+                                    <i class="fas fa-robot"></i> Start Training
+                                </button>
+                            </div>
+
+                            <div class="service-card">
+                                <div class="service-icon">
+                                    <i class="fas fa-chart-bar"></i>
+                                </div>
+                                <h3>Business Intelligence</h3>
+                                <p>Advanced analytics and visualization for data-driven decisions</p>
+                                <div class="service-features">
+                                    <span class="feature-tag">Real-time</span>
+                                    <span class="feature-tag">Dashboards</span>
+                                    <span class="feature-tag">Reports</span>
+                                </div>
+                                <div class="service-pricing">
+                                    <span class="price">From $129/month</span>
+                                </div>
+                                <button class="service-btn" onclick="selectCloudService('bi')">
+                                    <i class="fas fa-chart-line"></i> View Demo
+                                </button>
+                            </div>
+
+                            <div class="service-card">
+                                <div class="service-icon">
+                                    <i class="fas fa-stream"></i>
+                                </div>
+                                <h3>Data Pipeline</h3>
+                                <p>Real-time data processing and ETL workflows at scale</p>
+                                <div class="service-features">
+                                    <span class="feature-tag">Stream Processing</span>
+                                    <span class="feature-tag">ETL</span>
+                                    <span class="feature-tag">Data Lake</span>
+                                </div>
+                                <div class="service-pricing">
+                                    <span class="price">From $89/month</span>
+                                </div>
+                                <button class="service-btn" onclick="selectCloudService('pipeline')">
+                                    <i class="fas fa-play"></i> Build Pipeline
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pricing Plans -->
+                <div class="pricing-section">
+                    <h3 class="pricing-title">Choose Your Cloud Plan</h3>
+                    <div class="pricing-grid">
+                        <div class="pricing-card starter">
+                            <div class="plan-header">
+                                <h4>Startup</h4>
+                                <div class="plan-price">
+                                    <span class="currency">$</span>
+                                    <span class="amount">99</span>
+                                    <span class="period">/month</span>
+                                </div>
+                                <p class="plan-description">Perfect for small teams and startups</p>
+                            </div>
+                            <div class="plan-features">
+                                <div class="feature"><i class="fas fa-check"></i> 2 CPU Cores</div>
+                                <div class="feature"><i class="fas fa-check"></i> 8GB RAM</div>
+                                <div class="feature"><i class="fas fa-check"></i> 100GB Storage</div>
+                                <div class="feature"><i class="fas fa-check"></i> Basic Support</div>
+                                <div class="feature"><i class="fas fa-check"></i> 99.5% SLA</div>
+                            </div>
+                            <button class="plan-btn" onclick="selectPricingPlan('startup')">
+                                Start Free Trial
+                            </button>
+                        </div>
+
+                        <div class="pricing-card professional popular">
+                            <div class="popular-badge">Most Popular</div>
+                            <div class="plan-header">
+                                <h4>Professional</h4>
+                                <div class="plan-price">
+                                    <span class="currency">$</span>
+                                    <span class="amount">299</span>
+                                    <span class="period">/month</span>
+                                </div>
+                                <p class="plan-description">Ideal for growing businesses</p>
+                            </div>
+                            <div class="plan-features">
+                                <div class="feature"><i class="fas fa-check"></i> 8 CPU Cores</div>
+                                <div class="feature"><i class="fas fa-check"></i> 32GB RAM</div>
+                                <div class="feature"><i class="fas fa-check"></i> 500GB Storage</div>
+                                <div class="feature"><i class="fas fa-check"></i> Priority Support</div>
+                                <div class="feature"><i class="fas fa-check"></i> 99.9% SLA</div>
+                                <div class="feature"><i class="fas fa-check"></i> Auto-scaling</div>
+                            </div>
+                            <button class="plan-btn" onclick="selectPricingPlan('professional')">
+                                Choose Professional
+                            </button>
+                        </div>
+
+                        <div class="pricing-card enterprise">
+                            <div class="plan-header">
+                                <h4>Enterprise</h4>
+                                <div class="plan-price">
+                                    <span class="currency">$</span>
+                                    <span class="amount">999</span>
+                                    <span class="period">/month</span>
+                                </div>
+                                <p class="plan-description">For large-scale operations</p>
+                            </div>
+                            <div class="plan-features">
+                                <div class="feature"><i class="fas fa-check"></i> Unlimited CPU</div>
+                                <div class="feature"><i class="fas fa-check"></i> Unlimited RAM</div>
+                                <div class="feature"><i class="fas fa-check"></i> Unlimited Storage</div>
+                                <div class="feature"><i class="fas fa-check"></i> 24/7 Dedicated Support</div>
+                                <div class="feature"><i class="fas fa-check"></i> 99.99% SLA</div>
+                                <div class="feature"><i class="fas fa-check"></i> Custom Solutions</div>
+                                <div class="feature"><i class="fas fa-check"></i> Compliance Included</div>
+                            </div>
+                            <button class="plan-btn" onclick="selectPricingPlan('enterprise')">
+                                Contact Sales
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Section -->
+                <div class="cloud-contact-section">
+                    <div class="contact-card">
+                        <div class="contact-header">
+                            <div class="contact-icon">
+                                <i class="fas fa-headset"></i>
+                            </div>
+                            <h3>Ready to Move to the Cloud?</h3>
+                            <p>Our cloud experts are ready to help you design the perfect solution</p>
+                        </div>
+                        <div class="contact-options">
+                            <div class="contact-option">
+                                <div class="option-icon"><i class="fas fa-phone"></i></div>
+                                <div class="option-info">
+                                    <h4>Call Us</h4>
+                                    <p>+1 (555) 123-CLOUD</p>
+                                </div>
+                            </div>
+                            <div class="contact-option">
+                                <div class="option-icon"><i class="fas fa-envelope"></i></div>
+                                <div class="option-info">
+                                    <h4>Email Us</h4>
+                                    <p>cloud@kaitech.com</p>
+                                </div>
+                            </div>
+                            <div class="contact-option">
+                                <div class="option-icon"><i class="fas fa-calendar"></i></div>
+                                <div class="option-info">
+                                    <h4>Schedule Call</h4>
+                                    <p>Book a consultation</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="contact-actions">
+                            <button class="contact-btn primary" onclick="openCloudConsultation()">
+                                <i class="fas fa-rocket"></i> Free Consultation
+                            </button>
+                            <button class="contact-btn secondary" onclick="downloadCloudGuide()">
+                                <i class="fas fa-download"></i> Cloud Migration Guide
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Media & Design Section -->
-        <section id="media" class="section">
+        <!-- Creative Media & Design Studio Section -->
+        <section id="media" class="section media-design-section">
             <div class="container">
-                <h2><i class="fas fa-palette"></i> Media & Design</h2>
-                <p>Professional creative design services for your business</p>
-                
-                <div class="services-list">
-                    <h3>Our Design Services:</h3>
-                    <ul style="font-size: 1.1rem; line-height: 1.8; max-width: 800px; margin: 2rem auto;">
-                        <li><strong>🎨 Logo Design</strong> - Professional brand identity and logos</li>
-                        <li><strong>📄 Print Design</strong> - Business cards, brochures, and marketing materials</li>
-                        <li><strong>🌐 Web Design</strong> - Modern, responsive website design and development</li>
-                        <li><strong>🎥 Video Production</strong> - Corporate videos and promotional content</li>
-                        <li><strong>📱 Mobile App Design</strong> - User interface and experience design</li>
-                        <li><strong>🖼️ Digital Marketing</strong> - Social media graphics and online advertising</li>
-                    </ul>
+                <!-- Section Header -->
+                <div class="section-header">
+                    <div class="section-badge">
+                        <i class="fas fa-palette"></i>
+                        <span>Creative Studio</span>
+                    </div>
+                    <h2 class="section-title">Media & Creative Design</h2>
+                    <p class="section-subtitle">Where imagination meets innovation - crafting visual experiences that captivate, inspire, and drive results</p>
                 </div>
-                
-                <div class="contact-info" style="background: #f8f9fa; padding: 2rem; border-radius: 10px; margin-top: 3rem; text-align: center;">
-                    <h3>Get Design Services</h3>
-                    <p><strong>📧 Email:</strong> design@kaitech.com</p>
-                    <p><strong>📞 Phone:</strong> +1 (555) 987-6543</p>
-                    <p><strong>💬 Chat:</strong> Free consultations available</p>
-                    <p style="margin-top: 1.5rem;"><em>Contact us for custom design projects and quotes</em></p>
+
+                <!-- Creative Stats -->
+                <div class="creative-stats-grid">
+                    <div class="creative-stat-card">
+                        <div class="stat-icon"><i class="fas fa-magic"></i></div>
+                        <div class="stat-number">500+</div>
+                        <div class="stat-label">Projects Completed</div>
+                    </div>
+                    <div class="creative-stat-card">
+                        <div class="stat-icon"><i class="fas fa-trophy"></i></div>
+                        <div class="stat-number">15+</div>
+                        <div class="stat-label">Design Awards</div>
+                    </div>
+                    <div class="creative-stat-card">
+                        <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                        <div class="stat-number">48h</div>
+                        <div class="stat-label">Average Delivery</div>
+                    </div>
+                    <div class="creative-stat-card">
+                        <div class="stat-icon"><i class="fas fa-star"></i></div>
+                        <div class="stat-number">4.9/5</div>
+                        <div class="stat-label">Client Rating</div>
+                    </div>
+                </div>
+
+                <!-- Service Showcase -->
+                <div class="service-showcase">
+                    <div class="showcase-tabs">
+                        <button class="showcase-tab active" data-showcase="branding" onclick="switchShowcase('branding')">
+                            <i class="fas fa-trademark"></i>
+                            <span>Brand Identity</span>
+                        </button>
+                        <button class="showcase-tab" data-showcase="web" onclick="switchShowcase('web')">
+                            <i class="fas fa-desktop"></i>
+                            <span>Web Design</span>
+                        </button>
+                        <button class="showcase-tab" data-showcase="video" onclick="switchShowcase('video')">
+                            <i class="fas fa-video"></i>
+                            <span>Video Production</span>
+                        </button>
+                        <button class="showcase-tab" data-showcase="print" onclick="switchShowcase('print')">
+                            <i class="fas fa-print"></i>
+                            <span>Print & Digital</span>
+                        </button>
+                    </div>
+
+                    <!-- Branding Portfolio -->
+                    <div id="branding-showcase" class="showcase-content active">
+                        <div class="portfolio-grid">
+                            <div class="portfolio-item featured" onclick="viewPortfolioItem('tech-startup')">
+                                <div class="portfolio-image">
+                                    <div class="image-placeholder brand-gradient-1">
+                                        <div class="brand-elements">
+                                            <div class="logo-mockup">LOGO</div>
+                                            <div class="brand-colors">
+                                                <div class="color-dot color-1"></div>
+                                                <div class="color-dot color-2"></div>
+                                                <div class="color-dot color-3"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="portfolio-overlay">
+                                        <div class="overlay-content">
+                                            <h4>TechFlow Startup</h4>
+                                            <p>Complete brand identity system</p>
+                                            <div class="portfolio-tags">
+                                                <span>Logo Design</span>
+                                                <span>Brand Guidelines</span>
+                                                <span>Stationery</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="portfolio-item" onclick="viewPortfolioItem('restaurant-brand')">
+                                <div class="portfolio-image">
+                                    <div class="image-placeholder brand-gradient-2">
+                                        <div class="brand-elements">
+                                            <div class="logo-mockup restaurant">🍽️</div>
+                                            <div class="brand-text">Gourmet</div>
+                                        </div>
+                                    </div>
+                                    <div class="portfolio-overlay">
+                                        <div class="overlay-content">
+                                            <h4>Gourmet Bistro</h4>
+                                            <p>Premium restaurant branding</p>
+                                            <div class="portfolio-tags">
+                                                <span>Logo</span>
+                                                <span>Menu Design</span>
+                                                <span>Signage</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="portfolio-item" onclick="viewPortfolioItem('fitness-brand')">
+                                <div class="portfolio-image">
+                                    <div class="image-placeholder brand-gradient-3">
+                                        <div class="brand-elements">
+                                            <div class="logo-mockup fitness">💪</div>
+                                            <div class="brand-text">FitLife</div>
+                                        </div>
+                                    </div>
+                                    <div class="portfolio-overlay">
+                                        <div class="overlay-content">
+                                            <h4>FitLife Gym</h4>
+                                            <p>Dynamic fitness brand identity</p>
+                                            <div class="portfolio-tags">
+                                                <span>Brand Identity</span>
+                                                <span>App Design</span>
+                                                <span>Merchandise</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="portfolio-item" onclick="viewPortfolioItem('eco-brand')">
+                                <div class="portfolio-image">
+                                    <div class="image-placeholder brand-gradient-4">
+                                        <div class="brand-elements">
+                                            <div class="logo-mockup eco">🌱</div>
+                                            <div class="brand-text">EcoTech</div>
+                                        </div>
+                                    </div>
+                                    <div class="portfolio-overlay">
+                                        <div class="overlay-content">
+                                            <h4>EcoTech Solutions</h4>
+                                            <p>Sustainable technology branding</p>
+                                            <div class="portfolio-tags">
+                                                <span>Sustainable Design</span>
+                                                <span>Packaging</span>
+                                                <span>Digital Assets</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Web Design Portfolio -->
+                    <div id="web-showcase" class="showcase-content">
+                        <div class="portfolio-grid">
+                            <div class="portfolio-item featured" onclick="viewPortfolioItem('ecommerce-site')">
+                                <div class="portfolio-image">
+                                    <div class="image-placeholder web-mockup-1">
+                                        <div class="browser-frame">
+                                            <div class="browser-dots">
+                                                <span></span><span></span><span></span>
+                                            </div>
+                                            <div class="website-preview">
+                                                <div class="nav-bar"></div>
+                                                <div class="hero-section"></div>
+                                                <div class="content-blocks">
+                                                    <div class="block"></div>
+                                                    <div class="block"></div>
+                                                    <div class="block"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="portfolio-overlay">
+                                        <div class="overlay-content">
+                                            <h4>Luxury Fashion Store</h4>
+                                            <p>High-end e-commerce website</p>
+                                            <div class="portfolio-tags">
+                                                <span>E-commerce</span>
+                                                <span>Mobile-First</span>
+                                                <span>Payment Integration</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="portfolio-item" onclick="viewPortfolioItem('saas-platform')">
+                                <div class="portfolio-image">
+                                    <div class="image-placeholder web-mockup-2">
+                                        <div class="browser-frame">
+                                            <div class="browser-dots">
+                                                <span></span><span></span><span></span>
+                                            </div>
+                                            <div class="website-preview dashboard">
+                                                <div class="dashboard-sidebar"></div>
+                                                <div class="dashboard-content">
+                                                    <div class="chart-area"></div>
+                                                    <div class="stats-row">
+                                                        <div class="stat"></div>
+                                                        <div class="stat"></div>
+                                                        <div class="stat"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="portfolio-overlay">
+                                        <div class="overlay-content">
+                                            <h4>Analytics Platform</h4>
+                                            <p>SaaS dashboard interface</p>
+                                            <div class="portfolio-tags">
+                                                <span>Dashboard</span>
+                                                <span>Data Viz</span>
+                                                <span>UX Design</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="portfolio-item" onclick="viewPortfolioItem('mobile-app')">
+                                <div class="portfolio-image">
+                                    <div class="image-placeholder mobile-mockup">
+                                        <div class="phone-frame">
+                                            <div class="screen">
+                                                <div class="status-bar"></div>
+                                                <div class="app-header"></div>
+                                                <div class="app-content">
+                                                    <div class="card"></div>
+                                                    <div class="card"></div>
+                                                    <div class="card"></div>
+                                                </div>
+                                                <div class="bottom-nav"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="portfolio-overlay">
+                                        <div class="overlay-content">
+                                            <h4>Health & Fitness App</h4>
+                                            <p>Mobile app UI/UX design</p>
+                                            <div class="portfolio-tags">
+                                                <span>Mobile Design</span>
+                                                <span>UI/UX</span>
+                                                <span>Prototyping</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="portfolio-item" onclick="viewPortfolioItem('corporate-site')">
+                                <div class="portfolio-image">
+                                    <div class="image-placeholder web-mockup-3">
+                                        <div class="browser-frame">
+                                            <div class="browser-dots">
+                                                <span></span><span></span><span></span>
+                                            </div>
+                                            <div class="website-preview corporate">
+                                                <div class="hero-large"></div>
+                                                <div class="services-grid">
+                                                    <div class="service-card"></div>
+                                                    <div class="service-card"></div>
+                                                    <div class="service-card"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="portfolio-overlay">
+                                        <div class="overlay-content">
+                                            <h4>Corporate Website</h4>
+                                            <p>Professional business presence</p>
+                                            <div class="portfolio-tags">
+                                                <span>Corporate</span>
+                                                <span>CMS</span>
+                                                <span>SEO Optimized</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Video Production Portfolio -->
+                    <div id="video-showcase" class="showcase-content">
+                        <div class="portfolio-grid video-grid">
+                            <div class="portfolio-item video-item featured" onclick="playVideoDemo('corporate-video')">
+                                <div class="portfolio-image">
+                                    <div class="video-placeholder">
+                                        <div class="video-overlay">
+                                            <div class="play-button">
+                                                <i class="fas fa-play"></i>
+                                            </div>
+                                        </div>
+                                        <div class="video-info">
+                                            <h4>Corporate Brand Video</h4>
+                                            <p>2:30 • 4K Resolution</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="portfolio-item video-item" onclick="playVideoDemo('product-launch')">
+                                <div class="portfolio-image">
+                                    <div class="video-placeholder product">
+                                        <div class="video-overlay">
+                                            <div class="play-button">
+                                                <i class="fas fa-play"></i>
+                                            </div>
+                                        </div>
+                                        <div class="video-info">
+                                            <h4>Product Launch</h4>
+                                            <p>1:45 • Motion Graphics</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="portfolio-item video-item" onclick="playVideoDemo('social-campaign')">
+                                <div class="portfolio-image">
+                                    <div class="video-placeholder social">
+                                        <div class="video-overlay">
+                                            <div class="play-button">
+                                                <i class="fas fa-play"></i>
+                                            </div>
+                                        </div>
+                                        <div class="video-info">
+                                            <h4>Social Media Campaign</h4>
+                                            <p>0:30 • Instagram Stories</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="portfolio-item video-item" onclick="playVideoDemo('testimonial-video')">
+                                <div class="portfolio-image">
+                                    <div class="video-placeholder testimonial">
+                                        <div class="video-overlay">
+                                            <div class="play-button">
+                                                <i class="fas fa-play"></i>
+                                            </div>
+                                        </div>
+                                        <div class="video-info">
+                                            <h4>Client Testimonials</h4>
+                                            <p>3:20 • Interview Style</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Print & Digital Portfolio -->
+                    <div id="print-showcase" class="showcase-content">
+                        <div class="portfolio-grid">
+                            <div class="portfolio-item featured" onclick="viewPortfolioItem('magazine-design')">
+                                <div class="portfolio-image">
+                                    <div class="image-placeholder print-magazine">
+                                        <div class="magazine-cover">
+                                            <div class="magazine-title">DESIGN</div>
+                                            <div class="magazine-subtitle">QUARTERLY</div>
+                                            <div class="magazine-features">
+                                                <div class="feature-line"></div>
+                                                <div class="feature-line"></div>
+                                                <div class="feature-line"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="portfolio-overlay">
+                                        <div class="overlay-content">
+                                            <h4>Design Quarterly</h4>
+                                            <p>Magazine layout and design</p>
+                                            <div class="portfolio-tags">
+                                                <span>Editorial</span>
+                                                <span>Typography</span>
+                                                <span>Print Ready</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="portfolio-item" onclick="viewPortfolioItem('business-cards')">
+                                <div class="portfolio-image">
+                                    <div class="image-placeholder business-cards">
+                                        <div class="card-stack">
+                                            <div class="business-card card-1"></div>
+                                            <div class="business-card card-2"></div>
+                                            <div class="business-card card-3"></div>
+                                        </div>
+                                    </div>
+                                    <div class="portfolio-overlay">
+                                        <div class="overlay-content">
+                                            <h4>Executive Business Cards</h4>
+                                            <p>Premium stationery design</p>
+                                            <div class="portfolio-tags">
+                                                <span>Premium Paper</span>
+                                                <span>Embossing</span>
+                                                <span>Foil Stamping</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="portfolio-item" onclick="viewPortfolioItem('packaging-design')">
+                                <div class="portfolio-image">
+                                    <div class="image-placeholder packaging">
+                                        <div class="package-box">
+                                            <div class="package-front"></div>
+                                            <div class="package-side"></div>
+                                            <div class="package-label"></div>
+                                        </div>
+                                    </div>
+                                    <div class="portfolio-overlay">
+                                        <div class="overlay-content">
+                                            <h4>Product Packaging</h4>
+                                            <p>Sustainable packaging solutions</p>
+                                            <div class="portfolio-tags">
+                                                <span>Eco-Friendly</span>
+                                                <span>Die-Cut</span>
+                                                <span>Brand Integration</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="portfolio-item" onclick="viewPortfolioItem('social-templates')">
+                                <div class="portfolio-image">
+                                    <div class="image-placeholder social-media">
+                                        <div class="social-grid">
+                                            <div class="social-post post-1"></div>
+                                            <div class="social-post post-2"></div>
+                                            <div class="social-post post-3"></div>
+                                            <div class="social-post post-4"></div>
+                                        </div>
+                                    </div>
+                                    <div class="portfolio-overlay">
+                                        <div class="overlay-content">
+                                            <h4>Social Media Templates</h4>
+                                            <p>Complete social media kit</p>
+                                            <div class="portfolio-tags">
+                                                <span>Instagram</span>
+                                                <span>Facebook</span>
+                                                <span>LinkedIn</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Packages -->
+                <div class="service-packages">
+                    <h3 class="packages-title">Design Service Packages</h3>
+                    <div class="packages-grid">
+                        <div class="package-card starter">
+                            <div class="package-header">
+                                <div class="package-icon">
+                                    <i class="fas fa-rocket"></i>
+                                </div>
+                                <h4>Starter Package</h4>
+                                <div class="package-price">
+                                    <span class="currency">$</span>
+                                    <span class="amount">499</span>
+                                </div>
+                                <p class="package-description">Perfect for small businesses and startups</p>
+                            </div>
+                            <div class="package-features">
+                                <div class="feature"><i class="fas fa-check"></i> Logo Design</div>
+                                <div class="feature"><i class="fas fa-check"></i> Business Card Design</div>
+                                <div class="feature"><i class="fas fa-check"></i> Basic Brand Guidelines</div>
+                                <div class="feature"><i class="fas fa-check"></i> 3 Revisions</div>
+                                <div class="feature"><i class="fas fa-check"></i> 5 Business Days</div>
+                            </div>
+                            <button class="package-btn" onclick="selectDesignPackage('starter')">
+                                Choose Starter
+                            </button>
+                        </div>
+
+                        <div class="package-card professional popular">
+                            <div class="popular-badge">Most Popular</div>
+                            <div class="package-header">
+                                <div class="package-icon">
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <h4>Professional Package</h4>
+                                <div class="package-price">
+                                    <span class="currency">$</span>
+                                    <span class="amount">1,299</span>
+                                </div>
+                                <p class="package-description">Complete brand identity solution</p>
+                            </div>
+                            <div class="package-features">
+                                <div class="feature"><i class="fas fa-check"></i> Complete Brand Identity</div>
+                                <div class="feature"><i class="fas fa-check"></i> Website Design (5 Pages)</div>
+                                <div class="feature"><i class="fas fa-check"></i> Marketing Materials</div>
+                                <div class="feature"><i class="fas fa-check"></i> Social Media Kit</div>
+                                <div class="feature"><i class="fas fa-check"></i> Unlimited Revisions</div>
+                                <div class="feature"><i class="fas fa-check"></i> 10 Business Days</div>
+                            </div>
+                            <button class="package-btn" onclick="selectDesignPackage('professional')">
+                                Choose Professional
+                            </button>
+                        </div>
+
+                        <div class="package-card enterprise">
+                            <div class="package-header">
+                                <div class="package-icon">
+                                    <i class="fas fa-crown"></i>
+                                </div>
+                                <h4>Enterprise Package</h4>
+                                <div class="package-price">
+                                    <span class="currency">$</span>
+                                    <span class="amount">2,999</span>
+                                </div>
+                                <p class="package-description">Premium comprehensive solution</p>
+                            </div>
+                            <div class="package-features">
+                                <div class="feature"><i class="fas fa-check"></i> Full Brand System</div>
+                                <div class="feature"><i class="fas fa-check"></i> Website + E-commerce</div>
+                                <div class="feature"><i class="fas fa-check"></i> Video Production</div>
+                                <div class="feature"><i class="fas fa-check"></i> Photography Shoot</div>
+                                <div class="feature"><i class="fas fa-check"></i> Marketing Campaign</div>
+                                <div class="feature"><i class="fas fa-check"></i> Dedicated Designer</div>
+                                <div class="feature"><i class="fas fa-check"></i> Priority Support</div>
+                            </div>
+                            <button class="package-btn" onclick="selectDesignPackage('enterprise')">
+                                Get Quote
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Creative Process -->
+                <div class="creative-process">
+                    <h3 class="process-title">Our Creative Process</h3>
+                    <div class="process-steps">
+                        <div class="process-step">
+                            <div class="step-number">01</div>
+                            <div class="step-content">
+                                <h4>Discovery & Research</h4>
+                                <p>Understanding your brand, audience, and objectives</p>
+                            </div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number">02</div>
+                            <div class="step-content">
+                                <h4>Concept Development</h4>
+                                <p>Creating initial concepts and creative directions</p>
+                            </div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number">03</div>
+                            <div class="step-content">
+                                <h4>Design & Refinement</h4>
+                                <p>Crafting the final design with precision and attention to detail</p>
+                            </div>
+                        </div>
+                        <div class="process-step">
+                            <div class="step-number">04</div>
+                            <div class="step-content">
+                                <h4>Delivery & Support</h4>
+                                <p>Final delivery with ongoing support and maintenance</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Section -->
+                <div class="creative-contact-section">
+                    <div class="contact-card">
+                        <div class="contact-header">
+                            <div class="contact-icon">
+                                <i class="fas fa-lightbulb"></i>
+                            </div>
+                            <h3>Ready to Create Something Amazing?</h3>
+                            <p>Let's bring your vision to life with exceptional design</p>
+                        </div>
+                        <div class="contact-options">
+                            <div class="contact-option">
+                                <div class="option-icon"><i class="fas fa-phone"></i></div>
+                                <div class="option-info">
+                                    <h4>Call Us</h4>
+                                    <p>+1 (555) DESIGN-1</p>
+                                </div>
+                            </div>
+                            <div class="contact-option">
+                                <div class="option-icon"><i class="fas fa-envelope"></i></div>
+                                <div class="option-info">
+                                    <h4>Email Us</h4>
+                                    <p>design@kaitech.com</p>
+                                </div>
+                            </div>
+                            <div class="contact-option">
+                                <div class="option-icon"><i class="fas fa-calendar"></i></div>
+                                <div class="option-info">
+                                    <h4>Book Consultation</h4>
+                                    <p>Free creative session</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="contact-actions">
+                            <button class="contact-btn primary" onclick="openDesignConsultation()">
+                                <i class="fas fa-palette"></i> Free Consultation
+                            </button>
+                            <button class="contact-btn secondary" onclick="viewFullPortfolio()">
+                                <i class="fas fa-images"></i> View Full Portfolio
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>

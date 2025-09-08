@@ -1,0 +1,518 @@
+/* New Color Theme - Modern Blue & Teal Color Scheme */
+/* This file overrides colors while keeping all existing functionality */
+
+:root {
+    /* Updated Primary Colors */
+    --primary-blue: #0ea5e9;
+    --primary-dark: #0284c7;
+    --primary-light: #38bdf8;
+    --primary-lighter: #bae6fd;
+    
+    /* Secondary Colors - Teal Accent */
+    --secondary-teal: #14b8a6;
+    --secondary-teal-dark: #0f766e;
+    --secondary-teal-light: #5eead4;
+    --secondary-teal-lighter: #ccfbf1;
+    
+    /* Neutral Colors */
+    --neutral-900: #0f172a;
+    --neutral-800: #1e293b;
+    --neutral-700: #334155;
+    --neutral-600: #475569;
+    --neutral-500: #64748b;
+    --neutral-400: #94a3b8;
+    --neutral-300: #cbd5e1;
+    --neutral-200: #e2e8f0;
+    --neutral-100: #f1f5f9;
+    --neutral-50: #f8fafc;
+    --white: #ffffff;
+    
+    /* Success/Error Colors */
+    --success: #10b981;
+    --warning: #f59e0b;
+    --error: #ef4444;
+    
+    /* Background Gradients */
+    --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #bae6fd 100%);
+    --hero-gradient: linear-gradient(135deg, #0ea5e9 0%, #14b8a6 100%);
+    --card-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.9));
+}
+
+/* Update main background */
+body {
+    background: var(--bg-gradient);
+    background-attachment: fixed;
+}
+
+/* Hero section updates */
+.hero {
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.1) 0%, rgba(20, 184, 166, 0.1) 100%);
+}
+
+/* Navigation updates */
+.navbar {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--primary-lighter);
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--primary-blue);
+}
+
+.nav-link::after {
+    background: var(--primary-blue);
+}
+
+/* Button updates */
+.btn-primary,
+.cta-button.primary {
+    background: var(--hero-gradient);
+    color: var(--white);
+}
+
+.btn-primary:hover,
+.cta-button.primary:hover {
+    background: linear-gradient(135deg, var(--primary-dark), var(--secondary-teal-dark));
+    transform: translateY(-2px);
+}
+
+.btn-secondary,
+.cta-button.secondary {
+    background: var(--white);
+    color: var(--primary-blue);
+    border: 2px solid var(--primary-light);
+}
+
+.btn-secondary:hover,
+.cta-button.secondary:hover {
+    background: var(--primary-lighter);
+    border-color: var(--primary-blue);
+}
+
+.cta-button.tertiary {
+    background: var(--secondary-teal);
+    color: var(--white);
+}
+
+.cta-button.tertiary:hover {
+    background: var(--secondary-teal-dark);
+}
+
+/* Hero stats updates */
+.stat-number {
+    color: var(--primary-blue);
+}
+
+/* News section updates */
+.news-explorer-section {
+    background: var(--card-gradient);
+}
+
+.news-tab.active {
+    background: var(--hero-gradient);
+    color: var(--white);
+}
+
+.news-tab:hover {
+    background: var(--primary-lighter);
+    color: var(--primary-dark);
+}
+
+/* Cloud Services section updates */
+.cloud-services-section {
+    background: linear-gradient(135deg, var(--neutral-50) 0%, var(--primary-lighter) 50%, var(--secondary-teal-lighter) 100%);
+}
+
+.cloud-stat-card {
+    border: 1px solid var(--primary-light);
+}
+
+.cloud-stat-card:hover {
+    box-shadow: 0 20px 40px rgba(14, 165, 233, 0.2);
+    border-color: var(--primary-blue);
+}
+
+.cloud-stat-card .stat-icon {
+    background: var(--hero-gradient);
+}
+
+.cloud-stat-card .stat-number {
+    color: var(--primary-dark);
+}
+
+.category-tab.active,
+.category-tab:hover {
+    background: var(--hero-gradient);
+    color: var(--white);
+    border-color: var(--primary-blue);
+}
+
+.service-card {
+    border: 1px solid var(--primary-light);
+}
+
+.service-card:hover {
+    box-shadow: 0 25px 50px rgba(14, 165, 233, 0.25);
+    border-color: var(--primary-blue);
+}
+
+.service-icon {
+    background: linear-gradient(135deg, var(--primary-lighter), var(--secondary-teal-lighter));
+    color: var(--primary-dark);
+}
+
+.service-card h3 {
+    color: var(--primary-dark);
+}
+
+.feature-tag {
+    background: var(--primary-lighter);
+    color: var(--primary-dark);
+}
+
+.service-pricing .price {
+    color: var(--primary-dark);
+}
+
+.service-btn {
+    background: var(--hero-gradient);
+}
+
+.service-btn:hover {
+    background: linear-gradient(135deg, var(--primary-dark), var(--secondary-teal-dark));
+}
+
+/* Pricing section updates */
+.pricing-title {
+    color: var(--primary-dark);
+}
+
+.pricing-card {
+    border: 2px solid var(--primary-light);
+}
+
+.pricing-card.popular {
+    border-color: var(--primary-blue);
+    box-shadow: 0 20px 40px rgba(14, 165, 233, 0.3);
+}
+
+.popular-badge {
+    background: var(--hero-gradient);
+}
+
+.plan-header h4 {
+    color: var(--primary-dark);
+}
+
+.currency {
+    color: var(--primary-blue);
+}
+
+.amount {
+    color: var(--primary-dark);
+}
+
+.plan-btn {
+    background: var(--hero-gradient);
+}
+
+.plan-btn:hover {
+    background: linear-gradient(135deg, var(--primary-dark), var(--secondary-teal-dark));
+}
+
+/* Contact section updates */
+.contact-icon {
+    background: var(--hero-gradient);
+}
+
+.contact-header h3 {
+    color: var(--primary-dark);
+}
+
+.option-icon {
+    background: linear-gradient(135deg, var(--primary-lighter), var(--secondary-teal-lighter));
+    color: var(--primary-dark);
+}
+
+.option-info h4 {
+    color: var(--primary-dark);
+}
+
+.contact-btn.primary {
+    background: var(--hero-gradient);
+}
+
+.contact-btn.primary:hover {
+    background: linear-gradient(135deg, var(--primary-dark), var(--secondary-teal-dark));
+}
+
+.contact-btn.secondary {
+    color: var(--primary-dark);
+    border-color: var(--primary-light);
+}
+
+.contact-btn.secondary:hover {
+    background: var(--primary-lighter);
+    border-color: var(--primary-blue);
+}
+
+/* Media & Design section updates */
+.media-design-section {
+    background: linear-gradient(135deg, var(--neutral-50) 0%, var(--secondary-teal-lighter) 50%, var(--primary-lighter) 100%);
+}
+
+.creative-stat-card {
+    border: 1px solid var(--secondary-teal-light);
+}
+
+.creative-stat-card:hover {
+    box-shadow: 0 20px 40px rgba(20, 184, 166, 0.2);
+    border-color: var(--secondary-teal);
+}
+
+.creative-stat-card .stat-icon {
+    background: linear-gradient(135deg, var(--secondary-teal), var(--secondary-teal-dark));
+}
+
+.creative-stat-card .stat-number,
+.creative-stat-card .stat-label {
+    color: var(--secondary-teal-dark);
+}
+
+.showcase-tab.active,
+.showcase-tab:hover {
+    background: linear-gradient(135deg, var(--secondary-teal), var(--secondary-teal-dark));
+    color: var(--white);
+    border-color: var(--secondary-teal);
+}
+
+.showcase-tab {
+    border: 1px solid var(--secondary-teal-light);
+    color: var(--secondary-teal-dark);
+}
+
+/* Portfolio updates */
+.portfolio-overlay {
+    background: linear-gradient(to top, rgba(14, 165, 233, 0.9), transparent);
+}
+
+/* Package section updates */
+.packages-title {
+    color: var(--secondary-teal-dark);
+}
+
+.package-card {
+    border: 2px solid var(--secondary-teal-light);
+}
+
+.package-card.popular {
+    border-color: var(--secondary-teal);
+    box-shadow: 0 20px 40px rgba(20, 184, 166, 0.3);
+}
+
+.package-icon {
+    background: linear-gradient(135deg, var(--secondary-teal), var(--secondary-teal-dark));
+}
+
+.package-header h4 {
+    color: var(--secondary-teal-dark);
+}
+
+.package-price .currency {
+    color: var(--secondary-teal);
+}
+
+.package-price .amount {
+    color: var(--secondary-teal-dark);
+}
+
+.package-description {
+    color: var(--secondary-teal-dark);
+}
+
+.package-btn {
+    background: linear-gradient(135deg, var(--secondary-teal), var(--secondary-teal-dark));
+}
+
+.package-btn:hover {
+    background: linear-gradient(135deg, var(--secondary-teal-dark), var(--secondary-teal));
+}
+
+/* Process section updates */
+.process-title {
+    color: var(--secondary-teal-dark);
+}
+
+.step-number {
+    background: linear-gradient(135deg, var(--secondary-teal), var(--secondary-teal-dark));
+}
+
+.step-content h4 {
+    color: var(--secondary-teal-dark);
+}
+
+.step-content p {
+    color: var(--secondary-teal-dark);
+}
+
+/* Footer updates */
+.tech-footer {
+    background: linear-gradient(135deg, var(--neutral-900), var(--neutral-800));
+}
+
+/* Breaking news bar */
+.breaking-news-bar {
+    background: var(--hero-gradient);
+}
+
+/* Update section titles */
+.section-title {
+    color: var(--primary-dark);
+}
+
+/* Update feature cards */
+.feature-card {
+    border: 1px solid var(--primary-light);
+}
+
+.feature-card:hover {
+    border-color: var(--primary-blue);
+    box-shadow: 0 20px 40px rgba(14, 165, 233, 0.15);
+}
+
+.feature-icon {
+    background: var(--primary-lighter);
+    color: var(--primary-blue);
+}
+
+.feature-title {
+    color: var(--primary-dark);
+}
+
+.feature-link {
+    color: var(--primary-blue);
+}
+
+/* News cards updates */
+.news-card {
+    border-left: 4px solid var(--primary-blue);
+}
+
+.news-category.breaking {
+    background: var(--error);
+}
+
+.news-category.technology {
+    background: var(--primary-blue);
+}
+
+.news-category.business {
+    background: var(--secondary-teal);
+}
+
+.news-category.politics {
+    background: var(--warning);
+}
+
+.news-category.world {
+    background: var(--success);
+}
+
+/* Topic cards */
+.topic-card {
+    border: 1px solid var(--primary-light);
+}
+
+.topic-card:hover {
+    border-color: var(--primary-blue);
+    box-shadow: 0 15px 30px rgba(14, 165, 233, 0.2);
+}
+
+/* Financial cards */
+.index-card.positive,
+.crypto-change.positive,
+.stock-change.positive {
+    color: var(--success);
+}
+
+.index-card.negative,
+.crypto-change.negative,
+.stock-change.negative {
+    color: var(--error);
+}
+
+/* Scrollbar updates */
+::-webkit-scrollbar-thumb {
+    background: var(--primary-blue);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-dark);
+}
+
+/* Selection color */
+::selection {
+    background: var(--primary-lighter);
+    color: var(--primary-dark);
+}
+
+/* Focus states */
+.btn:focus,
+.nav-link:focus,
+.category-tab:focus,
+.showcase-tab:focus {
+    outline: 2px solid var(--primary-blue);
+    outline-offset: 2px;
+}
+
+/* Loading states */
+.loading {
+    background: linear-gradient(90deg, var(--neutral-200) 0px, var(--neutral-300) 100px, var(--neutral-200) 200px);
+}
+
+/* Animations - keep existing but update colors */
+@keyframes pulse-gentle {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.2); }
+}
+
+.status-dot {
+    background: var(--primary-blue);
+}
+
+/* Brand colors in hero */
+.hero-title .highlight {
+    color: var(--primary-blue);
+}
+
+/* Auth buttons */
+.auth-btn.register {
+    background: var(--hero-gradient);
+    color: var(--white);
+}
+
+.auth-btn.login {
+    background: var(--white);
+    color: var(--primary-blue);
+    border: 2px solid var(--primary-blue);
+}
+
+.auth-btn.register:hover {
+    background: linear-gradient(135deg, var(--primary-dark), var(--secondary-teal-dark));
+}
+
+.auth-btn.login:hover {
+    background: var(--primary-blue);
+    color: var(--white);
+}
+
+/* Mobile responsive color adjustments */
+@media (max-width: 768px) {
+    .pricing-card.popular,
+    .package-card.popular {
+        transform: none;
+        box-shadow: 0 10px 25px rgba(14, 165, 233, 0.2);
+    }
+}
