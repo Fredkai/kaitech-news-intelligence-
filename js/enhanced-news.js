@@ -17,6 +17,13 @@ class EnhancedNewsInterface {
             sortBy: 'relevance'
         };
         
+        // Translation properties
+        this.translationService = null;
+        this.currentLanguage = 'en';
+        this.autoTranslateEnabled = true;
+        this.translationCache = new Map();
+        this.languageToggle = null;
+        
         this.init();
     }
 
@@ -28,6 +35,9 @@ class EnhancedNewsInterface {
         
         // Load available options
         await this.loadAvailableOptions();
+        
+        // Initialize translation service
+        await this.initializeTranslation();
         
         // Set up event listeners
         this.setupEventListeners();
@@ -317,8 +327,10 @@ class EnhancedNewsInterface {
             const data = await response.json();
 
             if (data.success) {
-                this.renderArticles('discover-content', data.articles, 'Discover');
-                this.cacheResult('discover', data.articles);
+                // Translate articles if needed
+                const articles = await this.translateArticles(data.articles);
+                this.renderArticles('discover-content', articles, 'Discover');
+                this.cacheResult('discover', articles);
             } else {
                 this.showError('discover-content', 'Failed to load news');
             }
@@ -355,7 +367,9 @@ class EnhancedNewsInterface {
             const data = await response.json();
 
             if (data.success) {
-                this.renderArticles('markets-content', data.articles, 'Market News');
+                // Translate articles if needed
+                const articles = await this.translateArticles(data.articles);
+                this.renderArticles('markets-content', articles, 'Market News');
             } else {
                 this.showError('markets-content', 'Failed to load market news');
             }
@@ -373,7 +387,9 @@ class EnhancedNewsInterface {
             const data = await response.json();
 
             if (data.success) {
-                this.renderArticles('personalized-content', data.articles, 'Your Personalized Feed');
+                // Translate articles if needed
+                const articles = await this.translateArticles(data.articles);
+                this.renderArticles('personalized-content', articles, 'Your Personalized Feed');
                 this.renderUserStats('personalized-content', data);
             } else {
                 this.showError('personalized-content', 'Please log in for personalized news');
@@ -410,8 +426,10 @@ class EnhancedNewsInterface {
             const data = await response.json();
 
             if (data.success) {
-                this.renderLiveNews('live-content', data.articles);
-                this.cacheResult('live', data.articles);
+                // Translate articles if needed
+                const articles = await this.translateArticles(data.articles);
+                this.renderLiveNews('live-content', articles);
+                this.cacheResult('live', articles);
             } else {
                 this.showError('live-content', 'Failed to load live news');
             }
@@ -451,7 +469,9 @@ class EnhancedNewsInterface {
             const data = await response.json();
 
             if (data.success) {
-                this.renderSearchResults(data.articles, query);
+                // Translate articles if needed
+                const articles = await this.translateArticles(data.articles);
+                this.renderSearchResults(articles, query);
             } else {
                 this.showError('search-results', `No results found for "${query}"`);
             }
@@ -545,17 +565,34 @@ class EnhancedNewsInterface {
         const relevanceScore = article.relevanceScore || 0;
         const category = article.category || article.aiCategory || 'General';
         
+        // Use translated content if available
+        const title = article.translatedTitle || article.title;
+        const description = article.translatedDescription || article.description || '';
+        
+        // Show translation indicator
+        const isTranslated = article.translatedTitle && article.translatedTitle !== article.title;
+        const translationBadge = isTranslated ? `
+            <div class="translation-badge" title="Translated from ${article.originalLanguage?.toUpperCase() || 'original language'}">
+                <i class="fas fa-language"></i>
+                <span>${article.targetLanguage?.toUpperCase() || this.currentLanguage.toUpperCase()}</span>
+            </div>
+        ` : '';
+        
         return `
-            <div class="article-card" onclick="openArticle('${article.url || article.link}')">
-                ${article.urlToImage ? `<img src="${article.urlToImage}" alt="${article.title}" loading="lazy" onerror="this.style.display='none'">` : ''}
+            <div class="article-card ${isTranslated ? 'translated' : ''}" onclick="openArticle('${article.url || article.link}')">
+                ${article.urlToImage ? `<img src="${article.urlToImage}" alt="${title}" loading="lazy" onerror="this.style.display='none'">` : ''}
                 <div class="article-content">
-                    <div class="article-category">${category}</div>
-                    <h3 class="article-title">${article.title}</h3>
-                    <p class="article-description">${(article.description || '').substring(0, 150)}...</p>
+                    <div class="article-header">
+                        <div class="article-category">${category}</div>
+                        ${translationBadge}
+                    </div>
+                    <h3 class="article-title">${title}</h3>
+                    <p class="article-description">${description.substring(0, 150)}...</p>
                     <div class="article-meta">
                         <span class="source">${article.source?.name || article.source || 'Unknown'}</span>
                         <span class="time">${timeAgo}</span>
                         ${relevanceScore > 0 ? `<span class="relevance">${relevanceScore}% relevant</span>` : ''}
+                        ${isTranslated ? `<span class="translation-info">Translated by ${article.translationProvider || 'AI'}</span>` : ''}
                     </div>
                 </div>
                 <div class="article-actions">
@@ -565,6 +602,11 @@ class EnhancedNewsInterface {
                     <button class="share-btn" onclick="shareArticle(event, '${article.url || article.link}')">
                         <i class="fas fa-share"></i>
                     </button>
+                    ${isTranslated ? `
+                        <button class="translate-btn" onclick="showOriginal(event, '${article.id || article.link}')" title="Show original text">
+                            <i class="fas fa-undo"></i>
+                        </button>
+                    ` : ''}
                 </div>
             </div>
         `;
@@ -703,6 +745,153 @@ class EnhancedNewsInterface {
             this.renderRegionFilters(regionContainer);
         }
     }
+
+    // =============================================
+    // TRANSLATION METHODS
+    // =============================================
+
+    async initializeTranslation() {
+        try {
+            console.log('🌐 Initializing translation service...');
+            
+            // Load user translation preferences
+            const response = await fetch('/api/translation/preferences');
+            if (response.ok) {
+                const data = await response.json();
+                this.currentLanguage = data.preferences.language || 'en';
+                this.autoTranslateEnabled = data.preferences.autoTranslate !== false;
+                console.log('📋 Translation preferences loaded:', data.preferences);
+            }
+            
+            // Initialize language toggle if container exists
+            const languageContainer = document.getElementById('languageToggleContainer');
+            if (languageContainer && window.LanguageToggle) {
+                this.languageToggle = new window.LanguageToggle('#languageToggleContainer', {
+                    onLanguageChange: async (newLang, oldLang) => {
+                        await this.onLanguageChange(newLang, oldLang);
+                    },
+                    onAutoTranslateChange: async (enabled) => {
+                        await this.onAutoTranslateChange(enabled);
+                    }
+                });
+            }
+            
+            console.log('✅ Translation service initialized');
+        } catch (error) {
+            console.warn('Translation initialization failed:', error);
+        }
+    }
+
+    async onLanguageChange(newLang, oldLang) {
+        console.log(`🔄 Language changed from ${oldLang} to ${newLang}`);
+        this.currentLanguage = newLang;
+        
+        // Clear translation cache
+        this.translationCache.clear();
+        
+        // Refresh current view with new language
+        if (this.autoTranslateEnabled && newLang !== 'en') {
+            await this.refreshCurrentView();
+        }
+    }
+
+    async onAutoTranslateChange(enabled) {
+        console.log(`🔧 Auto-translate ${enabled ? 'enabled' : 'disabled'}`);
+        this.autoTranslateEnabled = enabled;
+        
+        // Refresh current view
+        await this.refreshCurrentView();
+    }
+
+    async translateArticles(articles) {
+        if (!this.autoTranslateEnabled || this.currentLanguage === 'en' || !articles || articles.length === 0) {
+            return articles;
+        }
+
+        try {
+            console.log(`📝 Translating ${articles.length} articles to ${this.currentLanguage}`);
+            
+            // Check cache first
+            const cacheKey = this.getTranslationCacheKey(articles, this.currentLanguage);
+            const cached = this.translationCache.get(cacheKey);
+            if (cached && (Date.now() - cached.timestamp) < this.cacheTimeout) {
+                console.log('📋 Using cached translations');
+                return cached.articles;
+            }
+
+            const response = await fetch('/api/translation/articles', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    articles: articles.slice(0, 20), // Limit to 20 articles for performance
+                    targetLang: this.currentLanguage,
+                    maxConcurrent: 3,
+                    includeOriginal: false
+                })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                const translatedArticles = data.results || articles;
+                
+                // Cache the results
+                this.translationCache.set(cacheKey, {
+                    articles: translatedArticles,
+                    timestamp: Date.now()
+                });
+                
+                console.log(`✅ Successfully translated ${translatedArticles.length} articles`);
+                return translatedArticles;
+            } else {
+                console.warn('Translation failed, returning original articles');
+                return articles;
+            }
+        } catch (error) {
+            console.error('Translation error:', error);
+            return articles;
+        }
+    }
+
+    async translateSingleArticle(article) {
+        if (!this.autoTranslateEnabled || this.currentLanguage === 'en' || !article) {
+            return article;
+        }
+
+        try {
+            const response = await fetch('/api/translation/article', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    article: article,
+                    targetLang: this.currentLanguage
+                })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                return data.article || article;
+            } else {
+                console.warn('Single article translation failed');
+                return article;
+            }
+        } catch (error) {
+            console.error('Single article translation error:', error);
+            return article;
+        }
+    }
+
+    getTranslationCacheKey(articles, language) {
+        const titles = articles.slice(0, 5).map(a => a.title).join('|');
+        return `${language}-${Buffer.from(titles).toString('base64').substring(0, 20)}`;
+    }
+
+    // =============================================
+    // MODIFIED NEWS LOADING METHODS
+    // =============================================
 }
 
 // Global helper functions

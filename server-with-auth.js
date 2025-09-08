@@ -22,6 +22,16 @@ try {
     console.warn('⚠️ Enhanced news services not available:', error.message);
 }
 
+// Import translation services
+let translationService, TranslationCacheDB;
+try {
+    translationService = require('./services/translation-service');
+    TranslationCacheDB = require('./database/translation-cache');
+    console.log('✅ Translation services loaded');
+} catch (error) {
+    console.warn('⚠️ Translation services not available:', error.message);
+}
+
 // Import cloud solutions service
 let CloudSolutionsService;
 try {
@@ -47,6 +57,14 @@ if (CloudSolutionsService) {
 }
 if (CloudDataIntegration) {
     cloudDataService = new CloudDataIntegration();
+}
+
+// Initialize translation cache database
+let translationCacheDB;
+if (TranslationCacheDB) {
+    translationCacheDB = new TranslationCacheDB();
+    translationCacheDB.initialize().catch(console.error);
+    console.log('✅ Translation cache database initializing...');
 }
 
 // Configuration
@@ -1574,6 +1592,300 @@ async function handleAPIRequest(req, res, pathname, query) {
                 }, null, 2));
             }
             break;
+
+        // ======== TRANSLATION API ENDPOINTS ========
+        case '/api/translation/languages':
+            try {
+                if (!translationService) {
+                    res.writeHead(503);
+                    res.end(JSON.stringify({
+                        error: 'Translation service not available',
+                        message: 'Translation service not initialized'
+                    }, null, 2));
+                    return;
+                }
+                
+                const languages = translationService.getSupportedLanguages();
+                
+                res.writeHead(200);
+                res.end(JSON.stringify({
+                    success: true,
+                    languages: languages,
+                    count: Object.keys(languages).length,
+                    timestamp: new Date().toISOString()
+                }, null, 2));
+            } catch (error) {
+                console.error('Get languages error:', error);
+                res.writeHead(500);
+                res.end(JSON.stringify({
+                    error: 'Failed to get supported languages',
+                    message: error.message
+                }, null, 2));
+            }
+            break;
+            
+        case '/api/translation/translate':
+            if (req.method !== 'POST') {
+                res.writeHead(405);
+                res.end(JSON.stringify({
+                    error: 'Method not allowed',
+                    message: 'Translation endpoint only accepts POST requests'
+                }, null, 2));
+                return;
+            }
+            
+            try {
+                if (!translationService) {
+                    res.writeHead(503);
+                    res.end(JSON.stringify({
+                        error: 'Translation service not available',
+                        message: 'Translation service not initialized'
+                    }, null, 2));
+                    return;
+                }
+                
+                const body = await getRequestBody(req);
+                const { text, targetLang, sourceLang = null } = body;
+
+                if (!text || !targetLang) {
+                    res.writeHead(400);
+                    res.end(JSON.stringify({
+                        error: 'Text and target language are required',
+                        example: {
+                            text: 'Hello world',
+                            targetLang: 'es',
+                            sourceLang: 'en'
+                        }
+                    }, null, 2));
+                    return;
+                }
+
+                if (!translationService.isLanguageSupported(targetLang)) {
+                    res.writeHead(400);
+                    res.end(JSON.stringify({
+                        error: `Unsupported target language: ${targetLang}`,
+                        supportedLanguages: Object.keys(translationService.getSupportedLanguages())
+                    }, null, 2));
+                    return;
+                }
+
+                const result = await translationService.translateText(text, targetLang, sourceLang);
+
+                res.writeHead(200);
+                res.end(JSON.stringify({
+                    success: true,
+                    ...result,
+                    timestamp: new Date().toISOString()
+                }, null, 2));
+
+            } catch (error) {
+                console.error('Translation error:', error);
+                res.writeHead(500);
+                res.end(JSON.stringify({
+                    error: 'Translation failed',
+                    message: error.message
+                }, null, 2));
+            }
+            break;
+            
+        case '/api/translation/article':
+            if (req.method !== 'POST') {
+                res.writeHead(405);
+                res.end(JSON.stringify({
+                    error: 'Method not allowed',
+                    message: 'Article translation endpoint only accepts POST requests'
+                }, null, 2));
+                return;
+            }
+            
+            try {
+                if (!translationService) {
+                    res.writeHead(503);
+                    res.end(JSON.stringify({
+                        error: 'Translation service not available',
+                        message: 'Translation service not initialized'
+                    }, null, 2));
+                    return;
+                }
+                
+                const body = await getRequestBody(req);
+                const { article, targetLang } = body;
+
+                if (!article || !targetLang) {
+                    res.writeHead(400);
+                    res.end(JSON.stringify({
+                        error: 'Article object and target language are required',
+                        example: {
+                            article: {
+                                title: 'News title',
+                                description: 'News description',
+                                url: 'https://example.com/news'
+                            },
+                            targetLang: 'es'
+                        }
+                    }, null, 2));
+                    return;
+                }
+
+                if (!translationService.isLanguageSupported(targetLang)) {
+                    res.writeHead(400);
+                    res.end(JSON.stringify({
+                        error: `Unsupported target language: ${targetLang}`,
+                        supportedLanguages: Object.keys(translationService.getSupportedLanguages())
+                    }, null, 2));
+                    return;
+                }
+
+                const translatedArticle = await translationService.translateArticle(article, targetLang);
+
+                res.writeHead(200);
+                res.end(JSON.stringify({
+                    success: true,
+                    article: translatedArticle,
+                    timestamp: new Date().toISOString()
+                }, null, 2));
+
+            } catch (error) {
+                console.error('Article translation error:', error);
+                res.writeHead(500);
+                res.end(JSON.stringify({
+                    error: 'Article translation failed',
+                    message: error.message
+                }, null, 2));
+            }
+            break;
+            
+        case '/api/news/translated':
+            try {
+                const lang = query.lang || 'en';
+                const category = query.category || null;
+                const autoTranslate = query.autoTranslate !== 'false';
+                const pageSize = parseInt(query.pageSize) || 20;
+
+                if (!translationService || !translationService.isLanguageSupported(lang)) {
+                    res.writeHead(400);
+                    res.end(JSON.stringify({
+                        error: `Unsupported or unavailable language: ${lang}`,
+                        supportedLanguages: translationService ? Object.keys(translationService.getSupportedLanguages()) : []
+                    }, null, 2));
+                    return;
+                }
+
+                // Get news articles first
+                const allNews = await aggregateAllNews();
+                let articles = category ? 
+                    allNews.filter(article => (article.category || '').toLowerCase().includes(category.toLowerCase())) : 
+                    allNews;
+                    
+                articles = articles.slice(0, pageSize);
+
+                // Translate articles if language is not English and autoTranslate is enabled
+                if (lang !== 'en' && autoTranslate && translationService) {
+                    try {
+                        articles = await Promise.all(
+                            articles.slice(0, 10).map(async (article) => {
+                                return await translationService.translateArticle(article, lang);
+                            })
+                        );
+                    } catch (error) {
+                        console.warn('Translation failed, returning original articles:', error.message);
+                    }
+                }
+
+                res.writeHead(200);
+                res.end(JSON.stringify({
+                    success: true,
+                    articles: articles,
+                    language: lang,
+                    languageInfo: translationService ? translationService.getLanguageInfo(lang) : null,
+                    autoTranslate: autoTranslate,
+                    totalResults: articles.length,
+                    filters: { category },
+                    timestamp: new Date().toISOString()
+                }, null, 2));
+
+            } catch (error) {
+                console.error('Translated news error:', error);
+                res.writeHead(500);
+                res.end(JSON.stringify({
+                    error: 'Failed to get translated news',
+                    message: error.message
+                }, null, 2));
+            }
+            break;
+            
+        case '/api/translation/preferences':
+            if (req.method === 'GET') {
+                // Get preferences - for now return defaults
+                res.writeHead(200);
+                res.end(JSON.stringify({
+                    success: true,
+                    preferences: {
+                        language: 'en',
+                        autoTranslate: true,
+                        defaultRegion: null
+                    },
+                    timestamp: new Date().toISOString()
+                }, null, 2));
+            } else if (req.method === 'POST') {
+                // Set preferences - for now just acknowledge
+                try {
+                    const body = await getRequestBody(req);
+                    const { language, autoTranslate = true, defaultRegion = null } = body;
+
+                    if (!language) {
+                        res.writeHead(400);
+                        res.end(JSON.stringify({
+                            error: 'Language preference is required',
+                            example: {
+                                language: 'es',
+                                autoTranslate: true,
+                                defaultRegion: 'es'
+                            }
+                        }, null, 2));
+                        return;
+                    }
+
+                    if (!translationService || !translationService.isLanguageSupported(language)) {
+                        res.writeHead(400);
+                        res.end(JSON.stringify({
+                            error: `Unsupported language: ${language}`,
+                            supportedLanguages: translationService ? Object.keys(translationService.getSupportedLanguages()) : []
+                        }, null, 2));
+                        return;
+                    }
+
+                    const preferences = {
+                        language: language,
+                        autoTranslate: autoTranslate,
+                        defaultRegion: defaultRegion,
+                        timestamp: new Date().toISOString()
+                    };
+
+                    res.writeHead(200);
+                    res.end(JSON.stringify({
+                        success: true,
+                        preferences: preferences,
+                        languageInfo: translationService ? translationService.getLanguageInfo(language) : null,
+                        timestamp: new Date().toISOString()
+                    }, null, 2));
+
+                } catch (error) {
+                    console.error('Set preferences error:', error);
+                    res.writeHead(500);
+                    res.end(JSON.stringify({
+                        error: 'Failed to set translation preferences',
+                        message: error.message
+                    }, null, 2));
+                }
+            } else {
+                res.writeHead(405);
+                res.end(JSON.stringify({
+                    error: 'Method not allowed',
+                    message: 'Preferences endpoint only accepts GET and POST requests'
+                }, null, 2));
+            }
+            break;
             
         default:
             res.writeHead(404);
@@ -1583,7 +1895,8 @@ async function handleAPIRequest(req, res, pathname, query) {
                     '/api/health', '/api/server-info', '/api/breaking-news', '/api/news', 
                     '/api/news/trending', '/api/news/sentiment', '/api/news/search', '/api/news/ai-enhanced',
                     '/api/discover', '/api/markets', '/api/foryou', '/api/analysis', '/api/live', '/api/chat',
-                    '/api/news/ai-asia', '/api/news/options', '/api/news/location',
+                    '/api/news/ai-asia', '/api/news/options', '/api/news/location', '/api/news/translated',
+                    '/api/translation/languages', '/api/translation/translate', '/api/translation/article', '/api/translation/preferences',
                     '/api/cloud/recommend', '/api/cloud/status', '/api/cloud/optimize', '/api/cloud/providers',
                     '/api/cloud/realtime', '/api/cloud/pricing'
                 ]
@@ -1741,6 +2054,13 @@ console.log('   - 🧠 Analysis: /api/analysis');
 console.log('   - 🔴 Live: /api/live');
 console.log('   - 🤖 AI Chat: /api/chat (POST)');
 console.log('   - 🎨 Design Consultation: /api/design/consultation (POST)');
+console.log('');
+console.log('🌐 Translation Services:');
+console.log('   - 🗣️ Supported Languages: /api/translation/languages');
+console.log('   - 📝 Translate Text: /api/translation/translate (POST)');
+console.log('   - 📰 Translate Article: /api/translation/article (POST)');
+console.log('   - 🌍 Translated News: /api/news/translated?lang=es');
+console.log('   - ⚙️ User Preferences: /api/translation/preferences (GET/POST)');
 console.log('');
 console.log('🌥️ Cloud Solutions:');
 console.log('   - 🎆 Cloud Recommendations: /api/cloud/recommend (POST)');

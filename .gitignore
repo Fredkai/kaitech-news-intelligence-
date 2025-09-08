@@ -57,3 +57,4 @@ api-keys.json
 # Cache files
 .cache/
 .parcel-cache/
+.vercel

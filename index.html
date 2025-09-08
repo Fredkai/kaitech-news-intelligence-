@@ -11,6 +11,7 @@
     <link rel="icon" type="image/svg+xml" href="assets/kaitech-enhanced-logo.svg">
     <script src="js/tech-animations.js" defer></script>
     <script src="js/simple-functions.js" defer></script>
+    <script src="js/language-toggle.js" defer></script>
     <script src="js/enhanced-news.js" defer></script>
 </head>
 <body>
@@ -132,12 +133,14 @@
                 </p>
                 <div class="news-dashboard">
                     <!-- News Search & AI Assistant -->
-                    <div class="news-control-panel">
-                        <div class="search-container">
-                            <input type="text" id="newsSearch" placeholder="Ask me about any topic or search news..." class="news-search-input">
-                            <button class="search-btn" onclick="searchNews()"><i class="fas fa-search"></i></button>
-                            <button class="ai-assistant-btn" onclick="openAIAssistant()"><i class="fas fa-robot"></i> World News Assistant</button>
-                        </div>
+                        <div class="news-control-panel">
+                            <div class="search-container">
+                                <input type="text" id="newsSearch" placeholder="Ask me about any topic or search news..." class="news-search-input">
+                                <button class="search-btn" onclick="searchNews()"><i class="fas fa-search"></i></button>
+                                <button class="ai-assistant-btn" onclick="openAIAssistant()"><i class="fas fa-robot"></i> World News Assistant</button>
+                                <!-- Language Toggle Button -->
+                                <div id="languageToggleContainer" class="language-toggle-container"></div>
+                            </div>
                         
                         <div class="news-tabs">
                             <div class="tab-container">
