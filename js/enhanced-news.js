@@ -24,7 +24,127 @@ class EnhancedNewsInterface {
         this.translationCache = new Map();
         this.languageToggle = null;
         
+        // Mock news data for immediate display
+        this.mockNewsData = this.getMockNewsData();
+        
         this.init();
+    }
+
+    getMockNewsData() {
+        return {
+            discover: [
+                {
+                    id: 'tech1',
+                    title: 'AI Revolution: New Language Models Break Barriers',
+                    description: 'Revolutionary AI models are transforming how we communicate across languages, making real-time translation more accurate than ever before.',
+                    category: 'Technology',
+                    source: 'TechNews Today',
+                    time: '2 hours ago',
+                    image: 'https://via.placeholder.com/300x200/3b82f6/ffffff?text=AI+Tech',
+                    trending: 95,
+                    sentiment: 'positive'
+                },
+                {
+                    id: 'world1',
+                    title: 'Global Climate Summit Reaches Historic Agreement',
+                    description: 'World leaders unite on ambitious climate goals, promising revolutionary changes in renewable energy and sustainability practices.',
+                    category: 'World News',
+                    source: 'Global Report',
+                    time: '4 hours ago',
+                    image: 'https://via.placeholder.com/300x200/10b981/ffffff?text=Climate',
+                    trending: 88,
+                    sentiment: 'positive'
+                },
+                {
+                    id: 'business1',
+                    title: 'Cryptocurrency Market Sees Major Innovation Wave',
+                    description: 'New blockchain technologies are reshaping digital finance with improved security and efficiency for global transactions.',
+                    category: 'Business',
+                    source: 'Financial Times',
+                    time: '1 hour ago',
+                    image: 'https://via.placeholder.com/300x200/f59e0b/ffffff?text=Crypto',
+                    trending: 92,
+                    sentiment: 'positive'
+                }
+            ],
+            trending: [
+                {
+                    id: 'trend1',
+                    title: 'Breaking: Space Technology Breakthrough Announced',
+                    description: 'Scientists achieve major milestone in space exploration technology, opening new possibilities for interplanetary travel.',
+                    category: 'Science',
+                    source: 'Space Daily',
+                    time: '30 minutes ago',
+                    image: 'https://via.placeholder.com/300x200/8b5cf6/ffffff?text=Space',
+                    trending: 98,
+                    sentiment: 'positive'
+                },
+                {
+                    id: 'trend2',
+                    title: 'Revolutionary Medical Treatment Shows Promise',
+                    description: 'New medical breakthrough offers hope for treating previously incurable conditions with innovative gene therapy approaches.',
+                    category: 'Health',
+                    source: 'Medical Journal',
+                    time: '1 hour ago',
+                    image: 'https://via.placeholder.com/300x200/ef4444/ffffff?text=Medical',
+                    trending: 94,
+                    sentiment: 'positive'
+                }
+            ],
+            markets: [
+                {
+                    id: 'market1',
+                    title: 'Tech Stocks Rally on Innovation News',
+                    description: 'Technology sector sees significant gains as investors react positively to breakthrough announcements and future growth prospects.',
+                    category: 'Markets',
+                    source: 'Market Watch',
+                    time: '45 minutes ago',
+                    image: 'https://via.placeholder.com/300x200/3b82f6/ffffff?text=Stocks',
+                    trending: 87,
+                    sentiment: 'positive'
+                }
+            ],
+            foryou: [
+                {
+                    id: 'personal1',
+                    title: 'AI-Powered Language Learning Revolution',
+                    description: 'New artificial intelligence technologies are making language learning more personalized and effective for millions of users worldwide.',
+                    category: 'Technology',
+                    source: 'EdTech Weekly',
+                    time: '3 hours ago',
+                    image: 'https://via.placeholder.com/300x200/10b981/ffffff?text=AI+Learn',
+                    trending: 89,
+                    sentiment: 'positive'
+                }
+            ],
+            analysis: [
+                {
+                    id: 'analysis1',
+                    title: 'Deep Dive: The Future of Multi-Language Communication',
+                    description: 'Comprehensive analysis of how emerging technologies are breaking down language barriers and creating a more connected world.',
+                    category: 'Analysis',
+                    source: 'Tech Analysis',
+                    time: '5 hours ago',
+                    image: 'https://via.placeholder.com/300x200/8b5cf6/ffffff?text=Analysis',
+                    trending: 85,
+                    sentiment: 'neutral'
+                }
+            ],
+            live: [
+                {
+                    id: 'live1',
+                    title: 'LIVE: Global Tech Conference 2025',
+                    description: 'Follow live updates from the world\'s largest technology conference featuring groundbreaking announcements and innovations.',
+                    category: 'Live',
+                    source: 'Live News',
+                    time: 'Live now',
+                    image: 'https://via.placeholder.com/300x200/ef4444/ffffff?text=LIVE',
+                    trending: 96,
+                    sentiment: 'positive',
+                    isLive: true
+                }
+            ]
+        };
     }
 
     async init() {
@@ -323,17 +443,27 @@ class EnhancedNewsInterface {
                 params.append('sentiment', this.currentFilters.sentiment);
             }
 
-            const response = await fetch(`/api/news/filtered?${params}`);
-            const data = await response.json();
+            try {
+                const response = await fetch(`/api/news/filtered?${params}`);
+                const data = await response.json();
 
-            if (data.success) {
-                // Translate articles if needed
-                const articles = await this.translateArticles(data.articles);
-                this.renderArticles('discover-content', articles, 'Discover');
-                this.cacheResult('discover', articles);
-            } else {
-                this.showError('discover-content', 'Failed to load news');
+                if (data.success) {
+                    // Translate articles if needed
+                    const articles = await this.translateArticles(data.articles);
+                    this.renderArticles('discover-content', articles, 'Discover');
+                    this.cacheResult('discover', articles);
+                    return;
+                }
+            } catch (apiError) {
+                console.warn('API not available, using mock data:', apiError.message);
             }
+
+            // Fallback to mock data
+            const mockArticles = this.mockNewsData.discover;
+            const articles = await this.translateArticles(mockArticles);
+            this.renderArticles('discover-content', articles, 'Discover News (Demo)');
+            this.cacheResult('discover', articles);
+            
         } catch (error) {
             console.error('Error loading discover news:', error);
             this.showError('discover-content', 'Error loading news');
@@ -344,15 +474,25 @@ class EnhancedNewsInterface {
         try {
             this.showLoadingState('trending-content');
 
-            const response = await fetch('/api/news/trending?limit=20');
-            const data = await response.json();
+            try {
+                const response = await fetch('/api/news/trending?limit=20');
+                const data = await response.json();
 
-            if (data.success) {
-                this.renderTrendingTopics('trending-content', data.trending_topics);
-                this.cacheResult('trending', data.trending_topics);
-            } else {
-                this.showError('trending-content', 'Failed to load trending topics');
+                if (data.success) {
+                    this.renderTrendingTopics('trending-content', data.trending_topics);
+                    this.cacheResult('trending', data.trending_topics);
+                    return;
+                }
+            } catch (apiError) {
+                console.warn('API not available, using mock trending data:', apiError.message);
             }
+
+            // Fallback to mock data
+            const mockArticles = this.mockNewsData.trending;
+            const articles = await this.translateArticles(mockArticles);
+            this.renderArticles('trending-content', articles, 'Trending News (Demo)');
+            this.cacheResult('trending', articles);
+            
         } catch (error) {
             console.error('Error loading trending news:', error);
             this.showError('trending-content', 'Error loading trending topics');
@@ -363,16 +503,25 @@ class EnhancedNewsInterface {
         try {
             this.showLoadingState('markets-content');
 
-            const response = await fetch('/api/news/search?q=market+economy+finance+business&category=business&sortBy=date&pageSize=25');
-            const data = await response.json();
+            try {
+                const response = await fetch('/api/news/search?q=market+economy+finance+business&category=business&sortBy=date&pageSize=25');
+                const data = await response.json();
 
-            if (data.success) {
-                // Translate articles if needed
-                const articles = await this.translateArticles(data.articles);
-                this.renderArticles('markets-content', articles, 'Market News');
-            } else {
-                this.showError('markets-content', 'Failed to load market news');
+                if (data.success) {
+                    // Translate articles if needed
+                    const articles = await this.translateArticles(data.articles);
+                    this.renderArticles('markets-content', articles, 'Market News');
+                    return;
+                }
+            } catch (apiError) {
+                console.warn('API not available, using mock market data:', apiError.message);
             }
+
+            // Fallback to mock data
+            const mockArticles = this.mockNewsData.markets;
+            const articles = await this.translateArticles(mockArticles);
+            this.renderArticles('markets-content', articles, 'Market News (Demo)');
+            
         } catch (error) {
             console.error('Error loading market news:', error);
             this.showError('markets-content', 'Error loading market news');
@@ -383,17 +532,26 @@ class EnhancedNewsInterface {
         try {
             this.showLoadingState('personalized-content');
 
-            const response = await fetch('/api/news/personalized');
-            const data = await response.json();
+            try {
+                const response = await fetch('/api/news/personalized');
+                const data = await response.json();
 
-            if (data.success) {
-                // Translate articles if needed
-                const articles = await this.translateArticles(data.articles);
-                this.renderArticles('personalized-content', articles, 'Your Personalized Feed');
-                this.renderUserStats('personalized-content', data);
-            } else {
-                this.showError('personalized-content', 'Please log in for personalized news');
+                if (data.success) {
+                    // Translate articles if needed
+                    const articles = await this.translateArticles(data.articles);
+                    this.renderArticles('personalized-content', articles, 'Your Personalized Feed');
+                    this.renderUserStats('personalized-content', data);
+                    return;
+                }
+            } catch (apiError) {
+                console.warn('API not available, using mock personalized data:', apiError.message);
             }
+
+            // Fallback to mock data
+            const mockArticles = this.mockNewsData.personalized;
+            const articles = await this.translateArticles(mockArticles);
+            this.renderArticles('personalized-content', articles, 'Personalized News (Demo)');
+            
         } catch (error) {
             console.error('Error loading personalized news:', error);
             this.showError('personalized-content', 'Error loading personalized news');
@@ -404,14 +562,24 @@ class EnhancedNewsInterface {
         try {
             this.showLoadingState('analysis-content');
 
-            const response = await fetch('/api/news/search?q=analysis+report+study&sortBy=relevance&pageSize=20');
-            const data = await response.json();
+            try {
+                const response = await fetch('/api/news/search?q=analysis+report+study&sortBy=relevance&pageSize=20');
+                const data = await response.json();
 
-            if (data.success) {
-                this.renderArticles('analysis-content', data.articles, 'News Analysis');
-            } else {
-                this.showError('analysis-content', 'Failed to load analysis');
+                if (data.success) {
+                    const articles = await this.translateArticles(data.articles);
+                    this.renderArticles('analysis-content', articles, 'News Analysis');
+                    return;
+                }
+            } catch (apiError) {
+                console.warn('API not available, using mock analysis data:', apiError.message);
             }
+
+            // Fallback to mock data
+            const mockArticles = this.mockNewsData.analysis;
+            const articles = await this.translateArticles(mockArticles);
+            this.renderArticles('analysis-content', articles, 'News Analysis (Demo)');
+            
         } catch (error) {
             console.error('Error loading analysis news:', error);
             this.showError('analysis-content', 'Error loading analysis');
@@ -422,17 +590,27 @@ class EnhancedNewsInterface {
         try {
             this.showLoadingState('live-content');
 
-            const response = await fetch('/api/news/breaking-enhanced?region=' + (this.userLocation?.newsRegion || 'global'));
-            const data = await response.json();
+            try {
+                const response = await fetch('/api/news/breaking-enhanced?region=' + (this.userLocation?.newsRegion || 'global'));
+                const data = await response.json();
 
-            if (data.success) {
-                // Translate articles if needed
-                const articles = await this.translateArticles(data.articles);
-                this.renderLiveNews('live-content', articles);
-                this.cacheResult('live', articles);
-            } else {
-                this.showError('live-content', 'Failed to load live news');
+                if (data.success) {
+                    // Translate articles if needed
+                    const articles = await this.translateArticles(data.articles);
+                    this.renderLiveNews('live-content', articles);
+                    this.cacheResult('live', articles);
+                    return;
+                }
+            } catch (apiError) {
+                console.warn('API not available, using mock live data:', apiError.message);
             }
+
+            // Fallback to mock data
+            const mockArticles = this.mockNewsData.live;
+            const articles = await this.translateArticles(mockArticles);
+            this.renderLiveNews('live-content', articles);
+            this.cacheResult('live', articles);
+            
         } catch (error) {
             console.error('Error loading live news:', error);
             this.showError('live-content', 'Error loading live news');
@@ -451,30 +629,53 @@ class EnhancedNewsInterface {
         try {
             this.showLoadingState('search-results');
 
-            const params = new URLSearchParams({
-                q: query,
-                pageSize: '30',
-                sortBy: this.currentFilters.sortBy
-            });
+            try {
+                const params = new URLSearchParams({
+                    q: query,
+                    pageSize: '30',
+                    sortBy: this.currentFilters.sortBy
+                });
 
-            if (this.currentFilters.categories.length > 0) {
-                params.append('category', this.currentFilters.categories[0]);
+                if (this.currentFilters.categories.length > 0) {
+                    params.append('category', this.currentFilters.categories[0]);
+                }
+
+                if (this.currentFilters.regions.length > 0) {
+                    params.append('region', this.currentFilters.regions[0]);
+                }
+
+                const response = await fetch(`/api/news/search?${params}`);
+                const data = await response.json();
+
+                if (data.success) {
+                    // Translate articles if needed
+                    const articles = await this.translateArticles(data.articles);
+                    this.renderSearchResults(articles, query);
+                    return;
+                }
+            } catch (apiError) {
+                console.warn('API not available, using mock search results:', apiError.message);
             }
 
-            if (this.currentFilters.regions.length > 0) {
-                params.append('region', this.currentFilters.regions[0]);
-            }
-
-            const response = await fetch(`/api/news/search?${params}`);
-            const data = await response.json();
-
-            if (data.success) {
-                // Translate articles if needed
-                const articles = await this.translateArticles(data.articles);
-                this.renderSearchResults(articles, query);
-            } else {
-                this.showError('search-results', `No results found for "${query}"`);
-            }
+            // Fallback to filtered mock data based on search query
+            const allMockArticles = [
+                ...this.mockNewsData.discover,
+                ...this.mockNewsData.trending,
+                ...this.mockNewsData.markets,
+                ...this.mockNewsData.personalized,
+                ...this.mockNewsData.analysis,
+                ...this.mockNewsData.live
+            ];
+            
+            // Simple search filtering on titles and descriptions
+            const filteredArticles = allMockArticles.filter(article => 
+                article.title.toLowerCase().includes(query.toLowerCase()) ||
+                article.description.toLowerCase().includes(query.toLowerCase())
+            );
+            
+            const articles = await this.translateArticles(filteredArticles.slice(0, 20));
+            this.renderSearchResults(articles, `${query} (Demo)`);
+            
         } catch (error) {
             console.error('Search error:', error);
             this.showError('search-results', 'Search failed');
@@ -755,12 +956,18 @@ class EnhancedNewsInterface {
             console.log('🌐 Initializing translation service...');
             
             // Load user translation preferences
-            const response = await fetch('/api/translation/preferences');
-            if (response.ok) {
-                const data = await response.json();
-                this.currentLanguage = data.preferences.language || 'en';
-                this.autoTranslateEnabled = data.preferences.autoTranslate !== false;
-                console.log('📋 Translation preferences loaded:', data.preferences);
+            try {
+                const response = await fetch('/api/translation/preferences');
+                if (response.ok) {
+                    const data = await response.json();
+                    this.currentLanguage = data.preferences.language || 'en';
+                    this.autoTranslateEnabled = data.preferences.autoTranslate !== false;
+                    console.log('📋 Translation preferences loaded:', data.preferences);
+                }
+            } catch (prefError) {
+                console.warn('Translation preferences API not available, using defaults:', prefError.message);
+                this.currentLanguage = 'en';
+                this.autoTranslateEnabled = false;
             }
             
             // Initialize language toggle if container exists
@@ -819,33 +1026,38 @@ class EnhancedNewsInterface {
                 return cached.articles;
             }
 
-            const response = await fetch('/api/translation/articles', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    articles: articles.slice(0, 20), // Limit to 20 articles for performance
-                    targetLang: this.currentLanguage,
-                    maxConcurrent: 3,
-                    includeOriginal: false
-                })
-            });
-
-            if (response.ok) {
-                const data = await response.json();
-                const translatedArticles = data.results || articles;
-                
-                // Cache the results
-                this.translationCache.set(cacheKey, {
-                    articles: translatedArticles,
-                    timestamp: Date.now()
+            try {
+                const response = await fetch('/api/translation/articles', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        articles: articles.slice(0, 20), // Limit to 20 articles for performance
+                        targetLang: this.currentLanguage,
+                        maxConcurrent: 3,
+                        includeOriginal: false
+                    })
                 });
-                
-                console.log(`✅ Successfully translated ${translatedArticles.length} articles`);
-                return translatedArticles;
-            } else {
-                console.warn('Translation failed, returning original articles');
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const translatedArticles = data.results || articles;
+                    
+                    // Cache the results
+                    this.translationCache.set(cacheKey, {
+                        articles: translatedArticles,
+                        timestamp: Date.now()
+                    });
+                    
+                    console.log(`✅ Successfully translated ${translatedArticles.length} articles`);
+                    return translatedArticles;
+                } else {
+                    console.warn('Translation failed, returning original articles');
+                    return articles;
+                }
+            } catch (translationError) {
+                console.warn('Translation API not available, returning original articles:', translationError.message);
                 return articles;
             }
         } catch (error) {
@@ -860,22 +1072,27 @@ class EnhancedNewsInterface {
         }
 
         try {
-            const response = await fetch('/api/translation/article', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    article: article,
-                    targetLang: this.currentLanguage
-                })
-            });
+            try {
+                const response = await fetch('/api/translation/article', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        article: article,
+                        targetLang: this.currentLanguage
+                    })
+                });
 
-            if (response.ok) {
-                const data = await response.json();
-                return data.article || article;
-            } else {
-                console.warn('Single article translation failed');
+                if (response.ok) {
+                    const data = await response.json();
+                    return data.article || article;
+                } else {
+                    console.warn('Single article translation failed');
+                    return article;
+                }
+            } catch (translationError) {
+                console.warn('Translation API not available for single article:', translationError.message);
                 return article;
             }
         } catch (error) {
