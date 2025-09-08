@@ -11,6 +11,43 @@ const path = require('path');
 const url = require('url');
 const os = require('os');
 const axios = require('axios');
+const DesignStylesDatabase = require('./services/design-styles-database');
+
+// Import enhanced news services (if available)
+let GoogleNewsService;
+try {
+    GoogleNewsService = require('./services/google-news-service');
+    console.log('✅ Enhanced news services loaded');
+} catch (error) {
+    console.warn('⚠️ Enhanced news services not available:', error.message);
+}
+
+// Import cloud solutions service
+let CloudSolutionsService;
+try {
+    CloudSolutionsService = require('./services/cloud-solutions-service');
+    console.log('✅ Cloud solutions service loaded');
+} catch (error) {
+    console.warn('⚠️ Cloud solutions service not available:', error.message);
+}
+
+// Import cloud data integration service
+let CloudDataIntegration;
+try {
+    CloudDataIntegration = require('./services/cloud-data-integration');
+    console.log('✅ Cloud data integration service loaded');
+} catch (error) {
+    console.warn('⚠️ Cloud data integration service not available:', error.message);
+}
+
+// Initialize cloud services
+let cloudService, cloudDataService;
+if (CloudSolutionsService) {
+    cloudService = new CloudSolutionsService();
+}
+if (CloudDataIntegration) {
+    cloudDataService = new CloudDataIntegration();
+}
 
 // Configuration
 const HTTP_PORT = 8080;
@@ -742,6 +779,37 @@ function serveFile(filePath, req, res) {
     });
 }
 
+// Fallback AI Asia news function
+async function getFallbackAIAsiaNews() {
+    try {
+        const allNews = await aggregateAllNews();
+        const aiAsiaNews = allNews.filter(article => {
+            const content = (article.title + ' ' + article.description).toLowerCase();
+            const hasAIKeywords = content.includes('ai') || content.includes('artificial intelligence') || 
+                                 content.includes('machine learning') || content.includes('technology');
+            const hasAsiaKeywords = content.includes('asia') || content.includes('china') || 
+                                   content.includes('japan') || content.includes('korea') || 
+                                   content.includes('singapore') || content.includes('india');
+            return hasAIKeywords && hasAsiaKeywords;
+        }).slice(0, 10);
+        
+        return {
+            articles: aiAsiaNews,
+            totalResults: aiAsiaNews.length,
+            source: 'rss-fallback',
+            regions: ['asia'],
+            query: 'AI-related news from Asia (fallback)'
+        };
+    } catch (error) {
+        return {
+            articles: [],
+            totalResults: 0,
+            source: 'fallback-error',
+            error: 'Unable to fetch fallback data'
+        };
+    }
+}
+
 // Handle API requests
 async function handleAPIRequest(req, res, pathname, query) {
     res.setHeader('Content-Type', 'application/json');
@@ -1117,6 +1185,396 @@ async function handleAPIRequest(req, res, pathname, query) {
             }
             break;
             
+        case '/api/news/ai-asia':
+            try {
+                // Initialize Google News service if available
+                let googleNewsService;
+                if (GoogleNewsService) {
+                    googleNewsService = new GoogleNewsService();
+                }
+                
+                if (!googleNewsService) {
+                    res.writeHead(503);
+                    res.end(JSON.stringify({
+                        error: 'Enhanced news service not available',
+                        message: 'Google News service not initialized',
+                        fallback_data: await getFallbackAIAsiaNews()
+                    }, null, 2));
+                    return;
+                }
+                
+                const result = await googleNewsService.getAINewsFromAsia();
+                
+                res.writeHead(200);
+                res.end(JSON.stringify({
+                    status: 'success',
+                    ...result,
+                    description: 'AI-related news from Asian countries',
+                    timestamp: new Date().toISOString()
+                }, null, 2));
+            } catch (error) {
+                console.error('AI Asia news error:', error);
+                res.writeHead(500);
+                res.end(JSON.stringify({
+                    error: 'Failed to fetch AI news from Asia',
+                    message: error.message,
+                    fallback_data: await getFallbackAIAsiaNews()
+                }, null, 2));
+            }
+            break;
+            
+        case '/api/news/options':
+            try {
+                const options = {
+                    categories: {
+                        custom: {
+                            'ai-technology': { display: 'AI & Technology', color: '#00D4FF' },
+                            'technology': { display: 'Technology', color: '#00A8FF' },
+                            'business': { display: 'Business', color: '#4CAF50' },
+                            'science': { display: 'Science', color: '#9C27B0' },
+                            'health': { display: 'Health', color: '#FF5722' },
+                            'politics': { display: 'Politics', color: '#FF9800' },
+                            'sports': { display: 'Sports', color: '#607D8B' },
+                            'entertainment': { display: 'Entertainment', color: '#E91E63' }
+                        }
+                    },
+                    regions: {
+                        groups: ['global', 'north-america', 'europe', 'asia', 'africa', 'south-america', 'oceania'],
+                        google: {
+                            'global': { display: 'Global', flag: '🌍' },
+                            'north-america': { display: 'North America', flag: '🌎' },
+                            'europe': { display: 'Europe', flag: '🇪🇺' },
+                            'asia': { display: 'Asia', flag: '🌏' },
+                            'africa': { display: 'Africa', flag: '🌍' }
+                        }
+                    },
+                    sortOptions: ['relevance', 'date', 'popularity'],
+                    sentimentOptions: ['positive', 'negative', 'neutral', 'urgent']
+                };
+
+                res.writeHead(200);
+                res.end(JSON.stringify({
+                    status: 'success',
+                    options: options,
+                    services: {
+                        google: !!GoogleNewsService,
+                        enhanced: true
+                    },
+                    timestamp: new Date().toISOString()
+                }, null, 2));
+
+            } catch (error) {
+                console.error('Options endpoint error:', error);
+                res.writeHead(500);
+                res.end(JSON.stringify({
+                    error: 'Failed to get options',
+                    message: error.message
+                }, null, 2));
+            }
+            break;
+            
+        case '/api/news/location':
+            try {
+                // Simple location fallback
+                const locationData = {
+                    newsRegion: 'global',
+                    country: 'Unknown',
+                    recommendations: {
+                        categories: ['technology', 'business', 'ai-technology'],
+                        regions: ['global']
+                    }
+                };
+                
+                res.writeHead(200);
+                res.end(JSON.stringify({
+                    status: 'success',
+                    location: locationData,
+                    timestamp: new Date().toISOString()
+                }, null, 2));
+
+            } catch (error) {
+                console.error('Location detection error:', error);
+                res.writeHead(500);
+                res.end(JSON.stringify({
+                    error: 'Failed to detect location',
+                    message: error.message
+                }, null, 2));
+            }
+            break;
+            
+        // ========== CLOUD SOLUTIONS ENDPOINTS ==========
+        case '/api/cloud/recommend':
+            if (req.method !== 'POST') {
+                res.writeHead(405);
+                res.end(JSON.stringify({
+                    error: 'Method not allowed',
+                    message: 'Cloud recommendation endpoint only accepts POST requests'
+                }, null, 2));
+                return;
+            }
+            
+            try {
+                if (!cloudService) {
+                    res.writeHead(503);
+                    res.end(JSON.stringify({
+                        error: 'Cloud service not available',
+                        message: 'Cloud solutions service not initialized'
+                    }, null, 2));
+                    return;
+                }
+                
+                const body = await getRequestBody(req);
+                const requirements = body.requirements || {};
+                
+                console.log('🌥️ Processing cloud recommendation request:', requirements);
+                
+                const recommendations = await cloudService.getCloudRecommendations(requirements);
+                
+                res.writeHead(200);
+                res.end(JSON.stringify({
+                    status: 'success',
+                    data: recommendations,
+                    timestamp: new Date().toISOString()
+                }, null, 2));
+                
+            } catch (error) {
+                console.error('Cloud recommendation error:', error);
+                res.writeHead(500);
+                res.end(JSON.stringify({
+                    error: 'Failed to generate cloud recommendations',
+                    message: error.message
+                }, null, 2));
+            }
+            break;
+            
+        case '/api/cloud/status':
+            try {
+                if (!cloudService) {
+                    res.writeHead(503);
+                    res.end(JSON.stringify({
+                        error: 'Cloud service not available',
+                        message: 'Cloud solutions service not initialized'
+                    }, null, 2));
+                    return;
+                }
+                
+                const cloudStatus = await cloudService.getCloudStatus();
+                
+                res.writeHead(200);
+                res.end(JSON.stringify({
+                    status: 'success',
+                    data: cloudStatus,
+                    timestamp: new Date().toISOString()
+                }, null, 2));
+                
+            } catch (error) {
+                console.error('Cloud status error:', error);
+                res.writeHead(500);
+                res.end(JSON.stringify({
+                    error: 'Failed to get cloud status',
+                    message: error.message
+                }, null, 2));
+            }
+            break;
+            
+        case '/api/cloud/optimize':
+            if (req.method !== 'POST') {
+                res.writeHead(405);
+                res.end(JSON.stringify({
+                    error: 'Method not allowed',
+                    message: 'Cloud optimization endpoint only accepts POST requests'
+                }, null, 2));
+                return;
+            }
+            
+            try {
+                if (!cloudService) {
+                    res.writeHead(503);
+                    res.end(JSON.stringify({
+                        error: 'Cloud service not available',
+                        message: 'Cloud solutions service not initialized'
+                    }, null, 2));
+                    return;
+                }
+                
+                const body = await getRequestBody(req);
+                const currentSetup = body.current_setup || {};
+                
+                const optimizations = await cloudService.getCostOptimizationSuggestions(currentSetup);
+                
+                res.writeHead(200);
+                res.end(JSON.stringify({
+                    status: 'success',
+                    data: optimizations,
+                    timestamp: new Date().toISOString()
+                }, null, 2));
+                
+            } catch (error) {
+                console.error('Cloud optimization error:', error);
+                res.writeHead(500);
+                res.end(JSON.stringify({
+                    error: 'Failed to generate optimization suggestions',
+                    message: error.message
+                }, null, 2));
+            }
+            break;
+            
+        case '/api/cloud/providers':
+            try {
+                if (!cloudService) {
+                    res.writeHead(503);
+                    res.end(JSON.stringify({
+                        error: 'Cloud service not available',
+                        message: 'Cloud solutions service not initialized'
+                    }, null, 2));
+                    return;
+                }
+                
+                const providersInfo = {
+                    providers: cloudService.cloudProviders,
+                    service_categories: ['compute', 'storage', 'database', 'networking', 'ai-ml', 'analytics'],
+                    budget_tiers: Object.keys(cloudService.recommendationRules.budget_tiers),
+                    workload_types: Object.keys(cloudService.recommendationRules.workload_patterns),
+                    available_features: {
+                        cost_estimation: true,
+                        ai_recommendations: true,
+                        comparative_analysis: true,
+                        deployment_guidance: true,
+                        real_time_status: !!cloudDataService,
+                        optimization_suggestions: true
+                    }
+                };
+                
+                res.writeHead(200);
+                res.end(JSON.stringify({
+                    status: 'success',
+                    data: providersInfo,
+                    timestamp: new Date().toISOString()
+                }, null, 2));
+                
+            } catch (error) {
+                console.error('Cloud providers info error:', error);
+                res.writeHead(500);
+                res.end(JSON.stringify({
+                    error: 'Failed to get providers information',
+                    message: error.message
+                }, null, 2));
+            }
+            break;
+            
+        case '/api/cloud/realtime':
+            try {
+                if (!cloudDataService) {
+                    res.writeHead(503);
+                    res.end(JSON.stringify({
+                        error: 'Real-time data service not available',
+                        message: 'Cloud data integration service not initialized'
+                    }, null, 2));
+                    return;
+                }
+                
+                const realTimeData = await cloudDataService.getRealTimeCloudData();
+                
+                res.writeHead(200);
+                res.end(JSON.stringify({
+                    status: 'success',
+                    data: realTimeData,
+                    timestamp: new Date().toISOString()
+                }, null, 2));
+                
+            } catch (error) {
+                console.error('Real-time cloud data error:', error);
+                res.writeHead(500);
+                res.end(JSON.stringify({
+                    error: 'Failed to get real-time cloud data',
+                    message: error.message
+                }, null, 2));
+            }
+            break;
+            
+        case '/api/cloud/pricing':
+            try {
+                if (!cloudDataService) {
+                    res.writeHead(503);
+                    res.end(JSON.stringify({
+                        error: 'Real-time data service not available',
+                        message: 'Cloud data integration service not initialized'
+                    }, null, 2));
+                    return;
+                }
+                
+                const body = req.method === 'POST' ? await getRequestBody(req) : {};
+                const requirements = body.requirements || {};
+                
+                const pricingData = await cloudDataService.getOptimizedCostRecommendations(requirements);
+                
+                res.writeHead(200);
+                res.end(JSON.stringify({
+                    status: 'success',
+                    data: pricingData,
+                    timestamp: new Date().toISOString()
+                }, null, 2));
+                
+            } catch (error) {
+                console.error('Cloud pricing optimization error:', error);
+                res.writeHead(500);
+                res.end(JSON.stringify({
+                    error: 'Failed to get pricing optimization',
+                    message: error.message
+                }, null, 2));
+            }
+            break;
+            
+        // ======== DESIGN CONSULTATION ENDPOINT ========
+        case '/api/design/consultation':
+            if (req.method !== 'POST') {
+                res.writeHead(405);
+                res.end(JSON.stringify({
+                    error: 'Method not allowed',
+                    message: 'Design consultation endpoint only accepts POST requests'
+                }, null, 2));
+                return;
+            }
+            
+            try {
+                const body = await getRequestBody(req);
+                const required = ['projectType', 'industry', 'description', 'budget', 'timeline', 'name', 'email'];
+                const missing = required.filter(k => !body[k] || String(body[k]).trim() === '');
+                if (missing.length > 0) {
+                    res.writeHead(400);
+                    res.end(JSON.stringify({
+                        error: 'Bad request',
+                        message: `Missing required fields: ${missing.join(', ')}`
+                    }, null, 2));
+                    return;
+                }
+
+                const consultationData = await processDesignConsultation(body);
+
+                // Save lead for follow-up
+                await saveDesignLead({
+                    contact: { name: body.name, email: body.email, phone: body.phone || '' },
+                    requirements: body,
+                    recommendations: consultationData,
+                    createdAt: new Date().toISOString()
+                });
+
+                res.writeHead(200);
+                res.end(JSON.stringify({
+                    status: 'success',
+                    data: consultationData,
+                    timestamp: new Date().toISOString()
+                }, null, 2));
+            } catch (error) {
+                console.error('Design consultation error:', error);
+                res.writeHead(500);
+                res.end(JSON.stringify({
+                    error: 'Failed to process design consultation',
+                    message: error.message
+                }, null, 2));
+            }
+            break;
+            
         default:
             res.writeHead(404);
             res.end(JSON.stringify({
@@ -1124,7 +1582,10 @@ async function handleAPIRequest(req, res, pathname, query) {
                 available_endpoints: [
                     '/api/health', '/api/server-info', '/api/breaking-news', '/api/news', 
                     '/api/news/trending', '/api/news/sentiment', '/api/news/search', '/api/news/ai-enhanced',
-                    '/api/discover', '/api/markets', '/api/foryou', '/api/analysis', '/api/live', '/api/chat'
+                    '/api/discover', '/api/markets', '/api/foryou', '/api/analysis', '/api/live', '/api/chat',
+                    '/api/news/ai-asia', '/api/news/options', '/api/news/location',
+                    '/api/cloud/recommend', '/api/cloud/status', '/api/cloud/optimize', '/api/cloud/providers',
+                    '/api/cloud/realtime', '/api/cloud/pricing'
                 ]
             }, null, 2));
     }
@@ -1144,6 +1605,74 @@ try {
 } catch (error) {
     console.log('⚠️  SSL certificates not found - HTTP server only');
     console.log('💡 Run generate-ssl-certs.ps1 to enable HTTPS');
+}
+
+// Helper: Process design consultation
+async function processDesignConsultation(requirements) {
+    const stylesDB = new DesignStylesDatabase();
+
+    // Normalize styles to array
+    if (requirements.styles && !Array.isArray(requirements.styles)) {
+        requirements.styles = [requirements.styles];
+    }
+
+    const styleRecs = stylesDB.getStyleRecommendations(requirements).map(s => ({
+        name: s.name,
+        style: s.style,
+        reason: `Suitable based on your ${requirements.industry} industry and ${requirements.projectType} project. ${s.description}`,
+        characteristics: s.characteristics,
+        colors: s.colors,
+        examples: s.examples
+    }));
+
+    // Optional AI analysis using Grok
+    let aiAnalysis = '';
+    try {
+        const msg = `A user needs design help. Details:\nProject: ${requirements.projectType}\nIndustry: ${requirements.industry}\nBudget: ${requirements.budget}\nTimeline: ${requirements.timeline}\nPreferred styles: ${(requirements.styles || []).join(', ') || 'none specified'}\nDescription: ${requirements.description}\n\nProvide a concise 2-4 sentence analysis of the best design direction and why. Avoid listing styles; focus on rationale and brand goals.`;
+        aiAnalysis = await chatWithGrok(msg);
+    } catch (e) {
+        aiAnalysis = 'Based on your inputs, we recommend focusing on clarity, strong visual hierarchy, and a style that matches your audience expectations.';
+    }
+
+    const budgetAdvice = stylesDB.generateBudgetAdvice(requirements);
+    const timelineAdvice = stylesDB.generateTimelineAdvice(requirements);
+    const nextSteps = stylesDB.generateNextSteps(requirements);
+
+    return {
+        aiAnalysis,
+        styleRecommendations: styleRecs,
+        budgetAdvice,
+        timelineAdvice,
+        nextSteps
+    };
+}
+
+// Persist design leads locally for follow-up
+async function saveDesignLead(entry) {
+    try {
+        const dataDir = path.join(__dirname, 'data');
+        const filePath = path.join(dataDir, 'design-leads.json');
+        if (!fs.existsSync(dataDir)) {
+            fs.mkdirSync(dataDir, { recursive: true });
+        }
+
+        let leads = [];
+        if (fs.existsSync(filePath)) {
+            try {
+                const raw = fs.readFileSync(filePath, 'utf-8');
+                leads = JSON.parse(raw);
+                if (!Array.isArray(leads)) leads = [];
+            } catch (_) {
+                leads = [];
+            }
+        }
+        leads.push(entry);
+        fs.writeFileSync(filePath, JSON.stringify(leads, null, 2), 'utf-8');
+        return true;
+    } catch (e) {
+        console.error('Failed to save design lead:', e.message);
+        return false;
+    }
 }
 
 // Create servers
@@ -1211,6 +1740,15 @@ console.log('   - ⭐ For You: /api/foryou?interests=tech,ai');
 console.log('   - 🧠 Analysis: /api/analysis');
 console.log('   - 🔴 Live: /api/live');
 console.log('   - 🤖 AI Chat: /api/chat (POST)');
+console.log('   - 🎨 Design Consultation: /api/design/consultation (POST)');
+console.log('');
+console.log('🌥️ Cloud Solutions:');
+console.log('   - 🎆 Cloud Recommendations: /api/cloud/recommend (POST)');
+console.log('   - 🟢 Cloud Status: /api/cloud/status');
+console.log('   - 💰 Cost Optimization: /api/cloud/optimize (POST)');
+console.log('   - 🏢 Provider Info: /api/cloud/providers');
+console.log('   - 🔄 Real-time Data: /api/cloud/realtime');
+console.log('   - 📊 Live Pricing: /api/cloud/pricing');
 
 console.log('');
 console.log('📱 Mobile Access Instructions:');

@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Consultation - KaiTech Creative Solutions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .consultation-form {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .design-showcase {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .checkbox-item:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 10px;
+            width: auto;
+        }
+
+        .style-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .style-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .style-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .style-card h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .style-card .style-preview {
+            height: 120px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        .minimalist { background: linear-gradient(45deg, #f5f7fa, #c3cfe2); color: #333 !important; }
+        .futuristic { background: linear-gradient(45deg, #0f3460, #e94560); }
+        .modern { background: linear-gradient(45deg, #ff6b6b, #4ecdc4); }
+        .classic { background: linear-gradient(45deg, #8b4513, #daa520); }
+        .playful { background: linear-gradient(45deg, #ff9a9e, #fecfef); color: #333 !important; }
+        .professional { background: linear-gradient(45deg, #2c3e50, #34495e); }
+
+        .btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .ai-recommendations {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin-top: 30px;
+            display: none;
+        }
+
+        .recommendation-card {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .contact-info {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .checkbox-group {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .back-link {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="/" class="back-link">← Back to Home</a>
+            <h1>🎨 Design Consultation</h1>
+            <p>Let our AI analyze your design needs and get personalized recommendations</p>
+        </div>
+
+        <div class="main-content">
+            <div class="consultation-form">
+                <h2>🤖 Describe Your Design Needs</h2>
+                <form id="consultationForm">
+                    <div class="form-group">
+                        <label for="projectType">Project Type</label>
+                        <select id="projectType" name="projectType" required>
+                            <option value="">Select project type...</option>
+                            <option value="logo">Logo Design</option>
+                            <option value="website">Website Design</option>
+                            <option value="mobile-app">Mobile App Design</option>
+                            <option value="branding">Complete Branding Package</option>
+                            <option value="marketing">Marketing Materials</option>
+                            <option value="packaging">Packaging Design</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="industry">Industry/Business Type</label>
+                        <select id="industry" name="industry" required>
+                            <option value="">Select industry...</option>
+                            <option value="technology">Technology</option>
+                            <option value="healthcare">Healthcare</option>
+                            <option value="finance">Finance</option>
+                            <option value="education">Education</option>
+                            <option value="retail">Retail/E-commerce</option>
+                            <option value="food">Food & Beverage</option>
+                            <option value="real-estate">Real Estate</option>
+                            <option value="consulting">Consulting</option>
+                            <option value="nonprofit">Non-profit</option>
+                            <option value="entertainment">Entertainment</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Describe Your Vision</label>
+                        <textarea id="description" name="description" placeholder="Tell us about your project, goals, and any specific ideas you have..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Preferred Design Styles (select all that apply)</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="minimalist" name="styles" value="minimalist">
+                                <label for="minimalist">Minimalist & Clean</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="futuristic" name="styles" value="futuristic">
+                                <label for="futuristic">Futuristic & Tech</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="modern" name="styles" value="modern">
+                                <label for="modern">Modern & Trendy</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="classic" name="styles" value="classic">
+                                <label for="classic">Classic & Elegant</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="playful" name="styles" value="playful">
+                                <label for="playful">Playful & Creative</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="professional" name="styles" value="professional">
+                                <label for="professional">Professional & Corporate</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="budget">Budget Range</label>
+                        <select id="budget" name="budget" required>
+                            <option value="">Select budget range...</option>
+                            <option value="under-500">Under $500</option>
+                            <option value="500-1500">$500 - $1,500</option>
+                            <option value="1500-5000">$1,500 - $5,000</option>
+                            <option value="5000-15000">$5,000 - $15,000</option>
+                            <option value="over-15000">Over $15,000</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="timeline">Project Timeline</label>
+                        <select id="timeline" name="timeline" required>
+                            <option value="">Select timeline...</option>
+                            <option value="asap">ASAP (Rush job)</option>
+                            <option value="1-2weeks">1-2 weeks</option>
+                            <option value="1month">1 month</option>
+                            <option value="2-3months">2-3 months</option>
+                            <option value="flexible">Flexible</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">Your Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number (optional)</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+
+                    <button type="submit" class="btn" id="submitBtn">
+                        🚀 Get AI Design Recommendations
+                    </button>
+                </form>
+
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    <p>Our AI is analyzing your requirements...</p>
+                </div>
+            </div>
+
+            <div class="design-showcase">
+                <h2>🎯 Popular Design Styles</h2>
+                <div class="style-grid">
+                    <div class="style-card" onclick="selectStyle('minimalist')">
+                        <div class="style-preview minimalist">MINIMAL</div>
+                        <h4>Minimalist & Clean</h4>
+                        <p>Perfect for tech startups and modern businesses. Focuses on simplicity, white space, and clear typography.</p>
+                    </div>
+
+                    <div class="style-card" onclick="selectStyle('futuristic')">
+                        <div class="style-preview futuristic">FUTURE</div>
+                        <h4>Futuristic & Tech</h4>
+                        <p>Ideal for AI, blockchain, and cutting-edge tech companies. Uses gradients, geometric shapes, and bold colors.</p>
+                    </div>
+
+                    <div class="style-card" onclick="selectStyle('modern')">
+                        <div class="style-preview modern">MODERN</div>
+                        <h4>Modern & Trendy</h4>
+                        <p>Great for lifestyle brands and creative agencies. Combines current design trends with vibrant colors.</p>
+                    </div>
+
+                    <div class="style-card" onclick="selectStyle('classic')">
+                        <div class="style-preview classic">CLASSIC</div>
+                        <h4>Classic & Elegant</h4>
+                        <p>Perfect for law firms, luxury brands, and established businesses. Timeless typography and refined aesthetics.</p>
+                    </div>
+
+                    <div class="style-card" onclick="selectStyle('playful')">
+                        <div class="style-preview playful">PLAYFUL</div>
+                        <h4>Playful & Creative</h4>
+                        <p>Excellent for kids' brands, entertainment, and creative services. Fun colors and organic shapes.</p>
+                    </div>
+
+                    <div class="style-card" onclick="selectStyle('professional')">
+                        <div class="style-preview professional">CORPORATE</div>
+                        <h4>Professional & Corporate</h4>
+                        <p>Ideal for consulting firms and B2B companies. Clean lines, professional colors, and structured layouts.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ai-recommendations" id="aiRecommendations">
+            <h2>🤖 AI-Powered Design Recommendations</h2>
+            <div id="recommendationsContent">
+                <!-- AI recommendations will be populated here -->
+            </div>
+        </div>
+
+        <div class="contact-info">
+            <h2>📞 Ready to Get Started?</h2>
+            <p>Our design team will review your requirements and contact you within 24 hours with a detailed proposal and next steps.</p>
+            <div style="margin-top: 20px;">
+                <p><strong>📧 Email:</strong> design@kaitech.com</p>
+                <p><strong>📱 Phone:</strong> +1 (555) 123-DESIGN</p>
+                <p><strong>💬 Chat:</strong> Available 24/7 on this website</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Style selection functionality
+        function selectStyle(styleName) {
+            const checkbox = document.getElementById(styleName);
+            checkbox.checked = !checkbox.checked;
+            
+            // Visual feedback
+            const styleCard = event.currentTarget;
+            if (checkbox.checked) {
+                styleCard.style.transform = 'scale(0.95)';
+                styleCard.style.boxShadow = '0 0 20px rgba(102, 126, 234, 0.3)';
+                setTimeout(() => {
+                    styleCard.style.transform = 'scale(1)';
+                }, 150);
+            } else {
+                styleCard.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+            }
+        }
+
+        // Form submission
+        document.getElementById('consultationForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const loading = document.getElementById('loading');
+            const form = document.getElementById('consultationForm');
+            
+            // Show loading state
+            submitBtn.disabled = true;
+            loading.style.display = 'block';
+            form.style.display = 'none';
+            
+            try {
+                const formData = new FormData(this);
+                const data = {};
+                
+                // Collect form data
+                for (let [key, value] of formData.entries()) {
+                    if (data[key]) {
+                        // Handle multiple values (like checkboxes)
+                        if (Array.isArray(data[key])) {
+                            data[key].push(value);
+                        } else {
+                            data[key] = [data[key], value];
+                        }
+                    } else {
+                        data[key] = value;
+                    }
+                }
+                
+                // Collect selected styles
+                const selectedStyles = [];
+                document.querySelectorAll('input[name="styles"]:checked').forEach(checkbox => {
+                    selectedStyles.push(checkbox.value);
+                });
+                data.styles = selectedStyles;
+                
+                console.log('Sending consultation request:', data);
+                
+                // Send to backend
+                const response = await fetch('/api/design/consultation', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to process consultation request');
+                }
+                
+                const result = await response.json();
+                
+                // Display AI recommendations
+                displayRecommendations(result.data);
+                
+            } catch (error) {
+                console.error('Error submitting consultation:', error);
+                alert('Sorry, there was an error processing your request. Please try again or contact us directly.');
+                
+                // Reset form state
+                form.style.display = 'block';
+                loading.style.display = 'none';
+                submitBtn.disabled = false;
+            }
+        });
+        
+        function displayRecommendations(recommendations) {
+            const loading = document.getElementById('loading');
+            const aiRecommendations = document.getElementById('aiRecommendations');
+            const content = document.getElementById('recommendationsContent');
+            
+            loading.style.display = 'none';
+            aiRecommendations.style.display = 'block';
+            
+            let html = '';
+            
+            if (recommendations.aiAnalysis) {
+                html += `
+                    <div class="recommendation-card">
+                        <h3>🧠 AI Analysis</h3>
+                        <p>${recommendations.aiAnalysis}</p>
+                    </div>
+                `;
+            }
+            
+            if (recommendations.styleRecommendations && recommendations.styleRecommendations.length > 0) {
+                html += `
+                    <div class="recommendation-card">
+                        <h3>🎨 Recommended Design Styles</h3>
+                        <ul>
+                            ${recommendations.styleRecommendations.map(style => 
+                                `<li><strong>${style.name}:</strong> ${style.reason}</li>`
+                            ).join('')}
+                        </ul>
+                    </div>
+                `;
+            }
+            
+            if (recommendations.budgetAdvice) {
+                html += `
+                    <div class="recommendation-card">
+                        <h3>💰 Budget Recommendations</h3>
+                        <p>${recommendations.budgetAdvice}</p>
+                    </div>
+                `;
+            }
+            
+            if (recommendations.timelineAdvice) {
+                html += `
+                    <div class="recommendation-card">
+                        <h3>⏰ Timeline Suggestions</h3>
+                        <p>${recommendations.timelineAdvice}</p>
+                    </div>
+                `;
+            }
+            
+            if (recommendations.nextSteps) {
+                html += `
+                    <div class="recommendation-card">
+                        <h3>🚀 Next Steps</h3>
+                        <p>${recommendations.nextSteps}</p>
+                    </div>
+                `;
+            }
+            
+            html += `
+                <div style="text-align: center; margin-top: 30px;">
+                    <p><strong>🎉 Your consultation request has been submitted!</strong></p>
+                    <p>Our design team will contact you within 24 hours to discuss your project in detail.</p>
+                    <button class="btn" onclick="location.reload()">Start New Consultation</button>
+                </div>
+            `;
+            
+            content.innerHTML = html;
+            
+            // Scroll to recommendations
+            aiRecommendations.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Add visual feedback for form interactions
+        document.querySelectorAll('.checkbox-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const checkbox = this.querySelector('input[type="checkbox"]');
+                if (checkbox) {
+                    checkbox.checked = !checkbox.checked;
+                    
+                    if (checkbox.checked) {
+                        this.style.borderColor = '#667eea';
+                        this.style.background = '#f8f9ff';
+                    } else {
+                        this.style.borderColor = '#e1e5e9';
+                        this.style.background = 'transparent';
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

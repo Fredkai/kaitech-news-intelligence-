@@ -10,6 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="assets/kaitech-enhanced-logo.svg">
     <script src="js/tech-animations.js" defer></script>
+    <script src="js/simple-functions.js" defer></script>
+    <script src="js/enhanced-news.js" defer></script>
 </head>
 <body>
     <!-- Futuristic Background Elements -->
@@ -31,7 +33,30 @@
     <header class="header" id="mainHeader">
         <nav class="nav">
             <div class="nav-brand">
-                <img src="assets/kaitech-professional-logo.svg" alt="KaiTech - Voice of Time" class="logo">
+                <div class="header-holographic-logo">
+                    <div class="header-logo-core">
+                        <div class="header-logo-rings">
+                            <div class="header-ring header-ring-1"></div>
+                            <div class="header-ring header-ring-2"></div>
+                            <div class="header-ring header-ring-3"></div>
+                        </div>
+                        <div class="header-logo-center">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <div class="header-logo-pulse"></div>
+                    </div>
+                    <div class="header-logo-scan-line"></div>
+                    <div class="header-brand-identity">
+                        <div class="header-company-name">
+                            <span class="header-name-part">Kai</span><span class="header-name-tech">Tech</span>
+                            <div class="header-name-glow"></div>
+                        </div>
+                        <div class="header-voice-of-time">
+                            <span class="header-voice-text">Voice of Time</span>
+                            <div class="header-voice-wave"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
@@ -39,6 +64,10 @@
                 <li><a href="#cloud">Cloud Services</a></li>
                 <li><a href="#media">Media & Design</a></li>
             </ul>
+            <div class="nav-auth">
+                <a href="/login" class="login-btn">Sign In</a>
+                <a href="/register" class="register-btn">Get Started</a>
+            </div>
         </nav>
     </header>
 
@@ -62,6 +91,18 @@
                         <i class="fas fa-palette"></i> Media & Design
                         <small>Creative Solutions</small>
                     </button>
+                </div>
+                <div class="auth-hero-section">
+                    <h3>🚀 Get Personalized News Experience</h3>
+                    <p>Create your account to get personalized news feeds, save articles, and customize your preferences</p>
+                    <div class="auth-buttons">
+                        <a href="/register" class="auth-btn register">
+                            <i class="fas fa-user-plus"></i> Create Free Account
+                        </a>
+                        <a href="/login" class="auth-btn login">
+                            <i class="fas fa-sign-in-alt"></i> Sign In
+                        </a>
+                    </div>
                 </div>
             </div>
             <div class="hero-stats">
@@ -108,6 +149,30 @@
                                 <button class="news-tab" data-tab="live" onclick="switchNewsTab('live')">🔴 Live</button>
                             </div>
                         </div>
+                    </div>
+                    
+                    <!-- Enhanced News Filters -->
+                    <div class="news-filters-panel">
+                        <div class="filters-header">
+                            <h4>🎯 Smart Filters</h4>
+                            <div class="filter-controls">
+                                <select id="sortBy" class="filter-select">
+                                    <option value="relevance">Most Relevant</option>
+                                    <option value="date">Most Recent</option>
+                                    <option value="popularity">Most Popular</option>
+                                </select>
+                                <select id="sentimentFilter" class="filter-select">
+                                    <option value="">All Sentiments</option>
+                                    <option value="positive">Positive News</option>
+                                    <option value="negative">Critical News</option>
+                                    <option value="neutral">Neutral News</option>
+                                    <option value="urgent">Breaking News</option>
+                                </select>
+                                <div id="userLocationDisplay" class="location-display"></div>
+                            </div>
+                        </div>
+                        <div id="categoryFilters" class="category-filters"></div>
+                        <div id="regionFilters" class="region-filters"></div>
                     </div>
                 </div>
                 <!-- Dynamic News Content Areas -->
@@ -1110,32 +1175,26 @@
         <section id="cloud" class="section">
             <div class="container">
                 <h2><i class="fas fa-cloud"></i> Cloud Services</h2>
-                <p>Reliable, scalable cloud solutions for your business needs</p>
-                <div class="tools-grid">
-                    <div class="tool-card">
-                        <div class="tool-icon">
-                            <i class="fas fa-server"></i>
-                        </div>
-                        <h3>Infrastructure</h3>
-                        <p>Scalable computing resources with 99.9% uptime guarantee</p>
-                        <button class="tool-button" onclick="openCloudService('infrastructure')">Learn More</button>
-                    </div>
-                    <div class="tool-card">
-                        <div class="tool-icon">
-                            <i class="fas fa-cogs"></i>
-                        </div>
-                        <h3>Platform Services</h3>
-                        <p>Complete development and deployment platform</p>
-                        <button class="tool-button" onclick="openCloudService('platform')">Learn More</button>
-                    </div>
-                    <div class="tool-card">
-                        <div class="tool-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <h3>Security</h3>
-                        <p>Enterprise-grade security and compliance</p>
-                        <button class="tool-button" onclick="openCloudService('security')">Learn More</button>
-                    </div>
+                <p>Professional cloud computing solutions for your business</p>
+                
+                <div class="services-list">
+                    <h3>Our Cloud Services:</h3>
+                    <ul style="font-size: 1.1rem; line-height: 1.8; max-width: 800px; margin: 2rem auto;">
+                        <li><strong>☁️ Cloud Infrastructure</strong> - Scalable servers and computing resources</li>
+                        <li><strong>🔧 Platform Services</strong> - Development and deployment platforms</li>
+                        <li><strong>🛡️ Security Solutions</strong> - Enterprise-grade security and compliance</li>
+                        <li><strong>💾 Data Storage</strong> - Secure and reliable cloud storage solutions</li>
+                        <li><strong>🔗 API Integration</strong> - Custom API development and integration</li>
+                        <li><strong>📊 Analytics & Monitoring</strong> - Real-time performance monitoring</li>
+                    </ul>
+                </div>
+                
+                <div class="contact-info" style="background: #f8f9fa; padding: 2rem; border-radius: 10px; margin-top: 3rem; text-align: center;">
+                    <h3>Get Cloud Services</h3>
+                    <p><strong>📧 Email:</strong> cloud@kaitech.com</p>
+                    <p><strong>📞 Phone:</strong> +1 (555) 123-4567</p>
+                    <p><strong>💬 Chat:</strong> Available 24/7 for consultations</p>
+                    <p style="margin-top: 1.5rem;"><em>Contact us for custom cloud solutions and pricing</em></p>
                 </div>
             </div>
         </section>
@@ -1144,32 +1203,26 @@
         <section id="media" class="section">
             <div class="container">
                 <h2><i class="fas fa-palette"></i> Media & Design</h2>
-                <p>Creative design solutions for your brand and marketing needs</p>
-                <div class="tools-grid">
-                    <div class="tool-card">
-                        <div class="tool-icon">
-                            <i class="fas fa-paint-brush"></i>
-                        </div>
-                        <h3>Graphic Design</h3>
-                        <p>Professional logo design, branding, and print materials</p>
-                        <button class="tool-button" onclick="showMediaPortfolio('graphic')">View Portfolio</button>
-                    </div>
-                    <div class="tool-card">
-                        <div class="tool-icon">
-                            <i class="fas fa-video"></i>
-                        </div>
-                        <h3>Video Production</h3>
-                        <p>Corporate videos, animations, and promotional content</p>
-                        <button class="tool-button" onclick="showMediaPortfolio('video')">View Portfolio</button>
-                    </div>
-                    <div class="tool-card">
-                        <div class="tool-icon">
-                            <i class="fas fa-globe"></i>
-                        </div>
-                        <h3>Web Design</h3>
-                        <p>Modern, responsive websites and digital experiences</p>
-                        <button class="tool-button" onclick="showMediaPortfolio('web')">View Portfolio</button>
-                    </div>
+                <p>Professional creative design services for your business</p>
+                
+                <div class="services-list">
+                    <h3>Our Design Services:</h3>
+                    <ul style="font-size: 1.1rem; line-height: 1.8; max-width: 800px; margin: 2rem auto;">
+                        <li><strong>🎨 Logo Design</strong> - Professional brand identity and logos</li>
+                        <li><strong>📄 Print Design</strong> - Business cards, brochures, and marketing materials</li>
+                        <li><strong>🌐 Web Design</strong> - Modern, responsive website design and development</li>
+                        <li><strong>🎥 Video Production</strong> - Corporate videos and promotional content</li>
+                        <li><strong>📱 Mobile App Design</strong> - User interface and experience design</li>
+                        <li><strong>🖼️ Digital Marketing</strong> - Social media graphics and online advertising</li>
+                    </ul>
+                </div>
+                
+                <div class="contact-info" style="background: #f8f9fa; padding: 2rem; border-radius: 10px; margin-top: 3rem; text-align: center;">
+                    <h3>Get Design Services</h3>
+                    <p><strong>📧 Email:</strong> design@kaitech.com</p>
+                    <p><strong>📞 Phone:</strong> +1 (555) 987-6543</p>
+                    <p><strong>💬 Chat:</strong> Free consultations available</p>
+                    <p style="margin-top: 1.5rem;"><em>Contact us for custom design projects and quotes</em></p>
                 </div>
             </div>
         </section>
@@ -1258,177 +1311,25 @@
                 </div>
             </div>
             
-            <!-- Futuristic Content Grid -->
-            <div class="tech-content-grid">
-                <!-- Digital Solutions Module -->
-                <div class="tech-module solutions-module">
-                    <div class="module-header">
-                        <div class="module-icon">
-                            <i class="fas fa-cube"></i>
-                            <div class="icon-orbit"></div>
-                        </div>
-                        <h3 class="module-title">
-                            <span class="title-text">Business Solutions</span>
-                            <div class="title-scan"></div>
-                        </h3>
-                    </div>
-                    <div class="module-content">
-                        <div class="solution-grid">
-                            <div class="solution-card" data-tech="news">
-                                <div class="card-icon"><i class="fas fa-globe-americas"></i></div>
-                                <div class="card-info">
-                                    <div class="card-title">World Updates</div>
-                                    <div class="card-desc">Global Intelligence Network</div>
-                                </div>
-                                <div class="card-circuit"></div>
-                            </div>
-                            <div class="solution-card" data-tech="cloud">
-                                <div class="card-icon"><i class="fas fa-cloud"></i></div>
-                                <div class="card-info">
-                                    <div class="card-title">Enterprise Cloud Infrastructure</div>
-                                    <div class="card-desc">Quantum Computing Platform</div>
-                                </div>
-                                <div class="card-circuit"></div>
-                            </div>
-                            <div class="solution-card" data-tech="media">
-                                <div class="card-icon"><i class="fas fa-palette"></i></div>
-                                <div class="card-info">
-                                    <div class="card-title">Media & Design Services</div>
-                                    <div class="card-desc">Neural Creative Engine</div>
-                                </div>
-                                <div class="card-circuit"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Navigation Interface -->
-                <div class="tech-module nav-module">
-                    <div class="module-header">
-                        <div class="module-icon">
-                            <i class="fas fa-sitemap"></i>
-                            <div class="icon-orbit"></div>
-                        </div>
-                        <h3 class="module-title">
-                            <span class="title-text">Navigation Interface</span>
-                            <div class="title-scan"></div>
-                        </h3>
-                    </div>
-                    <div class="module-content">
-                        <div class="nav-interface">
-                            <a href="#home" class="nav-link">
-                                <div class="link-icon"><i class="fas fa-home"></i></div>
-                                <span class="link-text">Home</span>
-                                <div class="link-beam"></div>
-                            </a>
-                            <a href="#news" class="nav-link">
-                                <div class="link-icon"><i class="fas fa-newspaper"></i></div>
-                                <span class="link-text">News Hub</span>
-                                <div class="link-beam"></div>
-                            </a>
-                            <a href="#cloud" class="nav-link">
-                                <div class="link-icon"><i class="fas fa-server"></i></div>
-                                <span class="link-text">Cloud Services</span>
-                                <div class="link-beam"></div>
-                            </a>
-                            <a href="#media" class="nav-link">
-                                <div class="link-icon"><i class="fas fa-paint-brush"></i></div>
-                                <span class="link-text">Design Studio</span>
-                                <div class="link-beam"></div>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Communication Terminal -->
-                <div class="tech-module contact-module">
-                    <div class="module-header">
-                        <div class="module-icon">
-                            <i class="fas fa-satellite-dish"></i>
-                            <div class="icon-orbit"></div>
-                        </div>
-                        <h3 class="module-title">
-                            <span class="title-text">Communication Terminal</span>
-                            <div class="title-scan"></div>
-                        </h3>
-                    </div>
-                    <div class="module-content">
-                        <div class="contact-terminal">
-                            <div class="terminal-item">
-                                <div class="terminal-icon phone-icon">
-                                    <i class="fas fa-phone"></i>
-                                    <div class="signal-waves"></div>
-                                </div>
-                                <div class="terminal-data">
-                                    <div class="data-label">VOICE CHANNEL</div>
-                                    <div class="data-value">+48 881754311</div>
-                                    <div class="data-status">ONLINE • 24/7 ACTIVE</div>
-                                </div>
-                            </div>
-                            
-                            <div class="terminal-item">
-                                <div class="terminal-icon email-icon">
-                                    <i class="fas fa-envelope"></i>
-                                    <div class="data-stream"></div>
-                                </div>
-                                <div class="terminal-data">
-                                    <div class="data-label">DATA CHANNEL</div>
-                                    <div class="data-value">info@kaitech.pro</div>
-                                    <div class="data-status">SECURE • ENCRYPTED</div>
-                                </div>
-                            </div>
-                            
-                            <div class="terminal-item">
-                                <div class="terminal-icon web-icon">
-                                    <i class="fas fa-globe"></i>
-                                    <div class="web-grid"></div>
-                                </div>
-                                <div class="terminal-data">
-                                    <div class="data-label">WEB PORTAL</div>
-                                    <div class="data-value">www.kaitech.pro</div>
-                                    <div class="data-status">LIVE • REAL-TIME</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Social Network Hub -->
-                <div class="tech-module social-module">
-                    <div class="module-header">
-                        <div class="module-icon">
-                            <i class="fas fa-network-wired"></i>
-                            <div class="icon-orbit"></div>
-                        </div>
-                        <h3 class="module-title">
-                            <span class="title-text">Social Network</span>
-                            <div class="title-scan"></div>
-                        </h3>
-                    </div>
-                    <div class="module-content">
-                        <div class="social-network">
-                            <a href="#" class="social-node linkedin-node">
-                                <div class="node-core"><i class="fab fa-linkedin-in"></i></div>
-                                <div class="node-ring"></div>
-                                <div class="connection-line"></div>
-                            </a>
-                            <a href="#" class="social-node twitter-node">
-                                <div class="node-core"><i class="fab fa-twitter"></i></div>
-                                <div class="node-ring"></div>
-                                <div class="connection-line"></div>
-                            </a>
-                            <a href="#" class="social-node github-node">
-                                <div class="node-core"><i class="fab fa-github"></i></div>
-                                <div class="node-ring"></div>
-                                <div class="connection-line"></div>
-                            </a>
-                            <a href="#" class="social-node facebook-node">
-                                <div class="node-core"><i class="fab fa-facebook-f"></i></div>
-                                <div class="node-ring"></div>
-                                <div class="connection-line"></div>
-                            </a>
-                        </div>
-                    </div>
+            <!-- Compact Social Network Section -->
+            <div class="compact-social-section">
+                <div class="social-network-compact">
+                    <a href="#" class="social-link linkedin">
+                        <i class="fab fa-linkedin-in"></i>
+                        <div class="social-glow"></div>
+                    </a>
+                    <a href="#" class="social-link twitter">
+                        <i class="fab fa-twitter"></i>
+                        <div class="social-glow"></div>
+                    </a>
+                    <a href="#" class="social-link github">
+                        <i class="fab fa-github"></i>
+                        <div class="social-glow"></div>
+                    </a>
+                    <a href="#" class="social-link facebook">
+                        <i class="fab fa-facebook-f"></i>
+                        <div class="social-glow"></div>
+                    </a>
                 </div>
             </div>
             

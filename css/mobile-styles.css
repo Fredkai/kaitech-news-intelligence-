@@ -66,6 +66,52 @@
         height: 36px;
     }
     
+    /* Mobile Header Holographic Logo */
+    .header-holographic-logo {
+        gap: 0.75rem;
+        padding: 0.25rem;
+    }
+    
+    .header-logo-core {
+        width: 38px;
+        height: 38px;
+    }
+    
+    .header-logo-center {
+        width: 24px;
+        height: 24px;
+        font-size: 0.8rem;
+    }
+    
+    .header-logo-pulse {
+        width: 48px;
+        height: 48px;
+        top: -5px;
+        left: -5px;
+    }
+    
+    .header-company-name {
+        font-size: 1.2rem;
+    }
+    
+    .header-voice-of-time {
+        font-size: 0.6rem;
+    }
+    
+    .header-voice-wave {
+        width: 15px;
+        height: 1.5px;
+    }
+    
+    /* Reduce animation intensity on mobile for better performance */
+    .header-ring-1, .header-ring-2, .header-ring-3 {
+        animation-duration: 20s;
+    }
+    
+    .header-logo-scan-line {
+        animation-duration: 8s;
+    }
+    
     .nav-links {
         display: flex;
         flex-wrap: wrap;

@@ -1,11 +1,20 @@
-// KaiTech Global News Intelligence - Main functionality
+// KaiTech Voice of Time - Fully Functional Website
+// Real-time AI-powered news intelligence platform
 
-// Global variables
-let chatHistory = [];
-let isAIResponding = false;
-let newsData = [];
-let currentFilter = 'all';
-let breakingNewsInterval;
+// Global state management
+let appState = {
+    currentTab: 'discover',
+    newsData: [],
+    isLoading: false,
+    lastUpdate: null,
+    apiEndpoint: '/api'
+};
+
+// Initialize everything when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 KaiTech Voice of Time - Initializing...');
+    initializeWebsite();
+});
 
 // DOM Elements
 const chatMessages = document.getElementById('chatMessages');

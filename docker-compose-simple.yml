@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  # Main KaiTech Application with AI
+  kaitech-app:
+    build: .
+    ports:
+      - "8080:8080"   # HTTP
+      - "8443:8443"   # HTTPS (if SSL certs available)
+    environment:
+      - NODE_ENV=production
+      - GROK_API_KEY=${GROK_API_KEY:-your-grok-api-key-here}
+      - AI_ENHANCED_MODE=true
+      - SENTIMENT_ANALYSIS=true
+      - AUTO_CATEGORIZATION=true
+      - TRENDING_CALCULATION=true
+    volumes:
+      - ./.env:/app/.env:ro  # Mount environment file
+    networks:
+      - kaitech-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # Redis for caching (optional but improves performance)
+  redis-cache:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - kaitech-network
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+
+networks:
+  kaitech-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+volumes:
+  redis_data:
+    driver: local

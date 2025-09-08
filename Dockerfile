@@ -1,24 +1,35 @@
-# Voice of Time News Intelligence Platform
-FROM nginx:alpine
+# KaiTech Voice of Time - AI-Powered News Intelligence Platform
+FROM node:18-alpine
 
-# Install Node.js for any server-side processing
-RUN apk add --no-cache nodejs npm
+# Install curl for health checks and other utilities
+RUN apk add --no-cache curl
 
-# Copy website files
-COPY . /usr/share/nginx/html
+# Set working directory
+WORKDIR /app
 
-# Copy custom nginx configuration
-COPY nginx.conf /etc/nginx/nginx.conf
+# Copy package files first for better caching
+COPY package*.json ./
 
-# Create directory for logs
-RUN mkdir -p /var/log/nginx
+# Install dependencies
+RUN npm ci --only=production && npm cache clean --force
 
-# Expose port 80
-EXPOSE 80
+# Copy application files
+COPY . .
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost/ || exit 1
+# Create a non-root user for security
+RUN addgroup -g 1001 -S nodejs && \
+    adduser -S nodejs -u 1001
 
-# Start nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Change ownership of the app directory
+RUN chown -R nodejs:nodejs /app
+USER nodejs
+
+# Expose ports
+EXPOSE 8080 8443
+
+# Health check for the Node.js server
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:8080/api/health || exit 1
+
+# Start the Node.js server
+CMD ["node", "server.js"]

@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account - KaiTech Voice of Time</title>
+    <link rel="icon" type="image/svg+xml" href="assets/kaitech-favicon.svg">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .auth-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .auth-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .auth-header h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+        
+        .auth-header p {
+            color: #666;
+            margin: 0;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .form-control.error {
+            border-color: #dc3545;
+        }
+        
+        .password-strength {
+            margin-top: 5px;
+            font-size: 0.8rem;
+        }
+        
+        .password-strength.weak {
+            color: #dc3545;
+        }
+        
+        .password-strength.medium {
+            color: #ffc107;
+        }
+        
+        .password-strength.strong {
+            color: #28a745;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+        
+        .btn-google {
+            background: #db4437;
+            color: white;
+            margin-bottom: 10px;
+        }
+        
+        .btn-google:hover {
+            background: #c23321;
+        }
+        
+        .btn-github {
+            background: #333;
+            color: white;
+        }
+        
+        .btn-github:hover {
+            background: #24292e;
+        }
+        
+        .divider {
+            text-align: center;
+            margin: 30px 0;
+            position: relative;
+        }
+        
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #e1e5e9;
+        }
+        
+        .divider span {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0 20px;
+            color: #666;
+        }
+        
+        .auth-links {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .auth-links a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        .auth-links a:hover {
+            text-decoration: underline;
+        }
+        
+        .alert {
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .alert-danger {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        
+        .alert-success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 10px;
+        }
+        
+        .spinner {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #667eea;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 10px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .terms-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .terms-checkbox input {
+            margin-top: 4px;
+        }
+        
+        .terms-checkbox label {
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        @media (max-width: 480px) {
+            .auth-card {
+                padding: 30px 20px;
+                margin: 10px;
+            }
+            
+            .auth-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <h1>Join KaiTech</h1>
+                <p>Create your account to get personalized news</p>
+            </div>
+            
+            <div id="alert-container"></div>
+            
+            <!-- OAuth Registration Options -->
+            <div class="oauth-section">
+                <a href="/auth/google" class="btn btn-google">
+                    <svg width="20" height="20" viewBox="0 0 24 24" style="margin-right: 10px; vertical-align: middle;">
+                        <path fill="white" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="white" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="white" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                        <path fill="white" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                    </svg>
+                    Continue with Google
+                </a>
+                
+                <a href="/auth/github" class="btn btn-github">
+                    <svg width="20" height="20" viewBox="0 0 24 24" style="margin-right: 10px; vertical-align: middle;">
+                        <path fill="white" d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    Continue with GitHub
+                </a>
+            </div>
+            
+            <div class="divider">
+                <span>or</span>
+            </div>
+            
+            <!-- Local Registration Form -->
+            <form id="register-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="username">Username *</label>
+                        <input type="text" id="username" name="username" class="form-control" required>
+                        <div id="username-feedback" class="form-feedback"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="display_name">Display Name</label>
+                        <input type="text" id="display_name" name="display_name" class="form-control">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" name="email" class="form-control" required>
+                    <div id="email-feedback" class="form-feedback"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password *</label>
+                    <input type="password" id="password" name="password" class="form-control" required>
+                    <div id="password-strength" class="password-strength"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirm_password">Confirm Password *</label>
+                    <input type="password" id="confirm_password" name="confirm_password" class="form-control" required>
+                    <div id="confirm-password-feedback" class="form-feedback"></div>
+                </div>
+                
+                <div class="terms-checkbox">
+                    <input type="checkbox" id="agree_terms" required>
+                    <label for="agree_terms">
+                        I agree to KaiTech's <a href="#" target="_blank">Terms of Service</a> and 
+                        <a href="#" target="_blank">Privacy Policy</a>
+                    </label>
+                </div>
+                
+                <button type="submit" class="btn btn-primary" id="register-btn">
+                    Create Account
+                </button>
+                
+                <div class="loading" id="loading">
+                    <div class="spinner"></div>
+                    Creating your account...
+                </div>
+            </form>
+            
+            <div class="auth-links">
+                <p>Already have an account? <a href="/login">Sign in here</a></p>
+                <p><a href="/">← Back to Home</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Password strength checker
+        function checkPasswordStrength(password) {
+            let strength = 0;
+            let feedback = '';
+            
+            if (password.length >= 8) strength += 1;
+            if (/[a-z]/.test(password)) strength += 1;
+            if (/[A-Z]/.test(password)) strength += 1;
+            if (/[0-9]/.test(password)) strength += 1;
+            if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+            
+            switch (strength) {
+                case 0:
+                case 1:
+                    feedback = 'Very weak password';
+                    return { class: 'weak', text: feedback };
+                case 2:
+                    feedback = 'Weak password';
+                    return { class: 'weak', text: feedback };
+                case 3:
+                    feedback = 'Medium password';
+                    return { class: 'medium', text: feedback };
+                case 4:
+                    feedback = 'Strong password';
+                    return { class: 'strong', text: feedback };
+                case 5:
+                    feedback = 'Very strong password';
+                    return { class: 'strong', text: feedback };
+                default:
+                    return { class: 'weak', text: 'Enter password' };
+            }
+        }
+        
+        // Real-time password strength feedback
+        document.getElementById('password').addEventListener('input', function() {
+            const password = this.value;
+            const strengthDiv = document.getElementById('password-strength');
+            
+            if (password.length > 0) {
+                const strength = checkPasswordStrength(password);
+                strengthDiv.className = `password-strength ${strength.class}`;
+                strengthDiv.textContent = strength.text;
+            } else {
+                strengthDiv.className = 'password-strength';
+                strengthDiv.textContent = '';
+            }
+        });
+        
+        // Password confirmation validation
+        document.getElementById('confirm_password').addEventListener('input', function() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = this.value;
+            const feedback = document.getElementById('confirm-password-feedback');
+            
+            if (confirmPassword.length > 0) {
+                if (password === confirmPassword) {
+                    feedback.style.color = '#28a745';
+                    feedback.textContent = '✓ Passwords match';
+                } else {
+                    feedback.style.color = '#dc3545';
+                    feedback.textContent = '✗ Passwords do not match';
+                }
+            } else {
+                feedback.textContent = '';
+            }
+        });
+        
+        // Username validation
+        document.getElementById('username').addEventListener('input', function() {
+            const username = this.value;
+            const feedback = document.getElementById('username-feedback');
+            
+            if (username.length > 0) {
+                if (username.length < 3) {
+                    feedback.style.color = '#dc3545';
+                    feedback.textContent = 'Username must be at least 3 characters';
+                } else if (!/^[a-zA-Z0-9_]+$/.test(username)) {
+                    feedback.style.color = '#dc3545';
+                    feedback.textContent = 'Username can only contain letters, numbers, and underscores';
+                } else {
+                    feedback.style.color = '#28a745';
+                    feedback.textContent = '✓ Username looks good';
+                }
+            } else {
+                feedback.textContent = '';
+            }
+        });
+        
+        // Handle registration form submission
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('register-btn');
+            const loading = document.getElementById('loading');
+            const alertContainer = document.getElementById('alert-container');
+            
+            // Show loading state
+            submitBtn.disabled = true;
+            loading.style.display = 'block';
+            alertContainer.innerHTML = '';
+            
+            const formData = new FormData(e.target);
+            const password = formData.get('password');
+            const confirmPassword = formData.get('confirm_password');
+            
+            // Client-side validation
+            if (password !== confirmPassword) {
+                alertContainer.innerHTML = `
+                    <div class="alert alert-danger">
+                        Passwords do not match. Please check and try again.
+                    </div>
+                `;
+                submitBtn.disabled = false;
+                loading.style.display = 'none';
+                return;
+            }
+            
+            const registerData = {
+                username: formData.get('username'),
+                email: formData.get('email'),
+                password: password,
+                display_name: formData.get('display_name') || formData.get('username')
+            };
+            
+            try {
+                const response = await fetch('/auth/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(registerData)
+                });
+                
+                const result = await response.json();
+                
+                if (response.ok && result.success) {
+                    // Successful registration
+                    alertContainer.innerHTML = `
+                        <div class="alert alert-success">
+                            Account created successfully! Redirecting to your dashboard...
+                        </div>
+                    `;
+                    
+                    // Redirect after short delay
+                    setTimeout(() => {
+                        window.location.href = '/dashboard';
+                    }, 2000);
+                } else {
+                    // Registration failed
+                    alertContainer.innerHTML = `
+                        <div class="alert alert-danger">
+                            ${result.message || 'Registration failed. Please try again.'}
+                        </div>
+                    `;
+                }
+                
+            } catch (error) {
+                console.error('Registration error:', error);
+                alertContainer.innerHTML = `
+                    <div class="alert alert-danger">
+                        Network error. Please check your connection and try again.
+                    </div>
+                `;
+            } finally {
+                // Hide loading state
+                submitBtn.disabled = false;
+                loading.style.display = 'none';
+            }
+        });
+        
+        // Check for OAuth error in URL
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('error') === 'oauth_failed') {
+            document.getElementById('alert-container').innerHTML = `
+                <div class="alert alert-danger">
+                    OAuth registration failed. Please try again.
+                </div>
+            `;
+        }
+        
+        // Auto-fill display name based on username
+        document.getElementById('username').addEventListener('input', function() {
+            const displayNameField = document.getElementById('display_name');
+            if (!displayNameField.value) {
+                displayNameField.value = this.value;
+            }
+        });
+        
+        // Check authentication status on page load
+        fetch('/auth/status')
+            .then(response => response.json())
+            .then(data => {
+                if (data.authenticated) {
+                    // User is already logged in, redirect to dashboard
+                    window.location.href = '/dashboard';
+                }
+            })
+            .catch(error => {
+                console.log('Status check failed:', error);
+            });
+    </script>
+</body>
+</html>

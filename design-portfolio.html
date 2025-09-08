@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Portfolio - KaiTech Creative Solutions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .back-link {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .style-sections {
+            display: flex;
+            flex-direction: column;
+            gap: 60px;
+        }
+
+        .style-section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .style-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .style-header h2 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .style-description {
+            font-size: 1.2em;
+            color: #666;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            text-align: center;
+        }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .portfolio-item {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .portfolio-preview {
+            height: 250px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .portfolio-info {
+            padding: 25px;
+        }
+
+        .portfolio-info h3 {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .portfolio-info p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .portfolio-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 500;
+        }
+
+        .characteristics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .characteristic-card {
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+        }
+
+        .characteristic-card h4 {
+            color: #667eea;
+            margin-bottom: 8px;
+        }
+
+        .color-palette {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .color-swatch {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7em;
+            font-weight: bold;
+            color: rgba(0,0,0,0.7);
+        }
+
+        .cta-section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .cta-section h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .cta-section p {
+            font-size: 1.1em;
+            color: #666;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid #667eea;
+            color: #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Style-specific colors */
+        .minimalist-bg { background: linear-gradient(45deg, #f5f7fa, #c3cfe2); color: #333 !important; }
+        .futuristic-bg { background: linear-gradient(45deg, #0f3460, #e94560); }
+        .modern-bg { background: linear-gradient(45deg, #ff6b6b, #4ecdc4); }
+        .classic-bg { background: linear-gradient(45deg, #8b4513, #daa520); }
+        .playful-bg { background: linear-gradient(45deg, #ff9a9e, #fecfef); color: #333 !important; }
+        .professional-bg { background: linear-gradient(45deg, #2c3e50, #34495e); }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .style-header h2 {
+                font-size: 2em;
+            }
+            
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <a href="/design-consultation.html" class="back-link">← Back to Design Consultation</a>
+            <h1>🎨 Design Portfolio</h1>
+            <p>Explore our design styles and see examples of our work across different industries</p>
+        </div>
+
+        <div class="style-sections">
+            <!-- Minimalist & Clean -->
+            <div class="style-section">
+                <div class="style-header">
+                    <h2>Minimalist & Clean</h2>
+                    <div class="style-description">
+                        Perfect for tech startups and modern businesses. Emphasizes simplicity, white space, and clarity with clean typography and uncluttered layouts.
+                    </div>
+                </div>
+
+                <div class="portfolio-grid">
+                    <div class="portfolio-item">
+                        <div class="portfolio-preview minimalist-bg">TechFlow</div>
+                        <div class="portfolio-info">
+                            <h3>TechFlow SaaS Platform</h3>
+                            <p>A clean, professional identity for a project management software company focusing on simplicity and user experience.</p>
+                            <div class="portfolio-tags">
+                                <span class="tag">Logo Design</span>
+                                <span class="tag">Website</span>
+                                <span class="tag">SaaS</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-item">
+                        <div class="portfolio-preview minimalist-bg">MediCare+</div>
+                        <div class="portfolio-info">
+                            <h3>MediCare+ Health App</h3>
+                            <p>Minimalist design for a healthcare application emphasizing trust, accessibility, and user-friendly navigation.</p>
+                            <div class="portfolio-tags">
+                                <span class="tag">Mobile App</span>
+                                <span class="tag">Healthcare</span>
+                                <span class="tag">UX/UI</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-item">
+                        <div class="portfolio-preview minimalist-bg">Consult Pro</div>
+                        <div class="portfolio-info">
+                            <h3>Consult Pro Services</h3>
+                            <p>Professional consulting firm branding with emphasis on expertise, reliability, and sophisticated simplicity.</p>
+                            <div class="portfolio-tags">
+                                <span class="tag">Branding</span>
+                                <span class="tag">Consulting</span>
+                                <span class="tag">B2B</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="characteristics">
+                    <div class="characteristic-card">
+                        <h4>Typography</h4>
+                        <p>Clean sans-serif fonts like Helvetica, Inter, or Roboto for maximum readability and modern appeal.</p>
+                    </div>
+                    <div class="characteristic-card">
+                        <h4>Color Palette</h4>
+                        <p>Neutral colors with 2-3 accent colors. Emphasis on white space and subtle contrasts.</p>
+                    </div>
+                    <div class="characteristic-card">
+                        <h4>Layout</h4>
+                        <p>Grid-based layouts with generous spacing, clear hierarchy, and functional design elements.</p>
+                    </div>
+                    <div class="characteristic-card">
+                        <h4>Best For</h4>
+                        <p>Technology, healthcare, consulting, finance, and professional services seeking modern sophistication.</p>
+                    </div>
+                </div>
+
+                <div class="color-palette">
+                    <div class="color-swatch" style="background: #FFFFFF;">White</div>
+                    <div class="color-swatch" style="background: #F8F9FA;">#F8F9FA</div>
+                    <div class="color-swatch" style="background: #E9ECEF;">#E9ECEF</div>
+                    <div class="color-swatch" style="background: #6C757D;">#6C757D</div>
+                    <div class="color-swatch" style="background: #495057; color: white;">#495057</div>
+                </div>
+            </div>
+
+            <!-- Futuristic & Tech -->
+            <div class="style-section">
+                <div class="style-header">
+                    <h2>Futuristic & Tech</h2>
+                    <div class="style-description">
+                        Forward-looking design with cutting-edge aesthetics. Features gradients, neon accents, geometric patterns, and high-tech elements perfect for innovative companies.
+                    </div>
+                </div>
+
+                <div class="portfolio-grid">
+                    <div class="portfolio-item">
+                        <div class="portfolio-preview futuristic-bg">NeuralAI</div>
+                        <div class="portfolio-info">
+                            <h3>NeuralAI Platform</h3>
+                            <p>Artificial intelligence startup branding with futuristic gradients and tech-inspired visual elements.</p>
+                            <div class="portfolio-tags">
+                                <span class="tag">AI/ML</span>
+                                <span class="tag">Startup</span>
+                                <span class="tag">Tech Platform</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-item">
+                        <div class="portfolio-preview futuristic-bg">CryptoVault</div>
+                        <div class="portfolio-info">
+                            <h3>CryptoVault Exchange</h3>
+                            <p>Blockchain and cryptocurrency platform with modern gradients and secure, high-tech aesthetic.</p>
+                            <div class="portfolio-tags">
+                                <span class="tag">Blockchain</span>
+                                <span class="tag">Fintech</span>
+                                <span class="tag">Security</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-item">
+                        <div class="portfolio-preview futuristic-bg">GameForge</div>
+                        <div class="portfolio-info">
+                            <h3>GameForge Studio</h3>
+                            <p>Gaming company identity featuring dynamic gradients, neon accents, and immersive visual elements.</p>
+                            <div class="portfolio-tags">
+                                <span class="tag">Gaming</span>
+                                <span class="tag">Entertainment</span>
+                                <span class="tag">Interactive</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="color-palette">
+                    <div class="color-swatch" style="background: #0D1421; color: white;">#0D1421</div>
+                    <div class="color-swatch" style="background: #1A73E8; color: white;">#1A73E8</div>
+                    <div class="color-swatch" style="background: #00D4FF; color: white;">#00D4FF</div>
+                    <div class="color-swatch" style="background: #6C5CE7; color: white;">#6C5CE7</div>
+                    <div class="color-swatch" style="background: #FF6B9D; color: white;">#FF6B9D</div>
+                </div>
+            </div>
+
+            <!-- Modern & Trendy -->
+            <div class="style-section">
+                <div class="style-header">
+                    <h2>Modern & Trendy</h2>
+                    <div class="style-description">
+                        Contemporary design following current trends. Bold typography, vibrant colors, asymmetrical layouts, and creative visual elements for dynamic brands.
+                    </div>
+                </div>
+
+                <div class="portfolio-grid">
+                    <div class="portfolio-item">
+                        <div class="portfolio-preview modern-bg">BrandLab</div>
+                        <div class="portfolio-info">
+                            <h3>BrandLab Creative Agency</h3>
+                            <p>Modern creative agency branding with bold typography and vibrant color combinations that stand out.</p>
+                            <div class="portfolio-tags">
+                                <span class="tag">Creative Agency</span>
+                                <span class="tag">Marketing</span>
+                                <span class="tag">Bold Design</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-item">
+                        <div class="portfolio-preview modern-bg">EcoStyle</div>
+                        <div class="portfolio-info">
+                            <h3>EcoStyle Fashion</h3>
+                            <p>Sustainable fashion brand with modern aesthetics combining environmental consciousness with style.</p>
+                            <div class="portfolio-tags">
+                                <span class="tag">Fashion</span>
+                                <span class="tag">Sustainability</span>
+                                <span class="tag">E-commerce</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-item">
+                        <div class="portfolio-preview modern-bg">SocialHub</div>
+                        <div class="portfolio-info">
+                            <h3>SocialHub Platform</h3>
+                            <p>Social media management tool with trendy design elements and user-friendly interface design.</p>
+                            <div class="portfolio-tags">
+                                <span class="tag">Social Media</span>
+                                <span class="tag">SaaS</span>
+                                <span class="tag">Dashboard</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="color-palette">
+                    <div class="color-swatch" style="background: #FF6B6B; color: white;">#FF6B6B</div>
+                    <div class="color-swatch" style="background: #4ECDC4; color: white;">#4ECDC4</div>
+                    <div class="color-swatch" style="background: #45B7D1; color: white;">#45B7D1</div>
+                    <div class="color-swatch" style="background: #96CEB4;">#96CEB4</div>
+                    <div class="color-swatch" style="background: #FFEAA7;">#FFEAA7</div>
+                </div>
+            </div>
+
+            <!-- Classic & Elegant -->
+            <div class="style-section">
+                <div class="style-header">
+                    <h2>Classic & Elegant</h2>
+                    <div class="style-description">
+                        Timeless design with sophisticated aesthetics. Traditional typography, refined color schemes, and elegant proportions for luxury and established brands.
+                    </div>
+                </div>
+
+                <div class="portfolio-grid">
+                    <div class="portfolio-item">
+                        <div class="portfolio-preview classic-bg">Goldstone Legal</div>
+                        <div class="portfolio-info">
+                            <h3>Goldstone Legal Firm</h3>
+                            <p>Prestigious law firm branding emphasizing trust, tradition, and professional excellence with elegant typography.</p>
+                            <div class="portfolio-tags">
+                                <span class="tag">Legal Services</span>
+                                <span class="tag">Professional</span>
+                                <span class="tag">Premium</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-item">
+                        <div class="portfolio-preview classic-bg">Heritage Wines</div>
+                        <div class="portfolio-info">
+                            <h3>Heritage Wines Collection</h3>
+                            <p>Luxury wine brand with classic design elements, refined color palette, and sophisticated packaging design.</p>
+                            <div class="portfolio-tags">
+                                <span class="tag">Luxury Goods</span>
+                                <span class="tag">Packaging</span>
+                                <span class="tag">Wine & Spirits</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-item">
+                        <div class="portfolio-preview classic-bg">Platinum Real Estate</div>
+                        <div class="portfolio-info">
+                            <h3>Platinum Real Estate</h3>
+                            <p>High-end real estate company branding with timeless design elements and luxury market appeal.</p>
+                            <div class="portfolio-tags">
+                                <span class="tag">Real Estate</span>
+                                <span class="tag">Luxury</span>
+                                <span class="tag">Investment</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="color-palette">
+                    <div class="color-swatch" style="background: #2C3E50; color: white;">#2C3E50</div>
+                    <div class="color-swatch" style="background: #34495E; color: white;">#34495E</div>
+                    <div class="color-swatch" style="background: #8B4513; color: white;">#8B4513</div>
+                    <div class="color-swatch" style="background: #DAA520;">#DAA520</div>
+                    <div class="color-swatch" style="background: #FFFFFF;">White</div>
+                </div>
+            </div>
+
+            <!-- Playful & Creative -->
+            <div class="style-section">
+                <div class="style-header">
+                    <h2>Playful & Creative</h2>
+                    <div class="style-description">
+                        Fun and engaging design with creative elements. Bright colors, custom illustrations, organic shapes, and interactive features for brands that want to stand out.
+                    </div>
+                </div>
+
+                <div class="portfolio-grid">
+                    <div class="portfolio-item">
+                        <div class="portfolio-preview playful-bg">KidsLearn Academy</div>
+                        <div class="portfolio-info">
+                            <h3>KidsLearn Academy</h3>
+                            <p>Educational platform for children featuring playful colors, friendly illustrations, and engaging interface design.</p>
+                            <div class="portfolio-tags">
+                                <span class="tag">Education</span>
+                                <span class="tag">Children</span>
+                                <span class="tag">E-learning</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-item">
+                        <div class="portfolio-preview playful-bg">FoodieDelight</div>
+                        <div class="portfolio-info">
+                            <h3>FoodieDelight Restaurant</h3>
+                            <p>Family restaurant branding with warm colors, playful typography, and appetizing visual elements.</p>
+                            <div class="portfolio-tags">
+                                <span class="tag">Restaurant</span>
+                                <span class="tag">Food & Beverage</span>
+                                <span class="tag">Family-Friendly</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-item">
+                        <div class="portfolio-preview playful-bg">CreativeSpace</div>
+                        <div class="portfolio-info">
+                            <h3>CreativeSpace Studio</h3>
+                            <p>Art studio and creative workspace branding with colorful design, organic shapes, and inspiring visual elements.</p>
+                            <div class="portfolio-tags">
+                                <span class="tag">Art Studio</span>
+                                <span class="tag">Creative Services</span>
+                                <span class="tag">Community</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="color-palette">
+                    <div class="color-swatch" style="background: #FF9A9E;">#FF9A9E</div>
+                    <div class="color-swatch" style="background: #FECFEF;">#FECFEF</div>
+                    <div class="color-swatch" style="background: #FFECD2;">#FFECD2</div>
+                    <div class="color-swatch" style="background: #A8E6CF;">#A8E6CF</div>
+                    <div class="color-swatch" style="background: #FFB3BA;">#FFB3BA</div>
+                </div>
+            </div>
+
+            <!-- Professional & Corporate -->
+            <div class="style-section">
+                <div class="style-header">
+                    <h2>Professional & Corporate</h2>
+                    <div class="style-description">
+                        Business-focused design emphasizing credibility and trust. Clean lines, professional color schemes, and structured layouts for established enterprises.
+                    </div>
+                </div>
+
+                <div class="portfolio-grid">
+                    <div class="portfolio-item">
+                        <div class="portfolio-preview professional-bg">GlobalConsult</div>
+                        <div class="portfolio-info">
+                            <h3>GlobalConsult Partners</h3>
+                            <p>International consulting firm with professional branding emphasizing expertise, reliability, and global reach.</p>
+                            <div class="portfolio-tags">
+                                <span class="tag">Consulting</span>
+                                <span class="tag">B2B</span>
+                                <span class="tag">Enterprise</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-item">
+                        <div class="portfolio-preview professional-bg">SecureBank</div>
+                        <div class="portfolio-info">
+                            <h3>SecureBank Financial</h3>
+                            <p>Financial services branding focusing on security, trust, and professional excellence in banking solutions.</p>
+                            <div class="portfolio-tags">
+                                <span class="tag">Banking</span>
+                                <span class="tag">Financial Services</span>
+                                <span class="tag">Security</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="portfolio-item">
+                        <div class="portfolio-preview professional-bg">IndustrialPro</div>
+                        <div class="portfolio-info">
+                            <h3>IndustrialPro Manufacturing</h3>
+                            <p>Manufacturing company branding with strong, reliable design elements emphasizing quality and precision.</p>
+                            <div class="portfolio-tags">
+                                <span class="tag">Manufacturing</span>
+                                <span class="tag">Industrial</span>
+                                <span class="tag">B2B</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="color-palette">
+                    <div class="color-swatch" style="background: #2C3E50; color: white;">#2C3E50</div>
+                    <div class="color-swatch" style="background: #34495E; color: white;">#34495E</div>
+                    <div class="color-swatch" style="background: #3498DB; color: white;">#3498DB</div>
+                    <div class="color-swatch" style="background: #95A5A6;">#95A5A6</div>
+                    <div class="color-swatch" style="background: #ECF0F1;">#ECF0F1</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h2>🚀 Ready to Create Your Perfect Design?</h2>
+            <p>Our AI-powered design consultation will analyze your needs and recommend the perfect style for your brand. Get personalized recommendations and connect with our design team to bring your vision to life.</p>
+            <div class="btn-group">
+                <a href="/design-consultation.html" class="btn">Start Design Consultation</a>
+                <a href="/" class="btn btn-secondary">Browse Our Services</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add smooth scrolling and interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate portfolio items on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all portfolio items
+            document.querySelectorAll('.portfolio-item').forEach(item => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(30px)';
+                item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(item);
+            });
+
+            // Add click analytics (optional)
+            document.querySelectorAll('.portfolio-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    const title = this.querySelector('h3').textContent;
+                    console.log('Portfolio item clicked:', title);
+                    // You can add analytics tracking here
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Solutions Advisor - KaiTech</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar h1 {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .navbar .subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .hero {
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .hero h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .requirements-panel, .results-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .panel-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #4A5568;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #4A5568;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid #E2E8F0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.5rem;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .provider-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .provider-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .provider-card.recommended {
+            border-color: #48BB78;
+            background: linear-gradient(135deg, #F0FFF4 0%, #C6F6D5 100%);
+        }
+
+        .provider-card.recommended::before {
+            content: "🏆 RECOMMENDED";
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #48BB78;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .provider-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .provider-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .provider-icon {
+            font-size: 2rem;
+        }
+
+        .provider-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2D3748;
+        }
+
+        .cost-badge {
+            background: #4299E1;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .provider-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .detail-section {
+            background: rgba(102, 126, 234, 0.05);
+            padding: 1rem;
+            border-radius: 12px;
+        }
+
+        .detail-title {
+            font-weight: 600;
+            color: #4A5568;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .detail-value {
+            color: #2D3748;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+
+        .cost-breakdown {
+            background: #F7FAFC;
+            padding: 1rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+        }
+
+        .cost-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .cost-item:last-child {
+            border-top: 1px solid #E2E8F0;
+            padding-top: 0.5rem;
+            margin-top: 0.5rem;
+            font-weight: 600;
+        }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .pros, .cons {
+            padding: 1rem;
+            border-radius: 12px;
+        }
+
+        .pros {
+            background: rgba(72, 187, 120, 0.1);
+        }
+
+        .cons {
+            background: rgba(245, 101, 101, 0.1);
+        }
+
+        .pros h4, .cons h4 {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .pros h4 {
+            color: #38A169;
+        }
+
+        .cons h4 {
+            color: #E53E3E;
+        }
+
+        .pros ul, .cons ul {
+            list-style: none;
+            font-size: 0.9rem;
+        }
+
+        .pros li::before {
+            content: "✅ ";
+            margin-right: 0.5rem;
+        }
+
+        .cons li::before {
+            content: "❌ ";
+            margin-right: 0.5rem;
+        }
+
+        .deployment-steps {
+            background: #F7FAFC;
+            padding: 1rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+        }
+
+        .deployment-steps h4 {
+            margin-bottom: 1rem;
+            color: #4A5568;
+        }
+
+        .deployment-steps ol {
+            padding-left: 1.5rem;
+        }
+
+        .deployment-steps li {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: #4A5568;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #E2E8F0;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .comparison-chart {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .chart-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #2D3748;
+        }
+
+        .chart-bars {
+            display: flex;
+            align-items: end;
+            gap: 1rem;
+            height: 200px;
+            margin: 1rem 0;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: linear-gradient(to top, #667eea, #764ba2);
+            border-radius: 8px 8px 0 0;
+            position: relative;
+            min-height: 20px;
+            display: flex;
+            align-items: end;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 0.8rem;
+            padding: 0.5rem;
+        }
+
+        .bar-label {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            color: #4A5568;
+            font-weight: 500;
+        }
+
+        .error-message {
+            background: #FED7D7;
+            color: #C53030;
+            padding: 1rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            border-left: 4px solid #E53E3E;
+        }
+
+        .status-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            background: #F0FFF4;
+            color: #38A169;
+            border: 1px solid #C6F6D5;
+        }
+
+        @media (max-width: 1024px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .provider-details {
+                grid-template-columns: 1fr;
+            }
+
+            .pros-cons {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            .requirements-panel, .results-panel {
+                padding: 1.5rem;
+            }
+
+            .chart-bars {
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <h1>🌥️ Cloud Solutions Advisor</h1>
+        <p class="subtitle">AI-powered cloud configuration recommendations</p>
+    </nav>
+
+    <div class="container">
+        <div class="hero">
+            <h2>Find Your Perfect Cloud Solution</h2>
+            <p>Get personalized recommendations for AWS, Azure, and Google Cloud Platform based on your specific requirements and budget.</p>
+        </div>
+
+        <div class="content-grid">
+            <div class="requirements-panel">
+                <h3 class="panel-title">
+                    📋 Project Requirements
+                </h3>
+
+                <form id="requirementsForm">
+                    <div class="form-group">
+                        <label for="workload_type">Workload Type</label>
+                        <select id="workload_type" name="workload_type">
+                            <option value="web_application">Web Application</option>
+                            <option value="development">Development/Testing</option>
+                            <option value="machine_learning">Machine Learning/AI</option>
+                            <option value="data_processing">Data Processing</option>
+                            <option value="database">Database/Storage</option>
+                            <option value="microservices">Microservices</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="expected_users">Expected Users</label>
+                        <input type="number" id="expected_users" name="expected_users" value="100" min="1" max="1000000">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="budget_tier">Budget Tier</label>
+                        <select id="budget_tier" name="budget_tier">
+                            <option value="very_low">Very Low ($5-25/month)</option>
+                            <option value="low">Low ($25-100/month)</option>
+                            <option value="medium" selected>Medium ($100-500/month)</option>
+                            <option value="high">High ($500-2000/month)</option>
+                            <option value="enterprise">Enterprise ($2000+/month)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="performance_priority">Performance Priority</label>
+                        <select id="performance_priority" name="performance_priority">
+                            <option value="cost_optimized">Cost Optimized</option>
+                            <option value="balanced" selected>Balanced</option>
+                            <option value="high_performance">High Performance</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Preferred Cloud Providers</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="aws" name="preferred_providers" value="aws" checked>
+                                <label for="aws">☁️ AWS</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="azure" name="preferred_providers" value="azure" checked>
+                                <label for="azure">🔷 Azure</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="gcp" name="preferred_providers" value="gcp" checked>
+                                <label for="gcp">🌥️ GCP</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="min_cpu">Minimum CPU Cores</label>
+                        <input type="number" id="min_cpu" name="min_cpu" value="2" min="1" max="128">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="min_memory">Minimum Memory (GB)</label>
+                        <input type="number" id="min_memory" name="min_memory" value="4" min="1" max="1024">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="min_storage">Storage Needed (GB)</label>
+                        <input type="number" id="min_storage" name="min_storage" value="50" min="10" max="10000">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Additional Requirements</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="needs_database" name="needs_database">
+                                <label for="needs_database">Database Required</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="needs_load_balancer" name="needs_load_balancer">
+                                <label for="needs_load_balancer">Load Balancer</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="needs_cdn" name="needs_cdn">
+                                <label for="needs_cdn">CDN</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn" id="analyzeBtn">
+                        🎆 Get Recommendations
+                    </button>
+                </form>
+            </div>
+
+            <div class="results-panel">
+                <h3 class="panel-title">
+                    🎯 Recommendations
+                </h3>
+
+                <div id="results-content">
+                    <div style="text-align: center; padding: 3rem; color: #A0AEC0;">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">🌟</div>
+                        <h3>Ready to Analyze</h3>
+                        <p>Fill out the requirements form and click "Get Recommendations" to see your personalized cloud solutions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class CloudAdvisor {
+            constructor() {
+                this.form = document.getElementById('requirementsForm');
+                this.resultsContent = document.getElementById('results-content');
+                this.analyzeBtn = document.getElementById('analyzeBtn');
+                
+                this.bindEvents();
+                this.loadCloudStatus();
+            }
+
+            bindEvents() {
+                this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+            }
+
+            async handleSubmit(e) {
+                e.preventDefault();
+                
+                this.showLoading();
+                
+                try {
+                    const requirements = this.gatherRequirements();
+                    const recommendations = await this.getRecommendations(requirements);
+                    this.displayRecommendations(recommendations);
+                } catch (error) {
+                    console.error('Error getting recommendations:', error);
+                    this.showError(error.message || 'Failed to get recommendations. Please try again.');
+                } finally {
+                    this.hideLoading();
+                }
+            }
+
+            gatherRequirements() {
+                const formData = new FormData(this.form);
+                const requirements = {};
+
+                // Basic fields
+                requirements.workload_type = formData.get('workload_type');
+                requirements.expected_users = parseInt(formData.get('expected_users'));
+                requirements.budget_tier = formData.get('budget_tier');
+                requirements.performance_priority = formData.get('performance_priority');
+
+                // Preferred providers (multiple checkboxes)
+                const providers = formData.getAll('preferred_providers');
+                requirements.preferred_providers = providers.length > 0 ? providers : ['aws', 'azure', 'gcp'];
+
+                // Technical requirements
+                requirements.technical_requirements = {
+                    min_cpu: parseInt(formData.get('min_cpu')),
+                    min_memory: parseInt(formData.get('min_memory')),
+                    min_storage: parseInt(formData.get('min_storage')),
+                    needs_database: formData.has('needs_database'),
+                    needs_load_balancer: formData.has('needs_load_balancer'),
+                    needs_cdn: formData.has('needs_cdn')
+                };
+
+                return requirements;
+            }
+
+            async getRecommendations(requirements) {
+                const response = await fetch('/api/cloud/recommend', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ requirements })
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.message || 'Failed to get recommendations');
+                }
+
+                const data = await response.json();
+                return data.data;
+            }
+
+            displayRecommendations(data) {
+                const { providers, comparison, best_match, analysis } = data;
+
+                let html = '';
+
+                // Best Match Banner
+                if (best_match) {
+                    html += `
+                        <div class="comparison-chart">
+                            <div class="chart-title">🏆 Best Match: ${providers[best_match.provider].provider}</div>
+                            <p style="margin-bottom: 1rem; color: #4A5568;">
+                                Confidence: ${Math.round(best_match.confidence * 100)}% | 
+                                ${best_match.reasoning.join(' • ')}
+                            </p>
+                        </div>
+                    `;
+                }
+
+                // Cost Comparison Chart
+                if (comparison && comparison.cost_comparison) {
+                    html += this.renderCostComparison(comparison.cost_comparison);
+                }
+
+                // Analysis Summary
+                if (analysis) {
+                    html += this.renderAnalysisSummary(analysis);
+                }
+
+                // Provider Recommendations
+                Object.entries(providers).forEach(([providerKey, provider]) => {
+                    const isRecommended = best_match && best_match.provider === providerKey;
+                    html += this.renderProviderCard(provider, isRecommended);
+                });
+
+                this.resultsContent.innerHTML = html;
+            }
+
+            renderCostComparison(costComparison) {
+                const maxCost = Math.max(...Object.values(costComparison).map(c => c.monthly));
+                
+                let bars = '';
+                Object.entries(costComparison).forEach(([provider, cost]) => {
+                    const height = (cost.monthly / maxCost) * 100;
+                    const providerName = provider.toUpperCase();
+                    
+                    bars += `
+                        <div class="chart-bar" style="height: ${height}%">
+                            $${cost.monthly}
+                            <div class="bar-label">${providerName}</div>
+                        </div>
+                    `;
+                });
+
+                return `
+                    <div class="comparison-chart">
+                        <div class="chart-title">💰 Monthly Cost Comparison</div>
+                        <div class="chart-bars">${bars}</div>
+                    </div>
+                `;
+            }
+
+            renderAnalysisSummary(analysis) {
+                return `
+                    <div class="comparison-chart">
+                        <div class="chart-title">📊 Workload Analysis</div>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                            <div class="detail-section">
+                                <div class="detail-title">Workload Type</div>
+                                <div class="detail-value">${analysis.workload_classification.type.replace('_', ' ').toUpperCase()}</div>
+                            </div>
+                            <div class="detail-section">
+                                <div class="detail-title">Scaling Tier</div>
+                                <div class="detail-value">${analysis.scaling_needs.tier.toUpperCase()} (${analysis.scaling_needs.expected_concurrent} concurrent)</div>
+                            </div>
+                            <div class="detail-section">
+                                <div class="detail-title">Budget Tier</div>
+                                <div class="detail-value">${analysis.cost_optimization.tier.replace('_', ' ').toUpperCase()} ($${analysis.cost_optimization.max_monthly_budget}/mo)</div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 1rem;">
+                            <div class="detail-title">Characteristics</div>
+                            <div class="detail-value">${analysis.workload_classification.characteristics.join(' • ')}</div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            renderProviderCard(provider, isRecommended) {
+                const cardClass = isRecommended ? 'provider-card recommended' : 'provider-card';
+                
+                return `
+                    <div class="${cardClass}">
+                        <div class="provider-header">
+                            <div class="provider-info">
+                                <div class="provider-icon">${provider.icon}</div>
+                                <div>
+                                    <div class="provider-name">${provider.provider}</div>
+                                    <div class="status-indicator">
+                                        🟢 ${provider.recommended_region} • ${provider.setup_complexity} complexity
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="cost-badge">
+                                $${provider.cost_estimate.monthly_estimate}/mo
+                            </div>
+                        </div>
+
+                        <div class="provider-details">
+                            <div class="detail-section">
+                                <div class="detail-title">Compute</div>
+                                <div class="detail-value">
+                                    ${provider.compute.instance_type}<br>
+                                    ${provider.compute.vcpu} vCPU, ${provider.compute.memory}<br>
+                                    <small>${provider.compute.use_case}</small>
+                                </div>
+                            </div>
+                            
+                            <div class="detail-section">
+                                <div class="detail-title">Storage</div>
+                                <div class="detail-value">
+                                    ${provider.storage.primary.type}<br>
+                                    ${provider.storage.primary.size_gb} GB<br>
+                                    <small>$${provider.storage.primary.monthly_cost}/mo</small>
+                                </div>
+                            </div>
+                            
+                            ${provider.database ? `
+                            <div class="detail-section">
+                                <div class="detail-title">Database</div>
+                                <div class="detail-value">
+                                    ${provider.database.service}<br>
+                                    <small>$${provider.database.monthly || 20}/mo</small>
+                                </div>
+                            </div>
+                            ` : ''}
+                        </div>
+
+                        <div class="cost-breakdown">
+                            <h4 style="margin-bottom: 0.75rem; color: #4A5568;">💰 Cost Breakdown</h4>
+                            <div class="cost-item">
+                                <span>Compute:</span>
+                                <span>$${provider.cost_estimate.breakdown.compute}/mo</span>
+                            </div>
+                            <div class="cost-item">
+                                <span>Storage:</span>
+                                <span>$${provider.cost_estimate.breakdown.storage}/mo</span>
+                            </div>
+                            ${provider.cost_estimate.breakdown.database > 0 ? `
+                            <div class="cost-item">
+                                <span>Database:</span>
+                                <span>$${provider.cost_estimate.breakdown.database}/mo</span>
+                            </div>
+                            ` : ''}
+                            <div class="cost-item">
+                                <span>Additional Services:</span>
+                                <span>$${provider.cost_estimate.breakdown.additional_services}/mo</span>
+                            </div>
+                            <div class="cost-item">
+                                <strong>Total Monthly:</strong>
+                                <strong>$${provider.cost_estimate.monthly_estimate}</strong>
+                            </div>
+                            <div class="cost-item" style="border-top: none; font-size: 0.9rem; color: #666;">
+                                <span>Yearly Estimate:</span>
+                                <span>$${provider.cost_estimate.yearly_estimate}</span>
+                            </div>
+                        </div>
+
+                        <div class="pros-cons">
+                            <div class="pros">
+                                <h4>Advantages</h4>
+                                <ul>
+                                    ${provider.pros.map(pro => `<li>${pro}</li>`).join('')}
+                                </ul>
+                            </div>
+                            <div class="cons">
+                                <h4>Considerations</h4>
+                                <ul>
+                                    ${provider.cons.map(con => `<li>${con}</li>`).join('')}
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="deployment-steps">
+                            <h4>🚀 Deployment Steps</h4>
+                            <ol>
+                                ${provider.deployment_steps.slice(0, 5).map(step => `<li>${step}</li>`).join('')}
+                            </ol>
+                        </div>
+
+                        ${provider.additional_services.length > 0 ? `
+                        <div class="detail-section">
+                            <div class="detail-title">Recommended Services</div>
+                            <div class="detail-value">
+                                ${provider.additional_services.map(service => 
+                                    `<strong>${service.name}:</strong> ${service.purpose} (~$${service.estimated_cost}/mo)`
+                                ).join('<br>')}
+                            </div>
+                        </div>
+                        ` : ''}
+
+                        ${provider.cost_estimate.savings_opportunities.length > 0 ? `
+                        <div style="background: #FFF5B7; padding: 1rem; border-radius: 12px; margin-top: 1rem;">
+                            <h4 style="margin-bottom: 0.5rem; color: #D69E2E;">💡 Cost Optimization Tips</h4>
+                            <ul style="list-style: none; font-size: 0.9rem;">
+                                ${provider.cost_estimate.savings_opportunities.map(tip => `<li>• ${tip}</li>`).join('')}
+                            </ul>
+                        </div>
+                        ` : ''}
+                    </div>
+                `;
+            }
+
+            showLoading() {
+                this.analyzeBtn.disabled = true;
+                this.analyzeBtn.innerHTML = '🔄 Analyzing...';
+                
+                this.resultsContent.innerHTML = `
+                    <div class="loading">
+                        <div class="loading-spinner"></div>
+                        <h3>Analyzing Requirements</h3>
+                        <p>Getting personalized cloud recommendations...</p>
+                    </div>
+                `;
+            }
+
+            hideLoading() {
+                this.analyzeBtn.disabled = false;
+                this.analyzeBtn.innerHTML = '🎆 Get Recommendations';
+            }
+
+            showError(message) {
+                this.resultsContent.innerHTML = `
+                    <div class="error-message">
+                        <h4>❌ Error</h4>
+                        <p>${message}</p>
+                    </div>
+                `;
+            }
+
+            async loadCloudStatus() {
+                try {
+                    const response = await fetch('/api/cloud/status');
+                    if (response.ok) {
+                        const data = await response.json();
+                        console.log('Cloud status loaded:', data.data);
+                    }
+                } catch (error) {
+                    console.warn('Could not load cloud status:', error);
+                }
+            }
+        }
+
+        // Initialize the Cloud Advisor when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new CloudAdvisor();
+        });
+    </script>
+</body>
+</html>

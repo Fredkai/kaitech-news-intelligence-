@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - KaiTech Voice of Time</title>
+    <link rel="icon" type="image/svg+xml" href="assets/kaitech-favicon.svg">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .dashboard-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 0;
+        }
+        
+        .dashboard-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: background 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .dashboard-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 20px;
+        }
+        
+        .welcome-section {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .news-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .news-feed {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .sidebar-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .news-item {
+            border-bottom: 1px solid #eee;
+            padding: 1rem 0;
+        }
+        
+        .news-item:last-child {
+            border-bottom: none;
+        }
+        
+        .news-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        
+        .news-meta {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+        
+        .news-summary {
+            color: #555;
+            line-height: 1.5;
+        }
+        
+        .news-actions {
+            margin-top: 0.5rem;
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #666;
+            border: 1px solid #dee2e6;
+        }
+        
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+        }
+        
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .preferences-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        
+        .checkbox-item:hover {
+            background: #f8f9fa;
+        }
+        
+        .checkbox-item input[type="checkbox"]:checked + label {
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        @media (max-width: 768px) {
+            .news-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .dashboard-nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-header">
+        <div class="dashboard-nav">
+            <div class="user-info">
+                <div class="user-avatar" id="user-avatar">U</div>
+                <div>
+                    <div><strong id="user-name">Loading...</strong></div>
+                    <div id="user-email" style="opacity: 0.8; font-size: 0.9rem;"></div>
+                </div>
+            </div>
+            <div class="nav-links">
+                <a href="/profile">Profile</a>
+                <a href="#" id="logout-btn">Logout</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-content">
+        <div class="welcome-section">
+            <h1>Welcome to your personalized news dashboard!</h1>
+            <p>Stay updated with news tailored to your interests. Manage your preferences, save articles, and discover trending topics.</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="total-articles">0</div>
+                <div>Articles Today</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="saved-articles">0</div>
+                <div>Saved Articles</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="categories-count">0</div>
+                <div>Categories</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="reading-time">0</div>
+                <div>Minutes Read</div>
+            </div>
+        </div>
+
+        <div class="news-section">
+            <div class="news-feed">
+                <h2>Your Personalized News Feed</h2>
+                <div id="news-container">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        Loading your personalized news...
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar">
+                <div class="sidebar-card">
+                    <h3>News Preferences</h3>
+                    <form class="preferences-form" id="preferences-form">
+                        <label>Select your interests:</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="tech" value="technology">
+                                <label for="tech">Technology</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="business" value="business">
+                                <label for="business">Business</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="world" value="world">
+                                <label for="world">World News</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="ai" value="ai & technology">
+                                <label for="ai">AI & Tech</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="crypto" value="cryptocurrency">
+                                <label for="crypto">Cryptocurrency</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="science" value="science">
+                                <label for="science">Science</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="health" value="health">
+                                <label for="health">Health</label>
+                            </div>
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="environment" value="environment">
+                                <label for="environment">Environment</label>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update Preferences</button>
+                    </form>
+                </div>
+
+                <div class="sidebar-card">
+                    <h3>Quick Actions</h3>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
+                        <button class="btn btn-secondary" onclick="refreshNews()">🔄 Refresh News</button>
+                        <button class="btn btn-secondary" onclick="viewSavedArticles()">📚 Saved Articles</button>
+                        <button class="btn btn-secondary" onclick="window.location.href='/profile'">⚙️ Profile Settings</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentUser = null;
+        let personalizedNews = [];
+
+        // Initialize dashboard
+        async function initDashboard() {
+            try {
+                // Check authentication status
+                const authResponse = await fetch('/auth/status');
+                const authData = await authResponse.json();
+                
+                if (!authData.authenticated) {
+                    window.location.href = '/login';
+                    return;
+                }
+                
+                currentUser = authData.user;
+                updateUserInfo(currentUser);
+                
+                // Load personalized news
+                await loadPersonalizedNews();
+                
+                // Load saved articles count
+                await loadStats();
+                
+                // Set user preferences
+                setUserPreferences(currentUser.preferences);
+                
+            } catch (error) {
+                console.error('Dashboard initialization error:', error);
+                alert('Failed to load dashboard. Please try again.');
+            }
+        }
+
+        function updateUserInfo(user) {
+            document.getElementById('user-name').textContent = user.display_name || user.username;
+            document.getElementById('user-email').textContent = user.email;
+            
+            // Update avatar
+            const avatar = document.getElementById('user-avatar');
+            if (user.avatar_url) {
+                avatar.innerHTML = `<img src="${user.avatar_url}" style="width: 100%; height: 100%; border-radius: 50%;">`;
+            } else {
+                avatar.textContent = (user.display_name || user.username).charAt(0).toUpperCase();
+            }
+        }
+
+        async function loadPersonalizedNews() {
+            try {
+                const response = await fetch('/api/news/personalized');
+                const data = await response.json();
+                
+                if (data.success) {
+                    personalizedNews = data.articles;
+                    displayNews(personalizedNews);
+                    updateStats({ totalArticles: data.articles.length });
+                } else {
+                    throw new Error(data.message || 'Failed to load news');
+                }
+                
+            } catch (error) {
+                console.error('Error loading personalized news:', error);
+                document.getElementById('news-container').innerHTML = `
+                    <div style="text-align: center; padding: 2rem; color: #666;">
+                        <p>Unable to load personalized news. <a href="#" onclick="loadPersonalizedNews()">Try again</a></p>
+                    </div>
+                `;
+            }
+        }
+
+        function displayNews(articles) {
+            const container = document.getElementById('news-container');
+            
+            if (!articles || articles.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 2rem; color: #666;">
+                        <p>No articles found matching your preferences. Try adjusting your news categories.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = articles.slice(0, 10).map(article => `
+                <div class="news-item">
+                    <div class="news-title">${article.title}</div>
+                    <div class="news-meta">
+                        <span>${article.source}</span> • 
+                        <span>${article.aiCategory}</span> • 
+                        <span>${new Date(article.pubDate).toLocaleDateString()}</span>
+                        ${article.sentiment ? `• <span class="sentiment-${article.sentiment}">${article.sentiment}</span>` : ''}
+                    </div>
+                    <div class="news-summary">${article.description ? article.description.substring(0, 200) + '...' : ''}</div>
+                    <div class="news-actions">
+                        <button class="btn btn-primary" onclick="readArticle('${article.link}')">Read Article</button>
+                        <button class="btn btn-secondary" onclick="saveArticle('${article.id}', '${article.title.replace(/'/g, "\\'")}', '${article.link}')">💾 Save</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function loadStats() {
+            try {
+                const savedResponse = await fetch('/auth/saved-articles');
+                const savedData = await savedResponse.json();
+                
+                updateStats({
+                    savedArticles: savedData.success ? savedData.count : 0,
+                    categoriesCount: currentUser.preferences?.news_categories?.length || 0,
+                    readingTime: Math.floor(Math.random() * 120) + 30 // Placeholder
+                });
+                
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+
+        function updateStats(stats) {
+            if (stats.totalArticles !== undefined) {
+                document.getElementById('total-articles').textContent = stats.totalArticles;
+            }
+            if (stats.savedArticles !== undefined) {
+                document.getElementById('saved-articles').textContent = stats.savedArticles;
+            }
+            if (stats.categoriesCount !== undefined) {
+                document.getElementById('categories-count').textContent = stats.categoriesCount;
+            }
+            if (stats.readingTime !== undefined) {
+                document.getElementById('reading-time').textContent = stats.readingTime;
+            }
+        }
+
+        function setUserPreferences(preferences) {
+            if (!preferences || !preferences.news_categories) return;
+            
+            preferences.news_categories.forEach(category => {
+                const checkbox = document.querySelector(`input[value="${category.toLowerCase()}"]`);
+                if (checkbox) {
+                    checkbox.checked = true;
+                }
+            });
+        }
+
+        async function saveArticle(articleId, title, url) {
+            try {
+                const response = await fetch('/auth/saved-articles', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        article_id: articleId,
+                        article_title: title,
+                        article_url: url,
+                        article_source: 'News Feed'
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('Article saved successfully!');
+                    loadStats(); // Refresh stats
+                } else {
+                    alert(result.message || 'Failed to save article');
+                }
+                
+            } catch (error) {
+                console.error('Error saving article:', error);
+                alert('Failed to save article. Please try again.');
+            }
+        }
+
+        function readArticle(url) {
+            window.open(url, '_blank');
+        }
+
+        async function refreshNews() {
+            document.getElementById('news-container').innerHTML = `
+                <div class="loading">
+                    <div class="spinner"></div>
+                    Refreshing your news feed...
+                </div>
+            `;
+            await loadPersonalizedNews();
+        }
+
+        function viewSavedArticles() {
+            window.location.href = '/profile#saved-articles';
+        }
+
+        // Handle preferences form submission
+        document.getElementById('preferences-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const selectedCategories = [];
+            
+            // Get all checked checkboxes
+            document.querySelectorAll('input[type="checkbox"]:checked').forEach(checkbox => {
+                selectedCategories.push(checkbox.value);
+            });
+            
+            try {
+                const response = await fetch('/auth/preferences', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        news_categories: selectedCategories,
+                        items_per_page: 20
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('Preferences updated successfully!');
+                    // Refresh news with new preferences
+                    await refreshNews();
+                    // Update stats
+                    updateStats({ categoriesCount: selectedCategories.length });
+                } else {
+                    alert(result.message || 'Failed to update preferences');
+                }
+                
+            } catch (error) {
+                console.error('Error updating preferences:', error);
+                alert('Failed to update preferences. Please try again.');
+            }
+        });
+
+        // Handle logout
+        document.getElementById('logout-btn').addEventListener('click', async (e) => {
+            e.preventDefault();
+            
+            try {
+                const response = await fetch('/auth/logout', {
+                    method: 'POST'
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    window.location.href = '/';
+                } else {
+                    alert('Logout failed. Please try again.');
+                }
+                
+            } catch (error) {
+                console.error('Logout error:', error);
+                alert('Logout failed. Please try again.');
+            }
+        });
+
+        // Initialize dashboard when page loads
+        document.addEventListener('DOMContentLoaded', initDashboard);
+    </script>
+</body>
+</html>

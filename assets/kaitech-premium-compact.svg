@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Premium Corporate Gradients -->
+    <linearGradient id="primaryCorporateCompact" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#1e293b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#334155;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="techBlueCompact" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0ea5e9;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0284c7;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="innovationPurpleCompact" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#7c3aed;stop-opacity:1" />
+    </linearGradient>
+    
+    <linearGradient id="successGreenCompact" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#10b981;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#059669;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Premium Shadow Effects -->
+    <filter id="corporateShadowCompact" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000000" flood-opacity="0.2"/>
+    </filter>
+    
+    <filter id="premiumGlowCompact" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Main Logo Symbol - Sophisticated Geometric K -->
+  <g transform="translate(40, 40)" filter="url(#corporateShadowCompact)">
+    <!-- Primary geometric structure -->
+    <g opacity="0.95">
+      <!-- Main K structure with premium styling -->
+      <path d="M -15 -20 L -15 20 L -9 20 L -9 4 L 6 20 L 14 20 L -1 -1 L 12 -20 L 4 -20 L -9 -4 L -9 -20 Z" 
+            fill="url(#primaryCorporateCompact)" stroke="none"/>
+      
+      <!-- Tech enhancement layer -->
+      <path d="M -13 -18 L -13 18 L -11 18 L -11 2 L 4 18 L 10 18 L -3 0 L 10 -18 L 4 -18 L -11 -6 L -11 -18 Z" 
+            fill="url(#techBlueCompact)" opacity="0.8"/>
+    </g>
+    
+    <!-- Innovation Elements - Compact -->
+    <g opacity="0.9">
+      <!-- Primary innovation nodes -->
+      <circle cx="18" cy="-12" r="3" fill="url(#innovationPurpleCompact)" filter="url(#premiumGlowCompact)"/>
+      <circle cx="20" cy="-4" r="2.5" fill="url(#successGreenCompact)" filter="url(#premiumGlowCompact)"/>
+      <circle cx="19" cy="4" r="2.8" fill="url(#techBlueCompact)" filter="url(#premiumGlowCompact)"/>
+      <circle cx="16" cy="14" r="2.5" fill="url(#innovationPurpleCompact)" filter="url(#premiumGlowCompact)"/>
+      
+      <!-- Connection matrix -->
+      <g stroke="url(#primaryCorporateCompact)" stroke-width="1.2" opacity="0.6" fill="none">
+        <path d="M 18 -9 Q 20 -6 20 -1.5" stroke-linecap="round"/>
+        <path d="M 20 -1.5 Q 19.5 1 19 6.8" stroke-linecap="round"/>
+        <path d="M 19 6.8 Q 17.5 10 16 11.5" stroke-linecap="round"/>
+      </g>
+      
+      <!-- Data flow indicators -->
+      <g fill="white" opacity="0.9">
+        <circle cx="18" cy="-12" r="1.2"/>
+        <circle cx="20" cy="-4" r="1"/>
+        <circle cx="19" cy="4" r="1.1"/>
+        <circle cx="16" cy="14" r="1"/>
+      </g>
+    </g>
+    
+    <!-- Premium accent elements -->
+    <g opacity="0.7">
+      <!-- Corporate precision lines -->
+      <rect x="-20" y="-1" width="6" height="0.8" fill="url(#techBlueCompact)" rx="0.4"/>
+      <rect x="-20" y="1.5" width="4" height="0.8" fill="url(#successGreenCompact)" rx="0.4"/>
+      <rect x="-20" y="4" width="7" height="0.8" fill="url(#innovationPurpleCompact)" rx="0.4"/>
+      
+      <!-- Status indicators -->
+      <circle cx="-22" cy="-10" r="1.5" fill="url(#successGreenCompact)" opacity="0.8"/>
+      <circle cx="-22" cy="10" r="1.5" fill="url(#innovationPurpleCompact)" opacity="0.8"/>
+      
+      <circle cx="-22" cy="-10" r="0.8" fill="white"/>
+      <circle cx="-22" cy="10" r="0.8" fill="white"/>
+    </g>
+  </g>
+  
+  <!-- Compact branding elements -->
+  <g opacity="0.6">
+    <!-- Subtle corporate grid -->
+    <g stroke="url(#primaryCorporateCompact)" stroke-width="0.3" opacity="0.15" fill="none">
+      <circle cx="40" cy="40" r="35" stroke-dasharray="2,4"/>
+      <circle cx="40" cy="40" r="25" stroke-dasharray="1,3"/>
+    </g>
+    
+    <!-- Corner accent elements -->
+    <g fill="url(#techBlueCompact)" opacity="0.4">
+      <rect x="65" y="65" width="1.5" height="6" rx="0.75"/>
+      <rect x="68" y="67" width="1.5" height="4" rx="0.75"/>
+      <rect x="71" y="68.5" width="1.5" height="3" rx="0.75"/>
+    </g>
+  </g>
+  
+</svg>
