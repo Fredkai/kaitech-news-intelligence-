@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "name": "kaitech-voice-of-time-ai",
   "builds": [
     {
       "src": "server-with-auth.js",
@@ -8,11 +9,39 @@
   ],
   "routes": [
     {
+      "src": "/api/(.*)",
+      "dest": "/server-with-auth.js"
+    },
+    {
+      "src": "/auth/(.*)",
+      "dest": "/server-with-auth.js"
+    },
+    {
+      "src": "/dashboard",
+      "dest": "/server-with-auth.js"
+    },
+    {
+      "src": "/login",
+      "dest": "/server-with-auth.js"
+    },
+    {
+      "src": "/register",
+      "dest": "/server-with-auth.js"
+    },
+    {
       "src": "/(.*)",
       "dest": "/server-with-auth.js"
     }
   ],
   "env": {
-    "NODE_ENV": "production"
+    "NODE_ENV": "production",
+    "GROK_API_KEY": "@grok_api_key",
+    "NEWSAPI_KEY": "@newsapi_key",
+    "OPENAI_API_KEY": "@openai_api_key"
+  },
+  "functions": {
+    "server-with-auth.js": {
+      "maxDuration": 30
+    }
   }
 }

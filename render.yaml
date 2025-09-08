@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: kaitech-voice-of-time-ai
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: npm install
+    startCommand: node server-with-auth.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        fromService:
+          type: web
+          name: kaitech-voice-of-time-ai
+          property: port
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: JWT_SECRET
+        generateValue: true
+    scaling:
+      minInstances: 1
+      maxInstances: 1
