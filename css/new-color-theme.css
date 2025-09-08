@@ -1,42 +1,17 @@
-/* New Color Theme - Modern Blue & Teal Color Scheme */
-/* This file overrides colors while keeping all existing functionality */
+/* Background Color Theme - Modern Blue & Teal Backgrounds Only */
+/* This file changes only background colors, keeping all text/fonts unchanged */
 
 :root {
-    /* Updated Primary Colors */
-    --primary-blue: #0ea5e9;
-    --primary-dark: #0284c7;
-    --primary-light: #38bdf8;
-    --primary-lighter: #bae6fd;
-    
-    /* Secondary Colors - Teal Accent */
-    --secondary-teal: #14b8a6;
-    --secondary-teal-dark: #0f766e;
-    --secondary-teal-light: #5eead4;
-    --secondary-teal-lighter: #ccfbf1;
-    
-    /* Neutral Colors */
-    --neutral-900: #0f172a;
-    --neutral-800: #1e293b;
-    --neutral-700: #334155;
-    --neutral-600: #475569;
-    --neutral-500: #64748b;
-    --neutral-400: #94a3b8;
-    --neutral-300: #cbd5e1;
-    --neutral-200: #e2e8f0;
-    --neutral-100: #f1f5f9;
-    --neutral-50: #f8fafc;
-    --white: #ffffff;
-    
-    /* Success/Error Colors */
-    --success: #10b981;
-    --warning: #f59e0b;
-    --error: #ef4444;
-    
-    /* Background Gradients */
-    --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 50%, #bae6fd 100%);
+    /* Background Gradients Only */
+    --bg-gradient: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #bae6fd 100%);
     --hero-gradient: linear-gradient(135deg, #0ea5e9 0%, #14b8a6 100%);
-    --card-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.9));
+    --card-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(240, 249, 255, 0.9));
+    --section-bg-1: linear-gradient(135deg, #f8fafc 0%, #f0f9ff 100%);
+    --section-bg-2: linear-gradient(135deg, #f0fdfa 0%, #ccfbf1 100%);
+    --section-bg-3: linear-gradient(135deg, #fafafa 0%, #e0f2fe 100%);
 }
+
+/* Background-Only Updates - Keep All Fonts/Text Unchanged */
 
 /* Update main background */
 body {
@@ -44,136 +19,75 @@ body {
     background-attachment: fixed;
 }
 
-/* Hero section updates */
+/* Hero section background only */
 .hero {
-    background: linear-gradient(135deg, rgba(14, 165, 233, 0.1) 0%, rgba(20, 184, 166, 0.1) 100%);
+    background: linear-gradient(135deg, rgba(14, 165, 233, 0.08) 0%, rgba(20, 184, 166, 0.08) 100%);
 }
 
-/* Navigation updates */
+/* Navigation background only */
 .navbar {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(20px);
-    border-bottom: 1px solid var(--primary-lighter);
 }
 
-.nav-link:hover,
-.nav-link.active {
-    color: var(--primary-blue);
-}
-
-.nav-link::after {
-    background: var(--primary-blue);
-}
-
-/* Button updates */
+/* Button backgrounds only */
 .btn-primary,
 .cta-button.primary {
     background: var(--hero-gradient);
-    color: var(--white);
 }
 
 .btn-primary:hover,
 .cta-button.primary:hover {
-    background: linear-gradient(135deg, var(--primary-dark), var(--secondary-teal-dark));
-    transform: translateY(-2px);
+    background: linear-gradient(135deg, #0284c7, #0f766e);
 }
 
 .btn-secondary,
 .cta-button.secondary {
-    background: var(--white);
-    color: var(--primary-blue);
-    border: 2px solid var(--primary-light);
+    background: rgba(255, 255, 255, 0.95);
 }
 
 .btn-secondary:hover,
 .cta-button.secondary:hover {
-    background: var(--primary-lighter);
-    border-color: var(--primary-blue);
+    background: rgba(186, 230, 253, 0.5);
 }
 
 .cta-button.tertiary {
-    background: var(--secondary-teal);
-    color: var(--white);
+    background: linear-gradient(135deg, #14b8a6, #0f766e);
 }
 
 .cta-button.tertiary:hover {
-    background: var(--secondary-teal-dark);
+    background: linear-gradient(135deg, #0f766e, #0d9488);
 }
 
-/* Hero stats updates */
-.stat-number {
-    color: var(--primary-blue);
-}
-
-/* News section updates */
+/* News section background only */
 .news-explorer-section {
     background: var(--card-gradient);
 }
 
 .news-tab.active {
     background: var(--hero-gradient);
-    color: var(--white);
 }
 
 .news-tab:hover {
-    background: var(--primary-lighter);
-    color: var(--primary-dark);
+    background: rgba(186, 230, 253, 0.3);
 }
 
-/* Cloud Services section updates */
+/* Cloud Services section background only */
 .cloud-services-section {
-    background: linear-gradient(135deg, var(--neutral-50) 0%, var(--primary-lighter) 50%, var(--secondary-teal-lighter) 100%);
-}
-
-.cloud-stat-card {
-    border: 1px solid var(--primary-light);
-}
-
-.cloud-stat-card:hover {
-    box-shadow: 0 20px 40px rgba(14, 165, 233, 0.2);
-    border-color: var(--primary-blue);
+    background: var(--section-bg-1);
 }
 
 .cloud-stat-card .stat-icon {
     background: var(--hero-gradient);
 }
 
-.cloud-stat-card .stat-number {
-    color: var(--primary-dark);
-}
-
 .category-tab.active,
 .category-tab:hover {
     background: var(--hero-gradient);
-    color: var(--white);
-    border-color: var(--primary-blue);
-}
-
-.service-card {
-    border: 1px solid var(--primary-light);
-}
-
-.service-card:hover {
-    box-shadow: 0 25px 50px rgba(14, 165, 233, 0.25);
-    border-color: var(--primary-blue);
 }
 
 .service-icon {
-    background: linear-gradient(135deg, var(--primary-lighter), var(--secondary-teal-lighter));
-    color: var(--primary-dark);
-}
-
-.service-card h3 {
-    color: var(--primary-dark);
-}
-
-.feature-tag {
-    background: var(--primary-lighter);
-    color: var(--primary-dark);
-}
-
-.service-pricing .price {
-    color: var(--primary-dark);
+    background: linear-gradient(135deg, rgba(186, 230, 253, 0.4), rgba(204, 251, 241, 0.4));
 }
 
 .service-btn {
@@ -181,37 +95,12 @@ body {
 }
 
 .service-btn:hover {
-    background: linear-gradient(135deg, var(--primary-dark), var(--secondary-teal-dark));
+    background: linear-gradient(135deg, #0284c7, #0f766e);
 }
 
-/* Pricing section updates */
-.pricing-title {
-    color: var(--primary-dark);
-}
-
-.pricing-card {
-    border: 2px solid var(--primary-light);
-}
-
-.pricing-card.popular {
-    border-color: var(--primary-blue);
-    box-shadow: 0 20px 40px rgba(14, 165, 233, 0.3);
-}
-
+/* Pricing section backgrounds only */
 .popular-badge {
     background: var(--hero-gradient);
-}
-
-.plan-header h4 {
-    color: var(--primary-dark);
-}
-
-.currency {
-    color: var(--primary-blue);
-}
-
-.amount {
-    color: var(--primary-dark);
 }
 
 .plan-btn {
@@ -219,25 +108,16 @@ body {
 }
 
 .plan-btn:hover {
-    background: linear-gradient(135deg, var(--primary-dark), var(--secondary-teal-dark));
+    background: linear-gradient(135deg, #0284c7, #0f766e);
 }
 
-/* Contact section updates */
+/* Contact section backgrounds only */
 .contact-icon {
     background: var(--hero-gradient);
 }
 
-.contact-header h3 {
-    color: var(--primary-dark);
-}
-
 .option-icon {
-    background: linear-gradient(135deg, var(--primary-lighter), var(--secondary-teal-lighter));
-    color: var(--primary-dark);
-}
-
-.option-info h4 {
-    color: var(--primary-dark);
+    background: linear-gradient(135deg, rgba(186, 230, 253, 0.4), rgba(204, 251, 241, 0.4));
 }
 
 .contact-btn.primary {
@@ -245,274 +125,69 @@ body {
 }
 
 .contact-btn.primary:hover {
-    background: linear-gradient(135deg, var(--primary-dark), var(--secondary-teal-dark));
-}
-
-.contact-btn.secondary {
-    color: var(--primary-dark);
-    border-color: var(--primary-light);
+    background: linear-gradient(135deg, #0284c7, #0f766e);
 }
 
 .contact-btn.secondary:hover {
-    background: var(--primary-lighter);
-    border-color: var(--primary-blue);
+    background: rgba(186, 230, 253, 0.3);
 }
 
-/* Media & Design section updates */
+/* Media & Design section background only */
 .media-design-section {
-    background: linear-gradient(135deg, var(--neutral-50) 0%, var(--secondary-teal-lighter) 50%, var(--primary-lighter) 100%);
-}
-
-.creative-stat-card {
-    border: 1px solid var(--secondary-teal-light);
-}
-
-.creative-stat-card:hover {
-    box-shadow: 0 20px 40px rgba(20, 184, 166, 0.2);
-    border-color: var(--secondary-teal);
+    background: var(--section-bg-2);
 }
 
 .creative-stat-card .stat-icon {
-    background: linear-gradient(135deg, var(--secondary-teal), var(--secondary-teal-dark));
-}
-
-.creative-stat-card .stat-number,
-.creative-stat-card .stat-label {
-    color: var(--secondary-teal-dark);
+    background: linear-gradient(135deg, #14b8a6, #0f766e);
 }
 
 .showcase-tab.active,
 .showcase-tab:hover {
-    background: linear-gradient(135deg, var(--secondary-teal), var(--secondary-teal-dark));
-    color: var(--white);
-    border-color: var(--secondary-teal);
+    background: linear-gradient(135deg, #14b8a6, #0f766e);
 }
 
-.showcase-tab {
-    border: 1px solid var(--secondary-teal-light);
-    color: var(--secondary-teal-dark);
-}
-
-/* Portfolio updates */
+/* Portfolio overlay background only */
 .portfolio-overlay {
-    background: linear-gradient(to top, rgba(14, 165, 233, 0.9), transparent);
+    background: linear-gradient(to top, rgba(14, 165, 233, 0.85), transparent);
 }
 
-/* Package section updates */
-.packages-title {
-    color: var(--secondary-teal-dark);
-}
-
-.package-card {
-    border: 2px solid var(--secondary-teal-light);
-}
-
-.package-card.popular {
-    border-color: var(--secondary-teal);
-    box-shadow: 0 20px 40px rgba(20, 184, 166, 0.3);
-}
-
+/* Package section backgrounds only */
 .package-icon {
-    background: linear-gradient(135deg, var(--secondary-teal), var(--secondary-teal-dark));
-}
-
-.package-header h4 {
-    color: var(--secondary-teal-dark);
-}
-
-.package-price .currency {
-    color: var(--secondary-teal);
-}
-
-.package-price .amount {
-    color: var(--secondary-teal-dark);
-}
-
-.package-description {
-    color: var(--secondary-teal-dark);
+    background: linear-gradient(135deg, #14b8a6, #0f766e);
 }
 
 .package-btn {
-    background: linear-gradient(135deg, var(--secondary-teal), var(--secondary-teal-dark));
+    background: linear-gradient(135deg, #14b8a6, #0f766e);
 }
 
 .package-btn:hover {
-    background: linear-gradient(135deg, var(--secondary-teal-dark), var(--secondary-teal));
+    background: linear-gradient(135deg, #0f766e, #0d9488);
 }
 
-/* Process section updates */
-.process-title {
-    color: var(--secondary-teal-dark);
-}
-
+/* Process section backgrounds only */
 .step-number {
-    background: linear-gradient(135deg, var(--secondary-teal), var(--secondary-teal-dark));
+    background: linear-gradient(135deg, #14b8a6, #0f766e);
 }
 
-.step-content h4 {
-    color: var(--secondary-teal-dark);
-}
-
-.step-content p {
-    color: var(--secondary-teal-dark);
-}
-
-/* Footer updates */
+/* Footer background only */
 .tech-footer {
-    background: linear-gradient(135deg, var(--neutral-900), var(--neutral-800));
+    background: linear-gradient(135deg, #0f172a, #1e293b);
 }
 
-/* Breaking news bar */
+/* Breaking news bar background only */
 .breaking-news-bar {
     background: var(--hero-gradient);
 }
 
-/* Update section titles */
-.section-title {
-    color: var(--primary-dark);
-}
-
-/* Update feature cards */
-.feature-card {
-    border: 1px solid var(--primary-light);
-}
-
-.feature-card:hover {
-    border-color: var(--primary-blue);
-    box-shadow: 0 20px 40px rgba(14, 165, 233, 0.15);
-}
-
-.feature-icon {
-    background: var(--primary-lighter);
-    color: var(--primary-blue);
-}
-
-.feature-title {
-    color: var(--primary-dark);
-}
-
-.feature-link {
-    color: var(--primary-blue);
-}
-
-/* News cards updates */
-.news-card {
-    border-left: 4px solid var(--primary-blue);
-}
-
-.news-category.breaking {
-    background: var(--error);
-}
-
-.news-category.technology {
-    background: var(--primary-blue);
-}
-
-.news-category.business {
-    background: var(--secondary-teal);
-}
-
-.news-category.politics {
-    background: var(--warning);
-}
-
-.news-category.world {
-    background: var(--success);
-}
-
-/* Topic cards */
-.topic-card {
-    border: 1px solid var(--primary-light);
-}
-
-.topic-card:hover {
-    border-color: var(--primary-blue);
-    box-shadow: 0 15px 30px rgba(14, 165, 233, 0.2);
-}
-
-/* Financial cards */
-.index-card.positive,
-.crypto-change.positive,
-.stock-change.positive {
-    color: var(--success);
-}
-
-.index-card.negative,
-.crypto-change.negative,
-.stock-change.negative {
-    color: var(--error);
-}
-
-/* Scrollbar updates */
-::-webkit-scrollbar-thumb {
-    background: var(--primary-blue);
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--primary-dark);
-}
-
-/* Selection color */
-::selection {
-    background: var(--primary-lighter);
-    color: var(--primary-dark);
-}
-
-/* Focus states */
-.btn:focus,
-.nav-link:focus,
-.category-tab:focus,
-.showcase-tab:focus {
-    outline: 2px solid var(--primary-blue);
-    outline-offset: 2px;
-}
-
-/* Loading states */
-.loading {
-    background: linear-gradient(90deg, var(--neutral-200) 0px, var(--neutral-300) 100px, var(--neutral-200) 200px);
-}
-
-/* Animations - keep existing but update colors */
-@keyframes pulse-gentle {
-    0%, 100% { opacity: 0.6; transform: scale(1); }
-    50% { opacity: 1; transform: scale(1.2); }
-}
-
-.status-dot {
-    background: var(--primary-blue);
-}
-
-/* Brand colors in hero */
-.hero-title .highlight {
-    color: var(--primary-blue);
-}
-
-/* Auth buttons */
+/* Auth button backgrounds only */
 .auth-btn.register {
     background: var(--hero-gradient);
-    color: var(--white);
-}
-
-.auth-btn.login {
-    background: var(--white);
-    color: var(--primary-blue);
-    border: 2px solid var(--primary-blue);
 }
 
 .auth-btn.register:hover {
-    background: linear-gradient(135deg, var(--primary-dark), var(--secondary-teal-dark));
+    background: linear-gradient(135deg, #0284c7, #0f766e);
 }
 
 .auth-btn.login:hover {
-    background: var(--primary-blue);
-    color: var(--white);
-}
-
-/* Mobile responsive color adjustments */
-@media (max-width: 768px) {
-    .pricing-card.popular,
-    .package-card.popular {
-        transform: none;
-        box-shadow: 0 10px 25px rgba(14, 165, 233, 0.2);
-    }
+    background: rgba(14, 165, 233, 0.1);
 }
