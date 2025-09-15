@@ -12,7 +12,7 @@ let appState = {
 
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 KaiTech Voice of Time - Initializing...');
+    console.log('KaiTech Voice of Time - Initializing...');
     initializeWebsite();
 });
 
