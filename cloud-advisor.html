@@ -489,7 +489,7 @@
                     📋 Project Requirements
                 </h3>
 
-                <form id="requirementsForm">
+                <form id="cloud-consultation-form">
                     <div class="form-group">
                         <label for="workload_type">Workload Type</label>
                         <select id="workload_type" name="workload_type">
@@ -578,8 +578,34 @@
                         </div>
                     </div>
 
+                    <!-- Contact Information -->
+                    <div class="form-group">
+                        <label for="name">Your Name *</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone">Phone Number (optional)</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="company">Company/Organization</label>
+                        <input type="text" id="company" name="company">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Additional Details</label>
+                        <textarea id="message" name="message" rows="3" placeholder="Any specific requirements or questions about your cloud infrastructure needs..."></textarea>
+                    </div>
+
                     <button type="submit" class="btn" id="analyzeBtn">
-                        🎆 Get Recommendations
+                        🎆 Send Cloud Consultation Request
                     </button>
                 </form>
             </div>

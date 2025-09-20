@@ -1571,6 +1571,21 @@ section {
         width: 95%;
         margin: 10% auto;
     }
+
+    /* Mobile hero buttons: stack and fit width */
+    .hero-buttons {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .cta-button {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        border-radius: 16px;
+    }
 }
 
 /* Smooth Scrolling */
@@ -2392,7 +2407,9 @@ html {
 }
 
 .cta-button.secondary {
-    background: linear-gradient(45deg, #10b981, #059669);
+    background: #000000;
+    border: 2px solid rgba(255, 255, 255, 0.85);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
 }
 
 .hero-stats {
