@@ -2211,22 +2211,22 @@ html {
 .logo-center {
     width: 32px;
     height: 32px;
-    background: linear-gradient(135deg, var(--electric-blue), var(--primary-blue));
-    border-radius: 8px;
+    background: transparent;
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
-    font-size: 1.2rem;
-    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+    color: var(--electric-blue);
+    font-size: 1.4rem;
     position: relative;
     z-index: 2;
     transition: all 0.3s ease;
 }
 
 .logo-center:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+    transform: scale(1.15);
+    color: var(--primary-blue);
+    filter: drop-shadow(0 2px 8px rgba(59, 130, 246, 0.3));
 }
 
 .brand-text {
@@ -2723,74 +2723,11 @@ html {
     font-weight: bold;
 }
 
-/* Breaking News Bar */
-.breaking-news-bar {
-    background: linear-gradient(135deg, rgba(30, 58, 138, 0.95) 0%, rgba(59, 130, 246, 0.95) 50%, rgba(6, 182, 212, 0.95) 100%);
-    backdrop-filter: blur(20px);
-    color: white;
-    padding: 0.8rem 0;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1001;
-    animation: slideDown 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
-    border-bottom: 1px solid rgba(59, 130, 246, 0.3);
-}
-
-.breaking-news-content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1.2rem;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 500;
-    font-size: 0.95rem;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-.breaking-label {
-    background: linear-gradient(135deg, #ef4444, #dc2626);
-    padding: 0.4rem 1rem;
-    border-radius: 25px;
-    font-size: 0.85rem;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    animation: pulseGlow 2s ease-in-out infinite;
-    box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
-}
-
-@keyframes pulseGlow {
-    0%, 100% { 
-        transform: scale(1);
-        box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
-    }
-    50% { 
-        transform: scale(1.05);
-        box-shadow: 0 6px 25px rgba(239, 68, 68, 0.6);
-    }
-}
-
-@keyframes slideDown {
-    from { transform: translateY(-100%); }
-    to { transform: translateY(0); }
-}
-
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.7; }
-}
-
-/* Adjust header for breaking news bar */
-.header {
-    top: 40px;
-}
 
 /* Hero section updates */
 .hero {
     background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
-    padding-top: 120px;
+    padding-top: 100px;
 }
 
 .hero-subtitle {
