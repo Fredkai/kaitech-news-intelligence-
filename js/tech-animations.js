@@ -19,6 +19,7 @@ class TechAnimationSystem {
             this.setupTypingAnimation();
             this.setupStatsAnimation();
             this.setupHeroAnimations();
+            this.setupNewsCardInteractions();
             this.setupIntersectionObserver();
             this.isLoaded = true;
         });
@@ -407,6 +408,103 @@ class TechAnimationSystem {
         }
     }
 
+    // Enhanced News Card Interactions
+    setupNewsCardInteractions() {
+        const newsCards = document.querySelectorAll('.news-card');
+        newsCards.forEach(card => {
+            card.addEventListener('click', (e) => {
+                this.createNewsCardClickEffect(card, e);
+            });
+            
+            card.addEventListener('mouseenter', () => {
+                this.enhanceNewsCardHover(card);
+            });
+        });
+        
+        // Re-setup for dynamically loaded cards
+        const observer = new MutationObserver(() => {
+            this.setupNewsCardInteractions();
+        });
+        
+        const newsContainer = document.querySelector('.news-grid');
+        if (newsContainer) {
+            observer.observe(newsContainer, { childList: true, subtree: true });
+        }
+    }
+
+    createNewsCardClickEffect(card, event) {
+        // Prevent multiple simultaneous effects
+        if (card.dataset.clicking) return;
+        card.dataset.clicking = 'true';
+        
+        // Create ripple effect
+        const rect = card.getBoundingClientRect();
+        const ripple = document.createElement('div');
+        const size = Math.max(rect.width, rect.height) * 1.5;
+        const x = event.clientX - rect.left - size / 2;
+        const y = event.clientY - rect.top - size / 2;
+        
+        ripple.style.cssText = `
+            position: absolute;
+            width: ${size}px;
+            height: ${size}px;
+            left: ${x}px;
+            top: ${y}px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, rgba(6, 182, 212, 0.1) 50%, transparent 70%);
+            border-radius: 50%;
+            transform: scale(0);
+            animation: newsCardRipple 0.8s ease-out;
+            pointer-events: none;
+            z-index: 2;
+        `;
+        
+        card.style.position = 'relative';
+        card.appendChild(ripple);
+        
+        // Add pulse effect to the entire card
+        card.style.animation = 'newsCardClickPulse 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+        
+        // Cleanup
+        setTimeout(() => {
+            ripple.remove();
+            card.style.animation = '';
+            delete card.dataset.clicking;
+        }, 800);
+        
+        // Add subtle vibration effect on mobile
+        if (navigator.vibrate) {
+            navigator.vibrate(50);
+        }
+    }
+
+    enhanceNewsCardHover(card) {
+        // Prevent multiple hover effects
+        if (card.querySelector('.news-card-glow')) return;
+        
+        const glow = document.createElement('div');
+        glow.className = 'news-card-glow';
+        glow.style.cssText = `
+            position: absolute;
+            inset: -3px;
+            background: linear-gradient(45deg, var(--electric-blue), var(--primary-blue), var(--electric-cyan), var(--electric-blue));
+            border-radius: inherit;
+            z-index: -1;
+            filter: blur(12px);
+            opacity: 0;
+            animation: newsCardGlow 2s ease-in-out;
+            background-size: 300% 300%;
+        `;
+        
+        card.appendChild(glow);
+        
+        // Auto-remove after animation
+        setTimeout(() => {
+            if (glow.parentNode) {
+                glow.remove();
+            }
+        }, 2000);
+    }
+
     // Utility Functions
     debounce(func, wait) {
         let timeout;
@@ -463,6 +561,24 @@ const injectKeyframes = () => {
         @keyframes glow-pulse {
             0%, 100% { opacity: 0.7; }
             50% { opacity: 1; }
+        }
+        
+        @keyframes newsCardRipple {
+            0% { transform: scale(0); opacity: 0.8; }
+            50% { opacity: 0.4; }
+            100% { transform: scale(1); opacity: 0; }
+        }
+        
+        @keyframes newsCardClickPulse {
+            0% { transform: translateY(-5px) scale(1.05); }
+            50% { transform: translateY(-8px) scale(1.08); }
+            100% { transform: translateY(-5px) scale(1.05); }
+        }
+        
+        @keyframes newsCardGlow {
+            0% { opacity: 0; background-position: 0% 50%; }
+            50% { opacity: 0.3; background-position: 100% 50%; }
+            100% { opacity: 0; background-position: 200% 50%; }
         }
         
         @keyframes slideInUp {
