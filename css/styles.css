@@ -2134,8 +2134,8 @@ html {
 
 .footer-main {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1.5fr;
-    gap: 3rem;
+    grid-template-columns: 2fr 1fr 2fr;
+    gap: 4rem;
     margin-bottom: 3rem;
 }
 
@@ -2144,153 +2144,9 @@ html {
     flex-direction: column;
 }
 
-/* Company Section */
-.company-section .footer-brand {
-    margin-bottom: 1.5rem;
-}
-
-/* Enhanced Footer Logo */
-.brand-logo {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 0.5rem;
-    position: relative;
-}
-
-.logo-container {
-    position: relative;
-    width: 50px;
-    height: 50px;
-    flex-shrink: 0;
-}
-
-.logo-core {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.logo-rings {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    animation: logoRotate 20s linear infinite;
-}
-
-.ring {
-    position: absolute;
-    border: 2px solid;
-    border-radius: 50%;
-    opacity: 0.6;
-}
-
-.ring-1 {
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    border-color: var(--electric-blue);
-    border-style: dashed;
-    animation: ringPulse1 3s ease-in-out infinite;
-}
-
-.ring-2 {
-    width: 70%;
-    height: 70%;
-    top: 15%;
-    left: 15%;
-    border-color: var(--primary-blue);
-    border-style: solid;
-    animation: ringPulse2 2s ease-in-out infinite reverse;
-}
-
-.logo-center {
-    width: 32px;
-    height: 32px;
-    background: transparent;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--electric-blue);
-    font-size: 1.4rem;
-    position: relative;
-    z-index: 2;
-    transition: all 0.3s ease;
-}
-
-.logo-center:hover {
-    transform: scale(1.15);
-    color: var(--primary-blue);
-    filter: drop-shadow(0 2px 8px rgba(59, 130, 246, 0.3));
-}
-
-.brand-text {
-    position: relative;
-}
-
-.brand-text h3 {
-    margin: 0 0 0.3rem 0;
-    font-size: 1.75rem;
-    font-weight: 700;
-    font-family: 'Space Grotesk', sans-serif;
-    line-height: 1.2;
-}
-
-.brand-name {
-    color: var(--primary-blue);
-    text-shadow: 0 2px 4px rgba(59, 130, 246, 0.1);
-}
-
-.brand-tech {
-    color: var(--electric-blue);
-    text-shadow: 0 2px 4px rgba(6, 182, 212, 0.1);
-}
-
-.brand-tagline {
-    color: var(--light-text);
-    font-size: 0.85rem;
-    font-style: italic;
-    font-weight: 400;
-    margin: 0;
-    position: relative;
-    z-index: 1;
-}
-
-.brand-pulse {
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    height: 2px;
-    width: 0;
-    background: linear-gradient(90deg, var(--electric-blue), var(--primary-blue));
-    border-radius: 1px;
-    animation: brandPulse 4s ease-in-out infinite;
-}
-
-/* Footer Logo Animations */
-@keyframes logoRotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-}
-
-@keyframes ringPulse1 {
-    0%, 100% { transform: scale(1); opacity: 0.6; }
-    50% { transform: scale(1.1); opacity: 0.8; }
-}
-
-@keyframes ringPulse2 {
-    0%, 100% { transform: scale(1); opacity: 0.4; }
-    50% { transform: scale(1.15); opacity: 0.7; }
-}
-
-@keyframes brandPulse {
-    0%, 100% { width: 0; opacity: 0.8; }
-    50% { width: 100%; opacity: 1; }
+/* Company Section - Simplified */
+.company-section {
+    max-width: 400px;
 }
 
 .company-description {
@@ -2405,40 +2261,159 @@ html {
     font-size: 1rem;
 }
 
-/* Social Media */
-.social-media h5 {
-    font-size: 1rem;
-    font-weight: 500;
-    color: var(--dark-text);
-    margin-bottom: 1rem;
+/* Enhanced Social Media Section */
+.social-section {
+    max-width: 600px;
 }
 
-.social-links {
+.social-description {
+    color: var(--light-text);
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.social-media-enhanced {
     display: flex;
-    gap: 0.75rem;
+    flex-direction: column;
+    gap: 2rem;
 }
 
-.social-link {
-    width: 40px;
-    height: 40px;
+.social-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.social-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
     background: rgba(255, 255, 255, 0.8);
     border: 1px solid var(--border-gray);
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.social-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    transition: left 0.6s ease;
+}
+
+.social-card:hover::before {
+    left: 100%;
+}
+
+.social-card:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.social-card.linkedin:hover {
+    border-color: #0077b5;
+    background: linear-gradient(135deg, rgba(0, 119, 181, 0.1), rgba(255, 255, 255, 0.9));
+}
+
+.social-card.twitter:hover {
+    border-color: #1da1f2;
+    background: linear-gradient(135deg, rgba(29, 161, 242, 0.1), rgba(255, 255, 255, 0.9));
+}
+
+.social-card.github:hover {
+    border-color: #333;
+    background: linear-gradient(135deg, rgba(51, 51, 51, 0.1), rgba(255, 255, 255, 0.9));
+}
+
+.social-card.youtube:hover {
+    border-color: #ff0000;
+    background: linear-gradient(135deg, rgba(255, 0, 0, 0.1), rgba(255, 255, 255, 0.9));
+}
+
+.social-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--electric-blue), var(--primary-blue));
     border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--light-text);
-    text-decoration: none;
+    color: white;
+    font-size: 1.2rem;
     transition: all 0.3s ease;
-    font-size: 1.1rem;
+    flex-shrink: 0;
 }
 
-.social-link:hover {
-    background: var(--electric-blue);
-    border-color: var(--electric-blue);
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+.social-card.linkedin .social-icon {
+    background: linear-gradient(135deg, #0077b5, #005582);
+}
+
+.social-card.twitter .social-icon {
+    background: linear-gradient(135deg, #1da1f2, #0d8bd9);
+}
+
+.social-card.github .social-icon {
+    background: linear-gradient(135deg, #333, #24292e);
+}
+
+.social-card.youtube .social-icon {
+    background: linear-gradient(135deg, #ff0000, #cc0000);
+}
+
+.social-card:hover .social-icon {
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.social-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.social-name {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--dark-text);
+}
+
+.social-handle {
+    font-size: 0.8rem;
+    color: var(--light-text);
+    font-family: 'Monaco', 'Menlo', monospace;
+}
+
+/* Contact Info Minimal */
+.contact-info-minimal {
+    display: flex;
+    gap: 2rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.6);
+    border-radius: 12px;
+    border: 1px solid var(--border-gray);
+}
+
+.contact-info-minimal .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.contact-info-minimal .contact-item i {
+    width: 16px;
+    color: var(--electric-blue);
+    font-size: 0.9rem;
 }
 
 /* Footer Bottom */
@@ -2520,6 +2495,10 @@ html {
     .footer-main {
         grid-template-columns: 1fr;
         gap: 2rem;
+    }
+
+    .social-grid {
+        grid-template-columns: 1fr;
     }
     
     .company-stats {
