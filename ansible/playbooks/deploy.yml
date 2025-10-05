@@ -1,0 +1,49 @@
+---
+- name: Deploy AI Website Project
+  hosts: all
+  become: yes
+  gather_facts: yes
+  
+  vars:
+    domain_name: "{{ ansible_host }}"  # Override this in inventory or command line
+    ssl_enabled: false  # Set to true when you have SSL certificates
+    
+  pre_tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+      when: ansible_os_family == "Debian"
+
+  roles:
+    - common
+    - nginx
+    - nodejs
+    - webapp
+    - security
+
+  post_tasks:
+    - name: Ensure Nginx is started and enabled
+      systemd:
+        name: nginx
+        state: started
+        enabled: yes
+        
+    - name: Test website accessibility
+      uri:
+        url: "http://{{ domain_name }}"
+        method: GET
+        status_code: 200
+      delegate_to: localhost
+      run_once: true
+      
+  handlers:
+    - name: restart nginx
+      systemd:
+        name: nginx
+        state: restarted
+        
+    - name: reload nginx
+      systemd:
+        name: nginx
+        state: reloaded

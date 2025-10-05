@@ -1,0 +1,33 @@
+---
+# Ansible Galaxy requirements file
+# Install with: ansible-galaxy install -r requirements.yml
+
+collections:
+  # Community general collection
+  - name: community.general
+    version: ">=3.0.0"
+    
+  # Ansible POSIX collection
+  - name: ansible.posix
+    version: ">=1.0.0"
+    
+  # Community crypto collection (for SSL/TLS)
+  - name: community.crypto
+    version: ">=1.0.0"
+
+roles:
+  # Nginx role
+  - name: geerlingguy.nginx
+    version: "3.1.4"
+    
+  # Node.js role  
+  - name: geerlingguy.nodejs
+    version: "6.0.0"
+    
+  # Security role
+  - name: geerlingguy.security
+    version: "2.0.1"
+    
+  # Firewall role
+  - name: geerlingguy.firewall
+    version: "2.3.0"

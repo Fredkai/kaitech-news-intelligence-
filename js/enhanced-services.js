@@ -361,14 +361,14 @@ function viewPortfolioItem(item) {
             duration: '5 weeks',
             year: '2023'
         },
-        'eco-brand': {
-            title: 'EcoTech Solutions - Sustainable Technology',
+        'fintech-brand': {
+            title: 'CryptoVault Pro - Premium Fintech Platform',
             category: 'Branding',
-            description: 'Environmentally-conscious brand design for a sustainable technology company, emphasizing green innovation.',
-            services: ['Sustainable Branding', 'Eco-Friendly Packaging', 'Digital Campaign', 'Website Design'],
-            client: 'EcoTech Solutions',
-            duration: '6 weeks',
-            year: '2023'
+            description: 'Cutting-edge brand identity for a premium cryptocurrency trading platform, featuring secure, modern design elements and comprehensive digital assets.',
+            services: ['Fintech Branding', 'Mobile App Design', 'Security Interface', 'Trading Dashboard', 'Marketing Assets'],
+            client: 'CryptoVault Pro',
+            duration: '8 weeks',
+            year: '2024'
         },
         'ecommerce-site': {
             title: 'Luxury Fashion Store - E-commerce Platform',

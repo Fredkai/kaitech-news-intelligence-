@@ -2720,9 +2720,21 @@ html {
 }
 
 .cta-button.secondary {
-    background: #000000;
-    border: 2px solid rgba(255, 255, 255, 0.85);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+    background: linear-gradient(135deg, #22d3ee 0%, #06b6d4 50%, #0ea5e9 100%);
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    box-shadow: 0 16px 40px rgba(2, 132, 199, 0.45);
+}
+
+.cta-button.secondary:hover {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: 0 22px 60px rgba(2, 132, 199, 0.55);
+    filter: saturate(1.08);
+}
+
+.cta-button.secondary:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 3px;
+    box-shadow: 0 0 0 4px rgba(34, 211, 238, 0.35), 0 20px 50px rgba(2, 132, 199, 0.5);
 }
 
 .hero-stats {

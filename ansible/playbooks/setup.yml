@@ -1,0 +1,88 @@
+---
+- name: Basic Server Setup for AI Website Project
+  hosts: all
+  become: yes
+  gather_facts: yes
+  
+  tasks:
+    - name: Update system packages
+      apt:
+        update_cache: yes
+        upgrade: dist
+        autoremove: yes
+        autoclean: yes
+      when: ansible_os_family == "Debian"
+      
+    - name: Install essential packages
+      apt:
+        name:
+          - curl
+          - wget
+          - git
+          - unzip
+          - software-properties-common
+          - apt-transport-https
+          - ca-certificates
+          - gnupg
+          - lsb-release
+          - htop
+          - vim
+          - ufw
+        state: present
+      when: ansible_os_family == "Debian"
+      
+    - name: Install Node.js repository
+      shell: |
+        curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+      when: ansible_os_family == "Debian"
+      
+    - name: Install Node.js and npm
+      apt:
+        name:
+          - nodejs
+        state: present
+      when: ansible_os_family == "Debian"
+      
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+      when: ansible_os_family == "Debian"
+      
+    - name: Start and enable Nginx
+      systemd:
+        name: nginx
+        state: started
+        enabled: yes
+        
+    - name: Configure UFW firewall
+      ufw:
+        rule: allow
+        port: "{{ item }}"
+      with_items:
+        - "22"    # SSH
+        - "80"    # HTTP
+        - "443"   # HTTPS
+        
+    - name: Enable UFW
+      ufw:
+        state: enabled
+        
+    - name: Create application directory
+      file:
+        path: "{{ app_directory }}"
+        state: directory
+        owner: "{{ app_user }}"
+        group: "{{ app_group }}"
+        mode: '0755'
+        
+    - name: Display server information
+      debug:
+        msg: |
+          Server setup completed successfully!
+          - Hostname: {{ ansible_hostname }}
+          - OS: {{ ansible_distribution }} {{ ansible_distribution_version }}
+          - Node.js version: {{ nodejs_version | default('18.x') }}
+          - Nginx status: Running
+          - Application directory: {{ app_directory }}
+          - Firewall: Enabled (ports 22, 80, 443 open)

@@ -58,3 +58,42 @@ api-keys.json
 .cache/
 .parcel-cache/
 .vercel
+
+# Ansible specific
+ansible/inventory/group_vars/all.yml
+ansible/inventory/host_vars/
+ansible/*.log
+ansible/.vault_password
+ansible/collections/
+ansible/roles/geerlingguy.*
+ansible/roles/community.*
+
+# SSH Keys (never commit these!)
+id_rsa*
+*.ppk
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Backup files
+*.bak
+*.backup
+
+# Certificate files
+*.crt
+*.csr
+*.pfx
+
+# Additional sensitive files
+secrets.yml
+config/production.js
+
+# Testing
+.pytest_cache/
+test-results/
+coverage.xml
+
+# Docker
+docker-compose.override.yml
